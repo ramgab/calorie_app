@@ -32,12 +32,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ProductListFragment extends Fragment {
 
 
 
     private String selectedDate;
+    private String breakfast_lunch_or_dinner;
 
     private static final String PREFS_NAME = "MyPrefsFile";
     private static final String DATA_INITIALIZED_KEY = "dataInitialized";
@@ -55,12 +57,14 @@ public class ProductListFragment extends Fragment {
 
     // Объявляем экземпляр класса базы данных для выбранной даты
     private SelectedDateDatabaseHelper selectedDateDBHelper;
+    private SelectedButtonDatabaseHelper selectedButtonDBHelper;
 
     // В методе onCreate() инициализируем экземпляр
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         selectedDateDBHelper = new SelectedDateDatabaseHelper(requireContext());
+        selectedButtonDBHelper = new SelectedButtonDatabaseHelper(requireContext());
     }
 
     @Override
@@ -69,6 +73,7 @@ public class ProductListFragment extends Fragment {
 
         // Получаем выбранную дату из базы данных
         selectedDate = selectedDateDBHelper.getSelectedDate();
+        breakfast_lunch_or_dinner = selectedButtonDBHelper.getSelectedButton();
 
         //selectedDate = getArguments().getString("selectedDate");
         /**
@@ -106,7 +111,13 @@ public class ProductListFragment extends Fragment {
             @Override
             public void onItemClick(String productName) {
                 // Handle item click by showing the bottom sheet
-                showBottomSheet(productName);
+                if (Objects.equals(breakfast_lunch_or_dinner, "breakfast")) {
+                    showBottomSheet(productName);
+                }
+
+                if (Objects.equals(breakfast_lunch_or_dinner, "lunch")) {
+                    showBottomSheetLunch(productName);
+                }
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -283,6 +294,125 @@ public class ProductListFragment extends Fragment {
     }
 
 
+
+
+    private void showBottomSheetLunch(String productName) {
+        // Inflate the bottom sheet layout
+        View bottomSheetViewLunch = getLayoutInflater().inflate(R.layout.bottom_sheet_layout_lunch, null);
+
+        // Find views in the bottom sheet layout
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) TextView titleTextViewLunch = bottomSheetViewLunch.findViewById(R.id.bottomSheetTitleLunch);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) TextView compositionTextViewLunch = bottomSheetViewLunch.findViewById(R.id.bottomSheetCompositionLunch);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) TextView caloriesTextViewLunch = bottomSheetViewLunch.findViewById(R.id.bottomSheetCaloriesLunch);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) TextView proteinTextViewLunch = bottomSheetViewLunch.findViewById(R.id.bottomSheetProteinLunch);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) TextView fatTextViewLunch = bottomSheetViewLunch.findViewById(R.id.bottomSheetFatLunch);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) TextView carbohydrateTextViewLunch = bottomSheetViewLunch.findViewById(R.id.bottomSheetCarbohydrateLunch);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) TextView categoryTextViewLunch = bottomSheetViewLunch.findViewById(R.id.bottomSheetCategoryLunch);
+
+
+        // Добавление поля ввода для грамм продукта
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) EditText editTextGramsLunch = bottomSheetViewLunch.findViewById(R.id.editTextGramsLunch);
+
+        // Добавьте слушателя для обработки событий клавиатуры
+        editTextGramsLunch.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    // Закрыть клавиатуру
+                    InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(editTextGramsLunch.getWindowToken(), 0);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        // Retrieve product details from the database based on the name
+        Product productDetails = getProductDetails(productName);
+
+        // Set values to views
+        titleTextViewLunch.setText(productDetails.getName());
+        compositionTextViewLunch.setText("Composition: " + productDetails.getComposition());
+        caloriesTextViewLunch.setText("Calories: " + String.valueOf(productDetails.getCalories()));
+        proteinTextViewLunch.setText("Protein: " + String.valueOf(productDetails.getProteins()));
+        fatTextViewLunch.setText("Fat: " + String.valueOf(productDetails.getFats()));
+        carbohydrateTextViewLunch.setText("Carbohydrate: " + String.valueOf(productDetails.getCarbohydrates()));
+        categoryTextViewLunch.setText("Category: " + productDetails.getCategory());
+
+        // Set up a TextWatcher to listen for changes in the grams input
+        editTextGramsLunch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // Сохраните введенный текст
+                editTextValue = charSequence.toString();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // После изменения введенных граммов, обновите значения калорий, белка, жира и углеводов
+                updateNutritionValues(productDetails, editable.toString(), caloriesTextViewLunch, proteinTextViewLunch, fatTextViewLunch, carbohydrateTextViewLunch);
+
+
+            }
+        });
+
+        // Найти кнопку сохранения в макете нижнего листа
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) Button saveButtonLunch = bottomSheetViewLunch.findViewById(R.id.saveProductLunch);
+
+
+        // Create a BottomSheetDialog and set the layout
+        BottomSheetDialog bottomSheetDialogLunch = new BottomSheetDialog(requireContext());
+        bottomSheetDialogLunch.setContentView(bottomSheetViewLunch);
+
+
+        // Find the close button in the bottom sheet layout
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) Button closeButton = bottomSheetViewLunch.findViewById(R.id.buttonCloseBottomSheetLunch);
+
+        // Set an onClickListener for the close button
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Close the bottom sheet
+                bottomSheetDialogLunch.dismiss();
+            }
+        });
+
+
+        // Установить слушатель onClickListener для кнопки сохранения
+        saveButtonLunch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Установить флаг, указывающий, что кнопка сохранения была нажата
+                saveButtonClicked = true;
+
+                // Используйте значение editTextValue при сохранении данных
+                saveProductLunch(productDetails, editTextValue);
+
+                // Закрыть клавиатуру
+                InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(editTextGramsLunch.getWindowToken(), 0);
+
+                // Закрыть bottomSheetDialog
+                bottomSheetDialogLunch.dismiss();
+            }
+        });
+
+        // Show the bottom sheet
+        bottomSheetDialogLunch.show();
+    }
+
+
+
+
+
+
+
+
+
     private void saveProductBreakfast(Product product, String gramsInput) {
         double grams = tryParseDouble(gramsInput);
         double calories = product.getCalories() * (grams / 100.0);
@@ -310,6 +440,35 @@ public class ProductListFragment extends Fragment {
 
         // Обновите сумму калорий в таблице calories_summary
         new BreakfastDatabaseHelper(requireContext()).updateCaloriesSummary(selectedDate);
+    }
+
+    private void saveProductLunch(Product product, String gramsInput) {
+        double grams = tryParseDouble(gramsInput);
+        double calories = product.getCalories() * (grams / 100.0);
+        double protein = product.getProteins() * (grams / 100.0);
+        double fat = product.getFats() * (grams / 100.0);
+        double carbohydrate = product.getCarbohydrates() * (grams / 100.0);
+
+        // Откройте базу данных для записи
+        SQLiteDatabase db = new LunchDatabaseHelper(requireContext()).getWritableDatabase();
+
+        // Вставьте данные в таблицу завтрака
+        ContentValues values = new ContentValues();
+        values.put(LunchDatabaseHelper.COLUMN_PRODUCT_NAME, product.getName());
+        values.put(LunchDatabaseHelper.COLUMN_GRAMS, grams);
+        values.put(LunchDatabaseHelper.COLUMN_CALORIES, calories);
+        values.put(LunchDatabaseHelper.COLUMN_PROTEIN, protein);
+        values.put(LunchDatabaseHelper.COLUMN_FAT, fat);
+        values.put(LunchDatabaseHelper.COLUMN_CARBOHYDRATE, carbohydrate);
+        values.put(LunchDatabaseHelper.COLUMN_DATE, selectedDate);
+
+        db.insert(LunchDatabaseHelper.TABLE_LUNCH, null, values);
+
+        // Закройте базу данных
+        db.close();
+
+        // Обновите сумму калорий в таблице calories_summary
+        new LunchDatabaseHelper(requireContext()).updateCaloriesSummaryLunch(selectedDate);
     }
 
 

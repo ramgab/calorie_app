@@ -48,12 +48,18 @@ public class DashboardFragment extends Fragment {
 
     // Добавьте ссылку на базу данных
     private BreakfastDatabaseHelper dbHelper = null;
+    private LunchDatabaseHelper dbHelperLunch = null;
     private ProductDatabaseHelper dbHelper2 = null;
 
     // Добавьте TextView для отображения суммы калорий
     private TextView sumCalorieBreakfast;
+    private TextView sumCalorieLunch;
+
     // Объявляем экземпляр класса базы данных для выбранной даты
     private SelectedDateDatabaseHelper selectedDateDBHelper;
+    private SelectedButtonDatabaseHelper selectedButtonDBHelper;
+
+    private String breakfast_lunch_or_dinner;
 
 
 
@@ -61,6 +67,7 @@ public class DashboardFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         selectedDateDBHelper = new SelectedDateDatabaseHelper(requireContext());
+        selectedButtonDBHelper = new SelectedButtonDatabaseHelper(requireContext());
     }
 
 
@@ -76,8 +83,12 @@ public class DashboardFragment extends Fragment {
 
         // Найти кнопку добавления завтрака
         Button buttonAddBreakfast = root.findViewById(R.id.buttonAddBreakfast);
+        // Найти кнопку добавления обеда
+        Button buttonAddLunch = root.findViewById(R.id.buttonAddLunch);
 
         // Установить слушатель нажатия
+
+
         buttonAddBreakfast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,6 +110,10 @@ public class DashboardFragment extends Fragment {
                 productListFragment.setArguments(bundle);
                 **/
 
+                breakfast_lunch_or_dinner = "breakfast";
+                selectedButtonDBHelper.insertSelectedButton(breakfast_lunch_or_dinner);
+
+
 
 
                 // Get the FragmentManager
@@ -117,6 +132,53 @@ public class DashboardFragment extends Fragment {
                 fragmentTransaction.commit();
             }
         });
+
+
+        buttonAddLunch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // Create a new instance of the ProductListFragment
+                ProductListFragment productListFragment = new ProductListFragment();
+
+
+                // Получите выбранную дату из вашего текстового поля
+                String selectedDate = currentDateTextView.getText().toString();
+                // Сохраняем выбранную дату в базу данных
+                selectedDateDBHelper.insertSelectedDate(selectedDate);
+
+
+                /**
+                 // Передайте выбранную дату в ProductListFragment через аргументы
+                 Bundle bundle = new Bundle();
+                 bundle.putString("selectedDate", selectedDate);
+                 productListFragment.setArguments(bundle);
+                 **/
+
+                breakfast_lunch_or_dinner = "lunch";
+                selectedButtonDBHelper.insertSelectedButton(breakfast_lunch_or_dinner);
+
+
+
+                // Get the FragmentManager
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+
+                // Start a FragmentTransaction
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                // Replace the current fragment (DashboardFragment) with the new one (ProductListFragment)
+                fragmentTransaction.replace(R.id.nav_host_fragment_activity_main, productListFragment);
+
+                // Add the transaction to the back stack, so you can return to the previous fragment
+                fragmentTransaction.addToBackStack(null);
+
+                // Apply the transaction
+                fragmentTransaction.commit();
+            }
+        });
+
+
+
 
 
         // Найти CardView с id cardViewBreakfast
@@ -143,6 +205,35 @@ public class DashboardFragment extends Fragment {
                 requireActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.nav_host_fragment_activity_main, breakfastDetailsFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        // Найти CardView с id cardViewBreakfast
+        CardView cardViewLunch = root.findViewById(R.id.cardViewLunch);
+
+        // Установить слушатель нажатия
+        cardViewLunch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Создайте новый экземпляр BreakfastDetailsFragment
+                LunchDetailsFragment lunchDetailsFragment = new LunchDetailsFragment();
+
+
+                // Получите выбранную дату из вашего текстового поля
+                String selectedDate = currentDateTextView.getText().toString();
+
+                // Передайте выбранную дату в ProductListFragment через аргументы
+                Bundle bundle = new Bundle();
+                bundle.putString("selectedDate", selectedDate);
+                lunchDetailsFragment.setArguments(bundle);
+
+
+                // Замените текущий фрагмент на BreakfastDetailsFragment
+                requireActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.nav_host_fragment_activity_main, lunchDetailsFragment)
                         .addToBackStack(null)
                         .commit();
             }
@@ -183,17 +274,29 @@ public class DashboardFragment extends Fragment {
         // Найдите TextView для отображения суммы калорий
         sumCalorieBreakfast = root.findViewById(R.id.sumCalorieBreakfast);
 
+
         // Проверяем, не является ли dbHelper null, и инициализируем его при необходимости
         if (dbHelper == null) {
             dbHelper = new BreakfastDatabaseHelper(requireContext());
         }
+
+       /**
+        // Найдите TextView для отображения суммы калорий
+        sumCalorieLunch = root.findViewById(R.id.sumCalorieLunch);
+        // Проверяем, не является ли dbHelper null, и инициализируем его при необходимости
+        if (dbHelperLunch == null) {
+            dbHelperLunch = new LunchDatabaseHelper(requireContext());
+        }
+        **/
 
         // Получите выбранную дату из аргументов
         String selectedDate = currentDateTextView.getText().toString();
 
         // Загрузите данные из базы данных и установите их в TextView
         loadCaloriesSummaryFromDatabase(selectedDate);
-
+        /**
+        loadCaloriesSummaryLunchFromDatabase(selectedDate);
+        **/
         // Добавьте слушатель изменений даты
         currentDateTextView.addTextChangedListener(dateTextWatcher);
 
@@ -255,6 +358,7 @@ public class DashboardFragment extends Fragment {
 
             // Загрузите данные из базы данных и обновите TextView
             loadCaloriesSummaryFromDatabase(selectedDate);
+            /**loadCaloriesSummaryLunchFromDatabase(selectedDate);**/
         }
     };
 
@@ -264,6 +368,14 @@ public class DashboardFragment extends Fragment {
 
         // Установите значение в TextView с округлением до сотых
         sumCalorieBreakfast.setText(String.format(Locale.getDefault(), "%.2f", totalCalories));
+    }
+
+    private void loadCaloriesSummaryLunchFromDatabase(String selectedDate) {
+        // Получите сумму калорий из базы данных для выбранной даты
+        double totalCaloriesLunch = dbHelperLunch.getTotalCaloriesSummaryLunch(selectedDate);
+
+        // Установите значение в TextView с округлением до сотых
+        sumCalorieBreakfast.setText(String.format(Locale.getDefault(), "%.2f", totalCaloriesLunch));
     }
 
     private void setCurrentDate() {
