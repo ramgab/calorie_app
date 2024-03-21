@@ -14,15 +14,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.calorieapp.R;
-import com.example.calorieapp.ui.dashboard.LunchDetailsAdapter;
+import com.example.calorieapp.ui.dashboard.DinnerDetailsAdapter;
 
-public class LunchDetailsFragment extends Fragment {
+public class DinnerDetailsFragment extends Fragment {
 
     private String selectedDate;
     private RecyclerView recyclerView;
-    private LunchDetailsAdapter adapter;
+    private DinnerDetailsAdapter adapter;
 
-    public LunchDetailsFragment() {
+    public DinnerDetailsFragment() {
         // Обязательный пустой конструктор
     }
 
@@ -31,10 +31,10 @@ public class LunchDetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Инфлейтинг макета для этого фрагмента
-        View rootView = inflater.inflate(R.layout.fragment_lunch_details, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_dinner_details, container, false);
 
         // Найти кнопку для закрытия фрагмента
-        Button buttonCloseFragment = rootView.findViewById(R.id.buttonCloseLunchFragment);
+        Button buttonCloseFragment = rootView.findViewById(R.id.buttonCloseDinnerFragment);
 
         // Установить слушатель нажатия для кнопки
         buttonCloseFragment.setOnClickListener(new View.OnClickListener() {
@@ -49,37 +49,37 @@ public class LunchDetailsFragment extends Fragment {
         });
 
         // Получите RecyclerView из макета
-        recyclerView = rootView.findViewById(R.id.recyclerViewLunchDetails);
+        recyclerView = rootView.findViewById(R.id.recyclerViewDinnerDetails);
 
         // Создайте LinearLayoutManager для управления макетом RecyclerView
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
         recyclerView.setLayoutManager(layoutManager);
 
         // Создайте адаптер и установите его для RecyclerView
-        adapter = new LunchDetailsAdapter(requireContext());
+        adapter = new DinnerDetailsAdapter(requireContext());
         recyclerView.setAdapter(adapter);
 
         // Получите выбранную дату из аргументов
         selectedDate = getArguments().getString("selectedDate");
 
         // Загрузите данные из базы данных и установите их в адаптер
-        loadLunchDetailsFromDatabase();
+        loadDinnerDetailsFromDatabase();
 
         return rootView;
     }
 
-    private void loadLunchDetailsFromDatabase() {
-        // Создайте объект LunchDatabaseHelper
-        LunchDatabaseHelper dbHelper = new LunchDatabaseHelper(requireContext());
+    private void loadDinnerDetailsFromDatabase() {
+        // Создайте объект DinnerDatabaseHelper
+        DinnerDatabaseHelper dbHelper = new DinnerDatabaseHelper(requireContext());
 
         // Получите базу данных в режиме для чтения
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         // Выполните запрос для выборки всех записей, где дата равна выбранной дате
         Cursor cursor = db.query(
-                LunchDatabaseHelper.TABLE_LUNCH,
+                DinnerDatabaseHelper.TABLE_DINNER,
                 null,
-                LunchDatabaseHelper.COLUMN_DATE + " = ?",
+                DinnerDatabaseHelper.COLUMN_DATE + " = ?",
                 new String[]{selectedDate},
                 null,
                 null,

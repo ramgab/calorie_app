@@ -14,7 +14,7 @@
         app:cardCornerRadius="15dp">
 
         <TextView
-            android:id="@+id/textViewProductName"
+            android:id="@+id/textViewProductNameDinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Product Name"
@@ -23,46 +23,46 @@
             android:layout_marginBottom="8dp"/>
 
         <TextView
-            android:id="@+id/textViewGrams"
+            android:id="@+id/textViewGramsDinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Граммы: "
             android:layout_marginBottom="4dp"/>
 
         <TextView
-            android:id="@+id/textViewCalories"
+            android:id="@+id/textViewCaloriesDinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Калории: "
             android:layout_marginBottom="4dp"/>
 
         <TextView
-            android:id="@+id/textViewProtein"
+            android:id="@+id/textViewProteinDinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Белки: "
             android:layout_marginBottom="4dp"/>
 
         <TextView
-            android:id="@+id/textViewFat"
+            android:id="@+id/textViewFatDinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Жиры: "
             android:layout_marginBottom="4dp"/>
 
         <TextView
-            android:id="@+id/textViewCarbohydrate"
+            android:id="@+id/textViewCarbohydrateDinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Углеводы: "
             android:layout_marginBottom="4dp"/>
 
         <Button
-            android:id="@+id/deleteButton"
+            android:id="@+id/deleteButtonDinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Удалить"
-            android:layout_below="@id/textViewProductName"
+            android:layout_below="@id/textViewProductNameDinner"
             android:layout_marginTop="8dp"/>
 
     </LinearLayout>

@@ -40,8 +40,12 @@ public class BreakfastDetailsFragment extends Fragment {
         buttonCloseFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Закрыть текущий фрагмент и вернуться на предыдущий
-                requireActivity().getSupportFragmentManager().popBackStack();
+                DashboardFragment dashboardFragment = new DashboardFragment();
+
+                // Получаем FragmentManager и начинаем транзакцию
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.nav_host_fragment_activity_main, dashboardFragment) // Заменяем текущий фрагмент на ProductListFragment
+                        .commit(); // Применяем транзакцию
             }
         });
 

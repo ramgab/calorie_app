@@ -442,6 +442,7 @@
             android:layout_marginTop="5dp">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewDinner"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:backgroundTint="@color/blocks"
@@ -465,6 +466,7 @@
                 </TextView>
 
                 <TextView
+                    android:id="@+id/sumCalorieDinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
@@ -476,6 +478,15 @@
                     android:textSize="18dp">
 
                 </TextView>
+
+                <Button
+                    android:id="@+id/buttonAddDinner"
+                    android:layout_width="45dp"
+                    android:layout_height="wrap_content"
+                    android:text="+"
+                    android:textSize="24sp"
+                    android:layout_gravity="end"
+                    />
 
 
             </androidx.cardview.widget.CardView>

@@ -1,0 +1,54 @@
+<!-- res/layout/fragment_breakfast_details.xml -->
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.dashboard.ProductListFragment"
+    android:background="@color/dark_grey"
+    android:fillViewport="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@color/dark_grey">
+
+        <!-- Здесь вы можете добавить виджеты и макеты для отображения деталей завтрака -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ужин: ваш рацион"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Заменяем LinearLayout на RecyclerView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewDinnerDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="8dp"/>
+
+        <Button
+            android:id="@+id/buttonCloseDinnerFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Закрыть"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</androidx.core.widget.NestedScrollView>

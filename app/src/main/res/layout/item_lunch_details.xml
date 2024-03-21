@@ -26,42 +26,42 @@
             android:id="@+id/textViewGramsLunch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Grams: "
+            android:text="Граммы: "
             android:layout_marginBottom="4dp"/>
 
         <TextView
             android:id="@+id/textViewCaloriesLunch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Calories: "
+            android:text="Калории: "
             android:layout_marginBottom="4dp"/>
 
         <TextView
             android:id="@+id/textViewProteinLunch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Protein: "
+            android:text="Белки: "
             android:layout_marginBottom="4dp"/>
 
         <TextView
             android:id="@+id/textViewFatLunch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fat: "
+            android:text="Жиры: "
             android:layout_marginBottom="4dp"/>
 
         <TextView
             android:id="@+id/textViewCarbohydrateLunch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Carbohydrate: "
+            android:text="Углеводы: "
             android:layout_marginBottom="4dp"/>
 
         <Button
             android:id="@+id/deleteButtonLunch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Delete"
+            android:text="Удалить"
             android:layout_below="@id/textViewProductNameLunch"
             android:layout_marginTop="8dp"/>
 

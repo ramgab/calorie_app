@@ -1,9 +1,9 @@
 package com.example.calorieapp.ui.dashboard;
 
 import static androidx.core.content.ContentProviderCompat.requireContext;
-import static com.example.calorieapp.ui.dashboard.BreakfastDatabaseHelper.COLUMN_CALORIES;
-import static com.example.calorieapp.ui.dashboard.BreakfastDatabaseHelper.COLUMN_DATE;
-import static com.example.calorieapp.ui.dashboard.BreakfastDatabaseHelper.TABLE_BREAKFAST;
+import static com.example.calorieapp.ui.dashboard.DinnerDatabaseHelper.COLUMN_CALORIES;
+import static com.example.calorieapp.ui.dashboard.DinnerDatabaseHelper.COLUMN_DATE;
+import static com.example.calorieapp.ui.dashboard.DinnerDatabaseHelper.TABLE_DINNER;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -25,21 +25,21 @@ import com.example.calorieapp.R;
 
 import java.util.Locale;
 
-public class BreakfastDetailsAdapter extends RecyclerView.Adapter<BreakfastDetailsAdapter.ViewHolder> {
+public class DinnerDetailsAdapter extends RecyclerView.Adapter<DinnerDetailsAdapter.ViewHolder> {
 
     private Context context;
     private Cursor cursor;
     private double deletedCalories; // Переменная для хранения значения калорий удаляемой карточки
     private String deletedDate; // Переменная для хранения значения даты удаляемой карточки
 
-    public BreakfastDetailsAdapter(Context context) {
+    public DinnerDetailsAdapter(Context context) {
         this.context = context;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_breakfast_details, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_dinner_details, parent, false);
         return new ViewHolder(view);
     }
 
@@ -47,12 +47,12 @@ public class BreakfastDetailsAdapter extends RecyclerView.Adapter<BreakfastDetai
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (cursor != null && cursor.moveToPosition(position)) {
             // Получите данные из курсора и установите их в представления элемента списка
-            @SuppressLint("Range") String productName = cursor.getString(cursor.getColumnIndex(BreakfastDatabaseHelper.COLUMN_PRODUCT_NAME));
-            @SuppressLint("Range") double grams = cursor.getDouble(cursor.getColumnIndex(BreakfastDatabaseHelper.COLUMN_GRAMS));
+            @SuppressLint("Range") String productName = cursor.getString(cursor.getColumnIndex(DinnerDatabaseHelper.COLUMN_PRODUCT_NAME));
+            @SuppressLint("Range") double grams = cursor.getDouble(cursor.getColumnIndex(DinnerDatabaseHelper.COLUMN_GRAMS));
             @SuppressLint("Range") double calories = cursor.getDouble(cursor.getColumnIndex(COLUMN_CALORIES));
-            @SuppressLint("Range") double protein = cursor.getDouble(cursor.getColumnIndex(BreakfastDatabaseHelper.COLUMN_PROTEIN));
-            @SuppressLint("Range") double fat = cursor.getDouble(cursor.getColumnIndex(BreakfastDatabaseHelper.COLUMN_FAT));
-            @SuppressLint("Range") double carbohydrate = cursor.getDouble(cursor.getColumnIndex(BreakfastDatabaseHelper.COLUMN_CARBOHYDRATE));
+            @SuppressLint("Range") double protein = cursor.getDouble(cursor.getColumnIndex(DinnerDatabaseHelper.COLUMN_PROTEIN));
+            @SuppressLint("Range") double fat = cursor.getDouble(cursor.getColumnIndex(DinnerDatabaseHelper.COLUMN_FAT));
+            @SuppressLint("Range") double carbohydrate = cursor.getDouble(cursor.getColumnIndex(DinnerDatabaseHelper.COLUMN_CARBOHYDRATE));
 
             holder.textViewProductName.setText(productName);
             holder.textViewGrams.setText(String.format(Locale.getDefault(), "Граммы: %.2f г.", grams));
@@ -71,7 +71,7 @@ public class BreakfastDetailsAdapter extends RecyclerView.Adapter<BreakfastDetai
                         // Перемещаем курсор на позицию элемента, который нужно удалить
                         cursor.moveToPosition(adapterPosition);
                         // Получаем id записи из курсора
-                        @SuppressLint("Range") long id = cursor.getLong(cursor.getColumnIndex(BreakfastDatabaseHelper.COLUMN_ID));
+                        @SuppressLint("Range") long id = cursor.getLong(cursor.getColumnIndex(DinnerDatabaseHelper.COLUMN_ID));
                         // Вызываем метод для удаления элемента из базы данных
                         deleteItem(id, holder);
                     }
@@ -84,15 +84,15 @@ public class BreakfastDetailsAdapter extends RecyclerView.Adapter<BreakfastDetai
     private void deleteItem(long id, ViewHolder holder) {
         if (holder != null) {
             // Получаем калории и дату удаляемой карточки перед удалением
-            deletedCalories = cursor.getDouble(cursor.getColumnIndex(BreakfastDatabaseHelper.COLUMN_CALORIES));
-            deletedDate = cursor.getString(cursor.getColumnIndex(BreakfastDatabaseHelper.COLUMN_DATE));
+            deletedCalories = cursor.getDouble(cursor.getColumnIndex(DinnerDatabaseHelper.COLUMN_CALORIES));
+            deletedDate = cursor.getString(cursor.getColumnIndex(DinnerDatabaseHelper.COLUMN_DATE));
             // Создаем объект dbHelper
-            BreakfastDatabaseHelper dbHelper = new BreakfastDatabaseHelper(context);
+            DinnerDatabaseHelper dbHelper = new DinnerDatabaseHelper(context);
             // Получаем базу данных в режиме для записи
             SQLiteDatabase db = dbHelper.getWritableDatabase();
             // Выполняем удаление записи по id
-            db.delete(BreakfastDatabaseHelper.TABLE_BREAKFAST,
-                    BreakfastDatabaseHelper.COLUMN_ID + " = ?",
+            db.delete(DinnerDatabaseHelper.TABLE_DINNER,
+                    DinnerDatabaseHelper.COLUMN_ID + " = ?",
                     new String[]{String.valueOf(id)});
 
 
@@ -100,7 +100,7 @@ public class BreakfastDetailsAdapter extends RecyclerView.Adapter<BreakfastDetai
             // Закрываем базу данных
             db.close();
             // Обновляем сумму калорий в таблице calories_summary
-            dbHelper.updateCaloriesSummary(deletedDate);
+            dbHelper.updateCaloriesSummaryDinner(deletedDate);
 
             // Обновите сумму калорий в таблице calories_summary
 
@@ -144,13 +144,13 @@ public class BreakfastDetailsAdapter extends RecyclerView.Adapter<BreakfastDetai
 
         ViewHolder(View itemView) {
             super(itemView);
-            textViewProductName = itemView.findViewById(R.id.textViewProductName);
-            textViewGrams = itemView.findViewById(R.id.textViewGrams);
-            textViewCalories = itemView.findViewById(R.id.textViewCalories);
-            textViewProtein = itemView.findViewById(R.id.textViewProtein);
-            textViewFat = itemView.findViewById(R.id.textViewFat);
-            textViewCarbohydrate = itemView.findViewById(R.id.textViewCarbohydrate);
-            deleteButton = itemView.findViewById(R.id.deleteButton);
+            textViewProductName = itemView.findViewById(R.id.textViewProductNameDinner);
+            textViewGrams = itemView.findViewById(R.id.textViewGramsDinner);
+            textViewCalories = itemView.findViewById(R.id.textViewCaloriesDinner);
+            textViewProtein = itemView.findViewById(R.id.textViewProteinDinner);
+            textViewFat = itemView.findViewById(R.id.textViewFatDinner);
+            textViewCarbohydrate = itemView.findViewById(R.id.textViewCarbohydrateDinner);
+            deleteButton = itemView.findViewById(R.id.deleteButtonDinner);
         }
     }
 
