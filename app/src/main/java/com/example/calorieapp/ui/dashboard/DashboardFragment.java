@@ -280,23 +280,23 @@ public class DashboardFragment extends Fragment {
             dbHelper = new BreakfastDatabaseHelper(requireContext());
         }
 
-       /**
+
         // Найдите TextView для отображения суммы калорий
         sumCalorieLunch = root.findViewById(R.id.sumCalorieLunch);
         // Проверяем, не является ли dbHelper null, и инициализируем его при необходимости
         if (dbHelperLunch == null) {
             dbHelperLunch = new LunchDatabaseHelper(requireContext());
         }
-        **/
+
 
         // Получите выбранную дату из аргументов
         String selectedDate = currentDateTextView.getText().toString();
 
         // Загрузите данные из базы данных и установите их в TextView
         loadCaloriesSummaryFromDatabase(selectedDate);
-        /**
+
         loadCaloriesSummaryLunchFromDatabase(selectedDate);
-        **/
+
         // Добавьте слушатель изменений даты
         currentDateTextView.addTextChangedListener(dateTextWatcher);
 
@@ -358,7 +358,7 @@ public class DashboardFragment extends Fragment {
 
             // Загрузите данные из базы данных и обновите TextView
             loadCaloriesSummaryFromDatabase(selectedDate);
-            /**loadCaloriesSummaryLunchFromDatabase(selectedDate);**/
+            loadCaloriesSummaryLunchFromDatabase(selectedDate);
         }
     };
 
@@ -375,7 +375,7 @@ public class DashboardFragment extends Fragment {
         double totalCaloriesLunch = dbHelperLunch.getTotalCaloriesSummaryLunch(selectedDate);
 
         // Установите значение в TextView с округлением до сотых
-        sumCalorieBreakfast.setText(String.format(Locale.getDefault(), "%.2f", totalCaloriesLunch));
+        sumCalorieLunch.setText(String.format(Locale.getDefault(), "%.2f", totalCaloriesLunch));
     }
 
     private void setCurrentDate() {
