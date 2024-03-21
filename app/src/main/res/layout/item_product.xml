@@ -1,0 +1,24 @@
+<!-- item_product.xml -->
+<!-- item_product.xml -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/productNameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textSize="18sp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:focusableInTouchMode="true"
+        android:textColor="@android:color/white"/>
+
+    <!-- Добавляем разделительную полосу -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+</LinearLayout>

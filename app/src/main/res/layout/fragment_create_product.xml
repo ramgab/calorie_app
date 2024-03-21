@@ -1,0 +1,60 @@
+<!-- fragment_create_product.xml -->
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.dashboard.CreateProductFragment"
+    android:background="@color/dark_grey"
+    android:fillViewport="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/editTextCreateProductName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Название продукта"/>
+
+        <!-- Заменим EditText для калорий на TextView -->
+        <TextView
+            android:id="@+id/textViewCreateCalories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Калории"/>
+
+        <EditText
+            android:id="@+id/editTextCreateProtein"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Белки"
+            android:inputType="numberDecimal"
+        android:digits="0123456789.,"/>
+
+        <EditText
+            android:id="@+id/editTextCreateFat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Жиры"
+            android:inputType="numberDecimal"
+        android:digits="0123456789.,"/>
+
+        <EditText
+            android:id="@+id/editTextCreateCarbohydrate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Углеводы"
+            android:inputType="numberDecimal"
+        android:digits="0123456789.,"/>
+
+        <Button
+            android:id="@+id/saveCreateProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Сохранить"/>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

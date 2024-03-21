@@ -1,0 +1,96 @@
+    <!-- res/layout/bottom_sheet_layout.xml -->
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:fillViewport="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@drawable/border_radius">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- Кнопка закрытия -->
+            <Button
+                android:id="@+id/buttonCloseBottomSheet"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="X" />
+
+            <!-- Заголовок -->
+            <TextView
+                android:id="@+id/bottomSheetTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Selected Product Details"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:paddingLeft="10dp"
+                android:textSize="18sp"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/bottomSheetComposition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/bottomSheetCalories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/bottomSheetProtein"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/bottomSheetFat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/bottomSheetCarbohydrate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/bottomSheetCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <EditText
+            android:id="@+id/editTextGrams"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="Введите количество грамм"
+            android:inputType="numberDecimal"
+            android:digits="0123456789.,"
+            android:maxLength="4" />
+
+
+        <Button
+            android:id="@+id/saveProductBreakfast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="Сохранить"/>
+
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
