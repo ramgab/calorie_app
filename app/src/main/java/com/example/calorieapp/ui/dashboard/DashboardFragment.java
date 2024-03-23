@@ -57,10 +57,7 @@ public class DashboardFragment extends Fragment {
     // Объявляем экземпляр класса базы данных для выбранной даты
     private SelectedDateDatabaseHelper selectedDateDBHelper;
     private SelectedButtonDatabaseHelper selectedButtonDBHelper;
-
     private String breakfast_lunch_or_dinner;
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,54 +66,32 @@ public class DashboardFragment extends Fragment {
         selectedButtonDBHelper = new SelectedButtonDatabaseHelper(requireContext());
     }
 
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
-
-
-
         // Найти кнопку добавления завтрака
         Button buttonAddBreakfast = root.findViewById(R.id.buttonAddBreakfast);
         // Найти кнопку добавления обеда
         Button buttonAddLunch = root.findViewById(R.id.buttonAddLunch);
         // Найти кнопку добавления ужина
         Button buttonAddDinner = root.findViewById(R.id.buttonAddDinner);
-
         // Установить слушатель нажатия
-
-
         buttonAddBreakfast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 // Create a new instance of the ProductListFragment
                 ProductListFragment productListFragment = new ProductListFragment();
-
 
                 // Получите выбранную дату из вашего текстового поля
                 String selectedDate = currentDateTextView.getText().toString();
                 // Сохраняем выбранную дату в базу данных
                 selectedDateDBHelper.insertSelectedDate(selectedDate);
-
-
-                /**
-                // Передайте выбранную дату в ProductListFragment через аргументы
-                Bundle bundle = new Bundle();
-                bundle.putString("selectedDate", selectedDate);
-                productListFragment.setArguments(bundle);
-                **/
 
                 breakfast_lunch_or_dinner = "breakfast";
                 selectedButtonDBHelper.insertSelectedButton(breakfast_lunch_or_dinner);
 
-
-
-
                 // Get the FragmentManager
                 FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
 
@@ -134,32 +109,19 @@ public class DashboardFragment extends Fragment {
             }
         });
 
-
         buttonAddLunch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 // Create a new instance of the ProductListFragment
                 ProductListFragment productListFragment = new ProductListFragment();
-
 
                 // Получите выбранную дату из вашего текстового поля
                 String selectedDate = currentDateTextView.getText().toString();
                 // Сохраняем выбранную дату в базу данных
                 selectedDateDBHelper.insertSelectedDate(selectedDate);
 
-
-                /**
-                 // Передайте выбранную дату в ProductListFragment через аргументы
-                 Bundle bundle = new Bundle();
-                 bundle.putString("selectedDate", selectedDate);
-                 productListFragment.setArguments(bundle);
-                 **/
-
                 breakfast_lunch_or_dinner = "lunch";
                 selectedButtonDBHelper.insertSelectedButton(breakfast_lunch_or_dinner);
-
-
 
                 // Get the FragmentManager
                 FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
@@ -177,7 +139,6 @@ public class DashboardFragment extends Fragment {
                 fragmentTransaction.commit();
             }
         });
-
 
         buttonAddDinner.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,25 +146,13 @@ public class DashboardFragment extends Fragment {
 
                 // Create a new instance of the ProductListFragment
                 ProductListFragment productListFragment = new ProductListFragment();
-
-
                 // Получите выбранную дату из вашего текстового поля
                 String selectedDate = currentDateTextView.getText().toString();
                 // Сохраняем выбранную дату в базу данных
                 selectedDateDBHelper.insertSelectedDate(selectedDate);
 
-
-                /**
-                 // Передайте выбранную дату в ProductListFragment через аргументы
-                 Bundle bundle = new Bundle();
-                 bundle.putString("selectedDate", selectedDate);
-                 productListFragment.setArguments(bundle);
-                 **/
-
                 breakfast_lunch_or_dinner = "dinner";
                 selectedButtonDBHelper.insertSelectedButton(breakfast_lunch_or_dinner);
-
-
 
                 // Get the FragmentManager
                 FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
@@ -221,9 +170,6 @@ public class DashboardFragment extends Fragment {
                 fragmentTransaction.commit();
             }
         });
-
-
-
 
         // Найти CardView с id cardViewBreakfast
         CardView cardViewBreakfast = root.findViewById(R.id.cardViewBreakfast);
@@ -234,7 +180,6 @@ public class DashboardFragment extends Fragment {
             public void onClick(View view) {
                 // Создайте новый экземпляр BreakfastDetailsFragment
                 BreakfastDetailsFragment breakfastDetailsFragment = new BreakfastDetailsFragment();
-
 
                 // Получите выбранную дату из вашего текстового поля
                 String selectedDate = currentDateTextView.getText().toString();
@@ -272,7 +217,6 @@ public class DashboardFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("selectedDate", selectedDate);
                 lunchDetailsFragment.setArguments(bundle);
-
 
                 // Замените текущий фрагмент на BreakfastDetailsFragment
                 requireActivity().getSupportFragmentManager()
@@ -312,7 +256,6 @@ public class DashboardFragment extends Fragment {
             }
         });
 
-
         homeHorizontalRec = root.findViewById(R.id.home_hor_rec);
 
         homeHorModelList = new ArrayList<>();
@@ -330,7 +273,6 @@ public class DashboardFragment extends Fragment {
 
         currentDateTextView = root.findViewById(R.id.currentDateTextView);
 
-
         // Установка текущей даты в текстовом поле
         setCurrentDate();
 
@@ -343,7 +285,6 @@ public class DashboardFragment extends Fragment {
             datePickerDialog.show();
         });
 
-
         // Находим TextView для отображения суммы калорий завтрака
         sumCalorieBreakfast = root.findViewById(R.id.sumCalorieBreakfast);
 
@@ -352,7 +293,6 @@ public class DashboardFragment extends Fragment {
         if (dbHelper == null) {
             dbHelper = new BreakfastDatabaseHelper(requireContext());
         }
-
 
         // Находим TextView для отображения суммы калорий обеда
         sumCalorieLunch = root.findViewById(R.id.sumCalorieLunch);
@@ -373,7 +313,6 @@ public class DashboardFragment extends Fragment {
         fatSum = root.findViewById(R.id.fatValue);
         carbohydrateSum = root.findViewById(R.id.carbValue);
 
-
         // Получите выбранную дату из аргументов
         String selectedDate = currentDateTextView.getText().toString();
 
@@ -385,21 +324,24 @@ public class DashboardFragment extends Fragment {
         loadTotalProteinSummaryFromDatabase(selectedDate);
         loadTotalFatSummaryFromDatabase(selectedDate);
         loadTotalCarbohydrateSummaryFromDatabase(selectedDate);
-
-
+        updateProgressBars(selectedDate);
         // Добавьте слушатель изменений даты
         currentDateTextView.addTextChangedListener(dateTextWatcher);
 
 
+        /**
+        String stringProteinValue = proteinSum.getText().toString();
+        String stringFatValue = fatSum.getText().toString();
+        String stringCarbValue = carbohydrateSum.getText().toString();
 
-
-
-
+        stringProteinValue = stringProteinValue.replace(",", ".");
+        stringFatValue = stringFatValue.replace(",", ".");
+        stringCarbValue = stringCarbValue.replace(",", ".");
 
         // Предположим, у вас есть значения для белков, жиров и углеводов
-        double proteinValue = 140.0; // Пример значения для белков
-        double fatValue = 56.0; // Пример значения для жиров
-        double carbValue = 240.0; // Пример значения для углеводов
+        double proteinValue = Double.parseDouble(stringProteinValue);
+        double fatValue = Double.parseDouble(stringFatValue);
+        double carbValue = Double.parseDouble(stringCarbValue);
 
         // Вычислите общую сумму, чтобы распределить прогресс в зависимости от общего значения
         double total = proteinValue + fatValue + carbValue;
@@ -409,28 +351,34 @@ public class DashboardFragment extends Fragment {
         int fatPercentage = (int) ((fatValue / total) * 100);
         int carbPercentage = (int) ((carbValue / total) * 100);
 
-        /**
-        TextView proteinTextView = root.findViewById(R.id.proteinValue);
-        proteinTextView.setText(String.format(Locale.getDefault(), "%.1f г.", proteinValue)); // Вставляем значение белков
-
-        TextView fatTextView = root.findViewById(R.id.fatValue);
-        fatTextView.setText(String.format(Locale.getDefault(), "%.1f г.", fatValue)); // Вставляем значение жиров
-
-        TextView carbTextView = root.findViewById(R.id.carbValue);
-        carbTextView.setText(String.format(Locale.getDefault(), "%.1f г.", carbValue)); // Вставляем значение углеводов
-        **/
         // Установите ширину каждой части прогресс-бара
         setProgressBarWidth(binding.proteinProgress, proteinPercentage);
         setProgressBarWidth(binding.fatProgress, fatPercentage);
         setProgressBarWidth(binding.carbProgress, carbPercentage);
-
-
-
-
-
+        **/
         return root;
     }
 
+
+    // Новый метод для обновления прогресс-баров
+    private void updateProgressBars(String selectedDate) {
+        double proteinValue = dbHelper.getTotalProteinSummaryFinal(selectedDate); // Получаем сумму белка из таблицы protein_summary
+        double fatValue = dbHelper.getTotalFatSummaryFinal(selectedDate); // Получаем сумму жиров из таблицы fat_summary
+        double carbValue = dbHelper.getTotalCarbSummaryFinal(selectedDate); // Получаем сумму углеводов из таблицы carbohydrate_summary
+
+        // Вычисляем общую сумму
+        double total = proteinValue + fatValue + carbValue;
+
+        // Вычисляем проценты для каждой части прогресс-бара
+        int proteinPercentage = (int) ((proteinValue / total) * 100);
+        int fatPercentage = (int) ((fatValue / total) * 100);
+        int carbPercentage = (int) ((carbValue / total) * 100);
+
+        // Устанавливаем ширину каждой части прогресс-бара
+        setProgressBarWidth(binding.proteinProgress, proteinPercentage);
+        setProgressBarWidth(binding.fatProgress, fatPercentage);
+        setProgressBarWidth(binding.carbProgress, carbPercentage);
+    }
 
     // Добавьте слушатель изменений текста для текущей даты
     private TextWatcher dateTextWatcher = new TextWatcher() {
@@ -455,6 +403,7 @@ public class DashboardFragment extends Fragment {
             loadTotalProteinSummaryFromDatabase(selectedDate);
             loadTotalFatSummaryFromDatabase(selectedDate);
             loadTotalCarbohydrateSummaryFromDatabase(selectedDate);
+            updateProgressBars(selectedDate);
         }
     };
 
@@ -499,6 +448,7 @@ public class DashboardFragment extends Fragment {
 
         double totalProteinFinal = totalProteinBreakfast + totalProteinLunch + totalProteinDinner;
 
+        dbHelper.updateProteinSummaryFinal(selectedDate, totalProteinFinal);
         proteinSum.setText(String.format(Locale.getDefault(), "%.2f", totalProteinFinal));
     }
 
@@ -509,6 +459,7 @@ public class DashboardFragment extends Fragment {
 
         double totalFatFinal = totalFatBreakfast + totalFatLunch + totalFatDinner;
 
+        dbHelper.updateFatSummaryFinal(selectedDate, totalFatFinal);
         fatSum.setText(String.format(Locale.getDefault(), "%.2f", totalFatFinal));
     }
 
@@ -519,11 +470,9 @@ public class DashboardFragment extends Fragment {
 
         double totalCarbFinal = totalCarbBreakfast + totalCarbLunch + totalCarbDinner;
 
+        dbHelper.updateCarbSummaryFinal(selectedDate, totalCarbFinal);
         carbohydrateSum.setText(String.format(Locale.getDefault(), "%.2f", totalCarbFinal));
     }
-
-
-
 
     private void setCurrentDate() {
         // Получение текущей даты
@@ -576,7 +525,6 @@ public class DashboardFragment extends Fragment {
         // Примените изменения
         progressBarPart.setLayoutParams(layoutParams);
     }
-
 
     private int getScreenWidth() {
         // Получите ширину экрана устройства

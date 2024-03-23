@@ -98,6 +98,9 @@ public class BreakfastDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_PROTEIN_SUMMARY_TABLE);
         db.execSQL(CREATE_FAT_SUMMARY_TABLE);
         db.execSQL(CREATE_CARBOHYDRATE_SUMMARY_TABLE);
+        db.execSQL(CREATE_PROTEIN_SUMMARY_FINAL_TABLE);
+        db.execSQL(CREATE_FAT_SUMMARY_FINAL_TABLE);
+        db.execSQL(CREATE_CARB_SUMMARY_FINAL_TABLE);
 
         Log.d("BreakfastDatabaseHelper", "Tables created: breakfast, calories_summary");
     }
@@ -305,6 +308,139 @@ public class BreakfastDatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    static final String TABLE_PROTEIN_SUMMARY_FINAL = "protein_summary_final";
+    public static final String COLUMN_DATE_SUMMARY_PROTEIN_FINAL = "date_summary_protein_final";
+    public static final String COLUMN_TOTAL_PROTEIN_FINAL = "total_protein_final";
+
+    // SQL query to create the protein_summary table
+    private static final String CREATE_PROTEIN_SUMMARY_FINAL_TABLE = "CREATE TABLE " + TABLE_PROTEIN_SUMMARY_FINAL + " (" +
+            COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            COLUMN_DATE_SUMMARY_PROTEIN_FINAL + " TEXT, " +
+            COLUMN_TOTAL_PROTEIN_FINAL + " REAL);";
+
+
+    static final String TABLE_FAT_SUMMARY_FINAL = "fat_summary_final";
+    public static final String COLUMN_DATE_SUMMARY_FAT_FINAL = "date_summary_fat_final";
+    public static final String COLUMN_TOTAL_FAT_FINAL = "total_fat_final";
+
+    // SQL query to create the protein_summary table
+    private static final String CREATE_FAT_SUMMARY_FINAL_TABLE = "CREATE TABLE " + TABLE_FAT_SUMMARY_FINAL + " (" +
+            COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            COLUMN_DATE_SUMMARY_FAT_FINAL + " TEXT, " +
+            COLUMN_TOTAL_FAT_FINAL + " REAL);";
+
+
+    static final String TABLE_CARB_SUMMARY_FINAL = "carb_summary_final";
+    public static final String COLUMN_DATE_SUMMARY_CARB_FINAL = "date_summary_carb_final";
+    public static final String COLUMN_TOTAL_CARB_FINAL = "total_carb_final";
+
+    // SQL query to create the protein_summary table
+    private static final String CREATE_CARB_SUMMARY_FINAL_TABLE = "CREATE TABLE " + TABLE_CARB_SUMMARY_FINAL + " (" +
+            COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            COLUMN_DATE_SUMMARY_CARB_FINAL + " TEXT, " +
+            COLUMN_TOTAL_CARB_FINAL + " REAL);";
+
+
+    public void updateProteinSummaryFinal(String date, double totalProtein) {
+        // Теперь вставляем или обновляем данные в таблице protein_summary
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_DATE_SUMMARY_PROTEIN_FINAL, date);
+        values.put(COLUMN_TOTAL_PROTEIN_FINAL, totalProtein);
+
+        db.replace(TABLE_PROTEIN_SUMMARY_FINAL, null, values);
+        db.close();
+    }
+
+    public void updateFatSummaryFinal(String date, double totalFat) {
+        // Теперь вставляем или обновляем данные в таблице protein_summary
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_DATE_SUMMARY_FAT_FINAL, date);
+        values.put(COLUMN_TOTAL_FAT_FINAL, totalFat);
+
+        db.replace(TABLE_FAT_SUMMARY_FINAL, null, values);
+        db.close();
+    }
+
+    public void updateCarbSummaryFinal(String date, double totalCarb) {
+        // Теперь вставляем или обновляем данные в таблице protein_summary
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_DATE_SUMMARY_CARB_FINAL, date);
+        values.put(COLUMN_TOTAL_CARB_FINAL, totalCarb);
+
+        db.replace(TABLE_CARB_SUMMARY_FINAL, null, values);
+        db.close();
+    }
+
+    public double getTotalProteinSummaryFinal(String date) {
+        // Выполняем запрос для получения суммы белка из таблицы protein_summary по выбранной дате
+        String query = "SELECT " + COLUMN_TOTAL_PROTEIN_FINAL + " FROM " + TABLE_PROTEIN_SUMMARY_FINAL +
+                " WHERE " + COLUMN_DATE_SUMMARY_PROTEIN_FINAL + " = ?" +
+                " ORDER BY " + COLUMN_ID + " DESC";  // Упорядочиваем по убыванию id
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, new String[]{date});
+
+        double totalProtein = 0;
+
+        // Если есть результат, переходим к первой записи
+        if (cursor.moveToFirst()) {
+            totalProtein = cursor.getDouble(0);
+        }
+
+        cursor.close();
+        db.close();
+
+        return totalProtein;
+    }
+
+    public double getTotalFatSummaryFinal(String date) {
+        // Выполняем запрос для получения суммы белка из таблицы protein_summary по выбранной дате
+        String query = "SELECT " + COLUMN_TOTAL_FAT_FINAL + " FROM " + TABLE_FAT_SUMMARY_FINAL +
+                " WHERE " + COLUMN_DATE_SUMMARY_FAT_FINAL + " = ?" +
+                " ORDER BY " + COLUMN_ID + " DESC";  // Упорядочиваем по убыванию id
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, new String[]{date});
+
+        double totalFat = 0;
+
+        // Если есть результат, переходим к первой записи
+        if (cursor.moveToFirst()) {
+            totalFat = cursor.getDouble(0);
+        }
+
+        cursor.close();
+        db.close();
+
+        return totalFat;
+    }
+
+    public double getTotalCarbSummaryFinal(String date) {
+        // Выполняем запрос для получения суммы белка из таблицы protein_summary по выбранной дате
+        String query = "SELECT " + COLUMN_TOTAL_CARB_FINAL + " FROM " + TABLE_CARB_SUMMARY_FINAL +
+                " WHERE " + COLUMN_DATE_SUMMARY_CARB_FINAL + " = ?" +
+                " ORDER BY " + COLUMN_ID + " DESC";  // Упорядочиваем по убыванию id
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, new String[]{date});
+
+        double totalCarb = 0;
+
+        // Если есть результат, переходим к первой записи
+        if (cursor.moveToFirst()) {
+            totalCarb = cursor.getDouble(0);
+        }
+
+        cursor.close();
+        db.close();
+
+        return totalCarb;
+    }
+
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.d("BreakfastDatabaseHelper", "Upgrading database from version " + oldVersion + " to " + newVersion);
@@ -333,7 +469,26 @@ public class BreakfastDatabaseHelper extends SQLiteOpenHelper {
                         COLUMN_TOTAL_CARBOHYDRATE + " REAL);");
             }
 
-            // Here you can handle future upgrades if needed
+            if (oldVersion < 2) {
+                db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_PROTEIN_SUMMARY_FINAL + " (" +
+                        COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        COLUMN_DATE_SUMMARY_PROTEIN_FINAL + " TEXT, " +
+                        COLUMN_TOTAL_PROTEIN_FINAL + " REAL);");
+            }
+
+            if (oldVersion < 2) {
+                db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_FAT_SUMMARY_FINAL + " (" +
+                        COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        COLUMN_DATE_SUMMARY_FAT_FINAL + " TEXT, " +
+                        COLUMN_TOTAL_FAT_FINAL + " REAL);");
+            }
+
+            if (oldVersion < 2) {
+                db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_CARB_SUMMARY_FINAL + " (" +
+                        COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        COLUMN_DATE_SUMMARY_CARB_FINAL + " TEXT, " +
+                        COLUMN_TOTAL_CARB_FINAL + " REAL);");
+            }
         }
     }
 
