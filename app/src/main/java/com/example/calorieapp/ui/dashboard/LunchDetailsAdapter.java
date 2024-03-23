@@ -102,6 +102,8 @@ public class LunchDetailsAdapter extends RecyclerView.Adapter<LunchDetailsAdapte
             // Обновляем сумму калорий в таблице calories_summary
             dbHelper.updateCaloriesSummaryLunch(deletedDate);
             dbHelper.updateProteinSummaryLunch(deletedDate);
+            dbHelper.updateFatSummaryLunch(deletedDate);
+            dbHelper.updateCarbSummaryLunch(deletedDate);
 
             // Обновите сумму калорий в таблице calories_summary
 
