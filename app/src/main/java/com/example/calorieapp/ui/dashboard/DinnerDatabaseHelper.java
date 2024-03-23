@@ -14,7 +14,7 @@ import java.util.Locale;
 public class DinnerDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "dinner_database";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     static final String TABLE_DINNER = "dinner";
     public static final String COLUMN_ID = "_id";
@@ -50,6 +50,21 @@ public class DinnerDatabaseHelper extends SQLiteOpenHelper {
             COLUMN_TOTAL_CALORIES + " REAL);";
 
 
+    static final String TABLE_PROTEIN_SUMMARY = "protein_summary";
+    public static final String COLUMN_DATE_SUMMARY_PROTEIN = "date_summary_protein";
+    public static final String COLUMN_TOTAL_PROTEIN = "total_protein";
+
+    // SQL query to create the calories_summary table
+    // SQL query to create the calories_summary table
+
+    private static final String CREATE_PROTEIN_SUMMARY_TABLE = "CREATE TABLE " + TABLE_PROTEIN_SUMMARY + " (" +
+            COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            COLUMN_DATE_SUMMARY_PROTEIN + " TEXT, " +
+            COLUMN_TOTAL_PROTEIN + " REAL);";
+
+
+
+
     public DinnerDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -58,6 +73,7 @@ public class DinnerDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_DINNER_TABLE);
         db.execSQL(CREATE_CALORIES_SUMMARY_TABLE);
+        db.execSQL(CREATE_PROTEIN_SUMMARY_TABLE);
 
         Log.d("DinnerDatabaseHelper", "Tables created: dinner, calories_summary");
     }
@@ -112,12 +128,74 @@ public class DinnerDatabaseHelper extends SQLiteOpenHelper {
         return totalCalories;
     }
 
+    public void updateProteinSummaryDinner(String date) {
+        // Выполняем запрос для получения суммы калорий по выбранной дате с округлением до сотых
+        String query = "SELECT ROUND(SUM(" + COLUMN_PROTEIN + "), 2) FROM " + TABLE_DINNER +
+                " WHERE " + COLUMN_DATE + " = ?";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, new String[]{date});
+
+        double totalProtein = 0;
+
+        // Если есть результат, переходим к первой записи
+        if (cursor.moveToFirst()) {
+            totalProtein = cursor.getDouble(0);
+        }
+
+        cursor.close();
+
+        // Теперь вставляем или обновляем данные в таблице protein_summary
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_DATE_SUMMARY_PROTEIN, date);
+        values.put(COLUMN_TOTAL_PROTEIN, totalProtein);
+
+        db = this.getWritableDatabase();
+        db.replace(TABLE_PROTEIN_SUMMARY, null, values);
+        db.close();
+    }
+
+
+    public double getTotalProteinSummaryDinner(String date) {
+        // Выполняем запрос для получения суммы калорий из таблицы protein_summary по выбранной дате
+        String query = "SELECT " + COLUMN_TOTAL_PROTEIN + " FROM " + TABLE_PROTEIN_SUMMARY +
+                " WHERE " + COLUMN_DATE_SUMMARY_PROTEIN + " = ?" +
+                " ORDER BY " + COLUMN_ID + " DESC";  // Упорядочиваем по убыванию id
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, new String[]{date});
+
+        double totalProtein = 0;
+
+        // Если есть результат, переходим к первой записи
+        if (cursor.moveToFirst()) {
+            totalProtein = cursor.getDouble(0);
+        }
+
+        cursor.close();
+        db.close();
+
+        return totalProtein;
+    }
+
+
 
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.d("DinnerDatabaseHelper", "Upgrading database from version " + oldVersion + " to " + newVersion);
         // Handle database upgrades if needed
+
+        if (oldVersion < newVersion) {
+            if (oldVersion < 2) {
+                // Upgrade from version 1 to 2
+                db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_PROTEIN_SUMMARY + " (" +
+                        COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        COLUMN_DATE_SUMMARY_PROTEIN + " TEXT, " +
+                        COLUMN_TOTAL_PROTEIN + " REAL);");
+            }
+
+            // Here you can handle future upgrades if needed
+        }
     }
 
 }

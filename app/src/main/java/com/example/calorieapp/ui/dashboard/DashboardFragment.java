@@ -1,19 +1,13 @@
 package com.example.calorieapp.ui.dashboard;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
-import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -22,7 +16,6 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -56,6 +49,8 @@ public class DashboardFragment extends Fragment {
     private TextView sumCalorieBreakfast;
     private TextView sumCalorieLunch;
     private TextView sumCalorieDinner;
+    private TextView calorieSum;
+    private TextView proteinSum;
 
     // Объявляем экземпляр класса базы данных для выбранной даты
     private SelectedDateDatabaseHelper selectedDateDBHelper;
@@ -371,6 +366,9 @@ public class DashboardFragment extends Fragment {
             dbHelperDinner = new DinnerDatabaseHelper(requireContext());
         }
 
+        calorieSum = root.findViewById(R.id.calorie_sum);
+        proteinSum = root.findViewById(R.id.proteinValue);
+
 
         // Получите выбранную дату из аргументов
         String selectedDate = currentDateTextView.getText().toString();
@@ -379,6 +377,9 @@ public class DashboardFragment extends Fragment {
         loadCaloriesSummaryFromDatabase(selectedDate);
         loadCaloriesSummaryLunchFromDatabase(selectedDate);
         loadCaloriesSummaryDinnerFromDatabase(selectedDate);
+        loadTotalCaloriesSummaryFromDatabase(selectedDate);
+        loadTotalProteinSummaryFromDatabase(selectedDate);
+
 
         // Добавьте слушатель изменений даты
         currentDateTextView.addTextChangedListener(dateTextWatcher);
@@ -402,6 +403,7 @@ public class DashboardFragment extends Fragment {
         int fatPercentage = (int) ((fatValue / total) * 100);
         int carbPercentage = (int) ((carbValue / total) * 100);
 
+        /**
         TextView proteinTextView = root.findViewById(R.id.proteinValue);
         proteinTextView.setText(String.format(Locale.getDefault(), "%.1f г.", proteinValue)); // Вставляем значение белков
 
@@ -410,7 +412,7 @@ public class DashboardFragment extends Fragment {
 
         TextView carbTextView = root.findViewById(R.id.carbValue);
         carbTextView.setText(String.format(Locale.getDefault(), "%.1f г.", carbValue)); // Вставляем значение углеводов
-
+        **/
         // Установите ширину каждой части прогресс-бара
         setProgressBarWidth(binding.proteinProgress, proteinPercentage);
         setProgressBarWidth(binding.fatProgress, fatPercentage);
@@ -443,6 +445,8 @@ public class DashboardFragment extends Fragment {
             loadCaloriesSummaryFromDatabase(selectedDate);
             loadCaloriesSummaryLunchFromDatabase(selectedDate);
             loadCaloriesSummaryDinnerFromDatabase(selectedDate);
+            loadTotalCaloriesSummaryFromDatabase(selectedDate);
+            loadTotalProteinSummaryFromDatabase(selectedDate);
         }
     };
 
@@ -469,6 +473,29 @@ public class DashboardFragment extends Fragment {
         // Установите значение в TextView с округлением до сотых
         sumCalorieDinner.setText(String.format(Locale.getDefault(), "%.2f", totalCaloriesDinner));
     }
+
+    private void loadTotalCaloriesSummaryFromDatabase(String selectedDate){
+        double totalCaloriesBreakfast = dbHelper.getTotalCaloriesSummary(selectedDate);
+        double totalCaloriesLunch = dbHelperLunch.getTotalCaloriesSummaryLunch(selectedDate);
+        double totalCaloriesDinner = dbHelperDinner.getTotalCaloriesSummaryDinner(selectedDate);
+
+        double totalCaloriesFinal = totalCaloriesBreakfast + totalCaloriesLunch + totalCaloriesDinner;
+
+        calorieSum.setText(String.format(Locale.getDefault(), "%.2f", totalCaloriesFinal));
+    }
+
+    private void loadTotalProteinSummaryFromDatabase(String selectedDate){
+        double totalProteinBreakfast = dbHelper.getTotalProteinSummary(selectedDate);
+        double totalProteinLunch = dbHelperLunch.getTotalProteinSummaryLunch(selectedDate);
+        double totalProteinDinner = dbHelperDinner.getTotalProteinSummaryDinner(selectedDate);
+
+        double totalProteinFinal = totalProteinBreakfast + totalProteinLunch + totalProteinDinner;
+
+        proteinSum.setText(String.format(Locale.getDefault(), "%.2f", totalProteinFinal));
+    }
+
+
+
 
     private void setCurrentDate() {
         // Получение текущей даты

@@ -101,6 +101,8 @@ public class BreakfastDetailsAdapter extends RecyclerView.Adapter<BreakfastDetai
             db.close();
             // Обновляем сумму калорий в таблице calories_summary
             dbHelper.updateCaloriesSummary(deletedDate);
+            dbHelper.updateProteinSummary(deletedDate);
+
 
             // Обновите сумму калорий в таблице calories_summary
 

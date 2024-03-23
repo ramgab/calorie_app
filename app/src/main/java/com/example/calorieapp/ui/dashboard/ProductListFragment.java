@@ -554,6 +554,7 @@ public class ProductListFragment extends Fragment {
 
         // Обновите сумму калорий в таблице calories_summary
         new BreakfastDatabaseHelper(requireContext()).updateCaloriesSummary(selectedDate);
+        new BreakfastDatabaseHelper(requireContext()).updateProteinSummary(selectedDate);
     }
 
     private void saveProductLunch(Product product, String gramsInput) {
@@ -583,6 +584,7 @@ public class ProductListFragment extends Fragment {
 
         // Обновите сумму калорий в таблице calories_summary
         new LunchDatabaseHelper(requireContext()).updateCaloriesSummaryLunch(selectedDate);
+        new LunchDatabaseHelper(requireContext()).updateProteinSummaryLunch(selectedDate);
     }
 
     private void saveProductDinner(Product product, String gramsInput) {
@@ -612,6 +614,7 @@ public class ProductListFragment extends Fragment {
 
         // Обновите сумму калорий в таблице calories_summary
         new DinnerDatabaseHelper(requireContext()).updateCaloriesSummaryDinner(selectedDate);
+        new DinnerDatabaseHelper(requireContext()).updateProteinSummaryDinner(selectedDate);
     }
 
 
