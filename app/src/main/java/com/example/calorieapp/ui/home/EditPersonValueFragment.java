@@ -1,0 +1,105 @@
+package com.example.calorieapp.ui.home;
+
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import com.example.calorieapp.R;
+import com.example.calorieapp.ui.dashboard.ProductListFragment;
+
+public class EditPersonValueFragment extends Fragment {
+
+    private EditText editTextName, editTextAge, editTextHeight, editTextWeight;
+    private Spinner spinnerGender, spinnerActivityLevel;
+    private Button buttonSave;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_edit_person_value, container, false);
+
+        // Инициализация views
+        editTextName = view.findViewById(R.id.editTextName);
+        editTextAge = view.findViewById(R.id.editTextAge);
+        editTextHeight = view.findViewById(R.id.editTextHeight);
+        editTextWeight = view.findViewById(R.id.editTextWeight);
+        spinnerGender = view.findViewById(R.id.spinnerGender);
+        spinnerActivityLevel = view.findViewById(R.id.spinnerActivityLevel);
+        buttonSave = view.findViewById(R.id.buttonSave);
+
+        // Установка адаптеров для спиннеров
+        ArrayAdapter<CharSequence> genderAdapter = ArrayAdapter.createFromResource(requireContext(),
+                R.array.gender_values, android.R.layout.simple_spinner_item);
+        genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerGender.setAdapter(genderAdapter);
+
+        ArrayAdapter<CharSequence> activityLevelAdapter = ArrayAdapter.createFromResource(requireContext(),
+                R.array.activity_level_values, android.R.layout.simple_spinner_item);
+        activityLevelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerActivityLevel.setAdapter(activityLevelAdapter);
+
+        // Установка обработчика нажатия на кнопку Сохранить
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Получаем введенные пользователем данные
+                String name = editTextName.getText().toString();
+                String ageStr = editTextAge.getText().toString();
+                String heightStr = editTextHeight.getText().toString();
+                String weightStr = editTextWeight.getText().toString();
+                String gender = spinnerGender.getSelectedItem().toString();
+                String activityLevel = spinnerActivityLevel.getSelectedItem().toString();
+
+                // Проверка наличия всех данных
+                if (name.isEmpty() || ageStr.isEmpty() || heightStr.isEmpty() || weightStr.isEmpty()) {
+                    // Если какое-то поле не заполнено, выведите сообщение об ошибке
+                    Toast.makeText(requireContext(), "Пожалуйста, заполните все поля", Toast.LENGTH_SHORT).show();
+                    return; // Прерываем выполнение метода, чтобы данные не сохранялись
+                }
+
+                // Проверка возраста, роста и веса на числовой формат
+                int age, height;
+                float weight;
+                try {
+                    age = Integer.parseInt(ageStr);
+                    height = Integer.parseInt(heightStr);
+                    weight = Float.parseFloat(weightStr);
+                } catch (NumberFormatException e) {
+                    // Если возраст, рост или вес не являются числами, выведите сообщение об ошибке
+                    Toast.makeText(requireContext(), "Пожалуйста, введите числовые значения для возраста, роста и веса", Toast.LENGTH_SHORT).show();
+                    return; // Прерываем выполнение метода, чтобы данные не сохранялись
+                }
+
+
+                // Создаем экземпляр класса DatabaseHelper для работы с базой данных
+                DatabaseHelper dbHelper = new DatabaseHelper(requireContext());
+
+                // Вставляем новую запись
+                dbHelper.insertData(name, age, height, weight, gender, activityLevel);
+
+                // Возвращаемся в HomeFragment
+                HomeFragment homeFragment = new HomeFragment();
+
+
+
+                // Получаем FragmentManager и начинаем транзакцию
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.nav_host_fragment_activity_main, homeFragment) // Заменяем текущий фрагмент на ProductListFragment
+                        .commit(); // Применяем транзакцию
+            }
+        });
+
+        return view;
+    }
+}

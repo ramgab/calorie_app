@@ -412,7 +412,7 @@ public class DashboardFragment extends Fragment {
         double totalCalories = dbHelper.getTotalCaloriesSummary(selectedDate);
 
         // Установите значение в TextView с округлением до сотых
-        sumCalorieBreakfast.setText(String.format(Locale.getDefault(), "%.2f", totalCalories));
+        sumCalorieBreakfast.setText(String.format(Locale.getDefault(), "%.2f калорий", totalCalories));
     }
 
     private void loadCaloriesSummaryLunchFromDatabase(String selectedDate) {
@@ -420,7 +420,7 @@ public class DashboardFragment extends Fragment {
         double totalCaloriesLunch = dbHelperLunch.getTotalCaloriesSummaryLunch(selectedDate);
 
         // Установите значение в TextView с округлением до сотых
-        sumCalorieLunch.setText(String.format(Locale.getDefault(), "%.2f", totalCaloriesLunch));
+        sumCalorieLunch.setText(String.format(Locale.getDefault(), "%.2f калорий", totalCaloriesLunch));
     }
 
     private void loadCaloriesSummaryDinnerFromDatabase(String selectedDate) {
@@ -428,7 +428,7 @@ public class DashboardFragment extends Fragment {
         double totalCaloriesDinner = dbHelperDinner.getTotalCaloriesSummaryDinner(selectedDate);
 
         // Установите значение в TextView с округлением до сотых
-        sumCalorieDinner.setText(String.format(Locale.getDefault(), "%.2f", totalCaloriesDinner));
+        sumCalorieDinner.setText(String.format(Locale.getDefault(), "%.2f калорий", totalCaloriesDinner));
     }
 
     private void loadTotalCaloriesSummaryFromDatabase(String selectedDate){
@@ -438,7 +438,7 @@ public class DashboardFragment extends Fragment {
 
         double totalCaloriesFinal = totalCaloriesBreakfast + totalCaloriesLunch + totalCaloriesDinner;
 
-        calorieSum.setText(String.format(Locale.getDefault(), "%.2f", totalCaloriesFinal));
+        calorieSum.setText(String.format(Locale.getDefault(), "%.2f калорий", totalCaloriesFinal));
     }
 
     private void loadTotalProteinSummaryFromDatabase(String selectedDate){
