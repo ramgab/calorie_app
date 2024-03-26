@@ -1,5 +1,6 @@
 package com.example.calorieapp.ui.dashboard;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -19,6 +20,7 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_FAT = "fat";
     public static final String COLUMN_CARBOHYDRATE = "carbohydrate";
     public static final String COLUMN_CATEGORY = "category";
+    public static final String COLUMN_BARCODE = "barcode"; // Новое поле
 
     // SQL query to create the products table
     private static final String CREATE_PRODUCTS_TABLE = "CREATE TABLE " + TABLE_PRODUCTS + " (" +
@@ -29,7 +31,8 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
             COLUMN_PROTEIN + " INTEGER, " +
             COLUMN_FAT + " INTEGER, " +
             COLUMN_CARBOHYDRATE + " INTEGER, " +
-            COLUMN_CATEGORY + " TEXT);";
+            COLUMN_CATEGORY + " TEXT, " +
+            COLUMN_BARCODE + " TEXT);";
 
     static final String TABLE_PRODUCT_BREAKFAST = "product_breakfast";
     private static final String COLUMN_BREAKFAST_ID = "_id";
@@ -51,6 +54,10 @@ public class ProductDatabaseHelper extends SQLiteOpenHelper {
             COLUMN_BREAKFAST_FAT + " INTEGER, " +
             COLUMN_BREAKFAST_CARBOHYDRATE + " INTEGER, " +
             COLUMN_BREAKFAST_GRAMS + " INTEGER);";
+
+
+
+
 
     public ProductDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

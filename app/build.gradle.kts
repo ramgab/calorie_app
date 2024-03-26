@@ -34,6 +34,8 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
+
 }
 
 dependencies {
@@ -55,9 +57,16 @@ dependencies {
     implementation("mysql:mysql-connector-java:8.0.33")
     implementation("androidx.recyclerview:recyclerview:1.3.0")
     implementation("org.apache.poi:poi-ooxml:5.2.5")
+
+    implementation ("com.google.zxing:zxing-parent:3.5.3")
+    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
+
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("com.opencsv:opencsv:3.7")
     implementation ("com.google.android.material:material:1.4.0")
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+
 
 
 

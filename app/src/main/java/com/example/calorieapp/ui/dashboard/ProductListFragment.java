@@ -3,12 +3,14 @@ package com.example.calorieapp.ui.dashboard;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,12 +21,16 @@ import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.view.inputmethod.EditorInfo;
+
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.calorieapp.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,7 +43,7 @@ import java.util.Objects;
 public class ProductListFragment extends Fragment {
 
 
-
+    private TextView barcodeTextView;
     private String selectedDate;
     private String breakfast_lunch_or_dinner;
 
@@ -47,6 +53,7 @@ public class ProductListFragment extends Fragment {
     private boolean saveButtonClicked = false;  // Флаг для отслеживания нажатия кнопки сохранения
     private List<Product> productList;
     private ProductDatabaseHelper databaseHelper;
+    private String productName; // Объявляем переменную productName на уровне класса
 
     private String editTextValue = "";
 
@@ -204,6 +211,7 @@ public class ProductListFragment extends Fragment {
         TextView fatTextView = bottomSheetView.findViewById(R.id.bottomSheetFat);
         TextView carbohydrateTextView = bottomSheetView.findViewById(R.id.bottomSheetCarbohydrate);
         TextView categoryTextView = bottomSheetView.findViewById(R.id.bottomSheetCategory);
+        barcodeTextView = bottomSheetView.findViewById(R.id.bottomSheetBarcode);
 
 
         // Добавление поля ввода для грамм продукта
@@ -235,6 +243,23 @@ public class ProductListFragment extends Fragment {
         fatTextView.setText("Жиры: " + String.valueOf(productDetails.getFats()));
         carbohydrateTextView.setText("Углеводы: " + String.valueOf(productDetails.getCarbohydrates()));
         categoryTextView.setText("Категория: " + productDetails.getCategory());
+        barcodeTextView.setText("Штрихкод: " + productDetails.getBarcode());
+
+        // Найти кнопку добавления штрихкода в макете нижнего листа
+        Button addBarcodeButton = bottomSheetView.findViewById(R.id.add_barcode);
+
+        // Установить слушатель onClickListener для кнопки добавления штрихкода
+        addBarcodeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Вызов метода для сканирования штрихкода
+                Log.d("BarcodeScanner", "Starting barcode scan...");
+                IntentIntegrator integrator = new IntentIntegrator(getActivity());
+                integrator.setOrientationLocked(true);
+                integrator.setPrompt("Пожалуйста, отсканируйте штрихкод");
+                integrator.initiateScan();
+            }
+        });
 
         // Set up a TextWatcher to listen for changes in the grams input
         editTextGrams.addTextChangedListener(new TextWatcher() {
@@ -300,8 +325,21 @@ public class ProductListFragment extends Fragment {
         bottomSheetDialog.show();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(intentResult != null){
+            String contents = intentResult.getContents();
+            if(contents != null){
+                barcodeTextView.setText(intentResult.getContents());
+            }
+        }else{
+            super.onActivityResult(requestCode, resultCode, data);
+        }
 
 
+
+    }
 
     private void showBottomSheetLunch(String productName) {
         // Inflate the bottom sheet layout
@@ -346,6 +384,9 @@ public class ProductListFragment extends Fragment {
         fatTextViewLunch.setText("Жиры: " + String.valueOf(productDetails.getFats()));
         carbohydrateTextViewLunch.setText("Углеводы: " + String.valueOf(productDetails.getCarbohydrates()));
         categoryTextViewLunch.setText("Категория: " + productDetails.getCategory());
+
+        // Устанавливаем значение переменной productName
+        this.productName = productName;
 
         // Set up a TextWatcher to listen for changes in the grams input
         editTextGramsLunch.addTextChangedListener(new TextWatcher() {
@@ -661,7 +702,8 @@ public class ProductListFragment extends Fragment {
                         ProductDatabaseHelper.COLUMN_PROTEIN,
                         ProductDatabaseHelper.COLUMN_FAT,
                         ProductDatabaseHelper.COLUMN_CARBOHYDRATE,
-                        ProductDatabaseHelper.COLUMN_CATEGORY
+                        ProductDatabaseHelper.COLUMN_CATEGORY,
+                        ProductDatabaseHelper.COLUMN_BARCODE
                 },
                 ProductDatabaseHelper.COLUMN_NAME + "=?",
                 new String[]{productName},
@@ -676,8 +718,9 @@ public class ProductListFragment extends Fragment {
             @SuppressLint("Range") double fat = cursor.getDouble(cursor.getColumnIndex(ProductDatabaseHelper.COLUMN_FAT));
             @SuppressLint("Range") double carbohydrate = cursor.getDouble(cursor.getColumnIndex(ProductDatabaseHelper.COLUMN_CARBOHYDRATE));
             @SuppressLint("Range") String category = cursor.getString(cursor.getColumnIndex(ProductDatabaseHelper.COLUMN_CATEGORY));
+            @SuppressLint("Range") String barcode = cursor.getString(cursor.getColumnIndex(ProductDatabaseHelper.COLUMN_BARCODE));
 
-            productDetails = new Product(name, calories, protein, fat, carbohydrate, composition, category);
+            productDetails = new Product(name, calories, protein, fat, carbohydrate, composition, category, barcode);
         }
 
         // Close the cursor and database
@@ -700,7 +743,7 @@ public class ProductListFragment extends Fragment {
 
     private void insertDataFromCSV() {
         try {
-            InputStream inputStream = getResources().openRawResource(R.raw.data); // Replace 'data' with your file name in res/raw/
+            InputStream inputStream = getResources().openRawResource(R.raw.data4); // Replace 'data' with your file name in res/raw/
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
 
@@ -714,7 +757,7 @@ public class ProductListFragment extends Fragment {
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(";");
 
-                // Assuming the CSV columns order is: title, squad, calories, protein, fat, carbohydrate, category
+                // Assuming the CSV columns order is: title, squad, calories, protein, fat, carbohydrate, category, barcode
                 String productName = data[0].trim();
                 String composition = data[1].trim();
                 double calories = tryParseDouble(data[2].trim().replace(",", "."));
@@ -722,6 +765,7 @@ public class ProductListFragment extends Fragment {
                 double fat = tryParseDouble(data[4].trim().replace(",", "."));
                 double carbohydrate = tryParseDouble(data[5].trim().replace(",", "."));
                 String category = data[6].trim();
+                String barcode = data[7].trim();
 
                 // Insert the data into the products table
                 String insertQuery = "INSERT INTO " + ProductDatabaseHelper.TABLE_PRODUCTS + " (" +
@@ -731,14 +775,16 @@ public class ProductListFragment extends Fragment {
                         ProductDatabaseHelper.COLUMN_PROTEIN + ", " +
                         ProductDatabaseHelper.COLUMN_FAT + ", " +
                         ProductDatabaseHelper.COLUMN_CARBOHYDRATE + ", " +
-                        ProductDatabaseHelper.COLUMN_CATEGORY + ") VALUES ('" +
+                        ProductDatabaseHelper.COLUMN_CATEGORY + ", " +
+                        ProductDatabaseHelper.COLUMN_BARCODE + ") VALUES ('" +
                         productName + "', '" +
                         composition + "', " +
                         calories + ", " +
                         protein + ", " +
                         fat + ", " +
                         carbohydrate + ", '" +
-                        category + "');";
+                        category + "', '" +
+                        barcode + "');";  // Добавлено значение barcode
                 db.execSQL(insertQuery);
             }
 
@@ -774,6 +820,18 @@ public class ProductListFragment extends Fragment {
 
         return productList;
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
     private boolean loadDataInitializationStatus() {
         SharedPreferences prefs = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);

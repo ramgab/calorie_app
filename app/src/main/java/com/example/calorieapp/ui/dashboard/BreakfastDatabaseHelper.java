@@ -23,6 +23,7 @@ public class BreakfastDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_CALORIES = "calories";
     public static final String COLUMN_PROTEIN = "protein";
     public static final String COLUMN_FAT = "fat";
+
     public static final String COLUMN_CARBOHYDRATE = "carbohydrate";
     public static final String COLUMN_DATE = "date";
 
@@ -35,7 +36,8 @@ public class BreakfastDatabaseHelper extends SQLiteOpenHelper {
             COLUMN_PROTEIN + " REAL, " +
             COLUMN_FAT + " REAL, " +
             COLUMN_CARBOHYDRATE + " REAL, " +
-            COLUMN_DATE + " TEXT);";
+            COLUMN_DATE + " TEXT);"; // Новое поле с значением по умолчанию
+
 
 
     static final String TABLE_CALORIES_SUMMARY = "calories_summary";

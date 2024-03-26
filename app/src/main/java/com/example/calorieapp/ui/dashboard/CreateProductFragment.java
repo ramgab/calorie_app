@@ -198,7 +198,7 @@ public class CreateProductFragment extends Fragment {
         double carbohydrate = Double.parseDouble(editTextCarbohydrate.getText().toString().trim().replace(",", "."));
 
         // Создаем объект Product
-        Product product = new Product(name, calories, protein, fat, carbohydrate, null, null);
+        Product product = new Product(name, calories, protein, fat, carbohydrate, null, null, null);
 
         // Добавляем продукт в базу данных
         addProductToDatabase(product);

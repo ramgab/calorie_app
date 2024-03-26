@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "person_values.db";
     private static final int DATABASE_VERSION = 1;
@@ -18,6 +21,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_WEIGHT = "weight";
     public static final String COLUMN_GENDER = "gender";
     public static final String COLUMN_ACTIVITY_LEVEL = "activity_level";
+    public static final String COLUMN_DATE = "date";
 
     // Создание таблицы
     private static final String SQL_CREATE_TABLE =
@@ -27,7 +31,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_HEIGHT + " REAL," +
                     COLUMN_WEIGHT + " REAL," +
                     COLUMN_GENDER + " TEXT," +
-                    COLUMN_ACTIVITY_LEVEL + " REAL)";
+                    COLUMN_ACTIVITY_LEVEL + " REAL," +
+                    COLUMN_DATE + " TEXT)";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -53,6 +58,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_WEIGHT, weight);
         values.put(COLUMN_GENDER, gender);
         values.put(COLUMN_ACTIVITY_LEVEL, activityLevel);
+        // Добавление текущей даты в формате YYYY-MM-DD HH:MM:SS
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        values.put(COLUMN_DATE, dateFormat.format(date));
         db.insert(TABLE_NAME, null, values);
         db.close();
     }

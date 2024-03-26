@@ -70,6 +70,16 @@
             android:id="@+id/bottomSheetCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/bottomSheetBarcode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/add_barcode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Добавить штрихкод"/>
 
 
         <EditText
