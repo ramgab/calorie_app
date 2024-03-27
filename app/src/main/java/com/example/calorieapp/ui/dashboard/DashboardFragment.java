@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.calorieapp.R;
 import com.example.calorieapp.databinding.FragmentDashboardBinding;
+import com.example.calorieapp.ui.home.DatabaseHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,6 +45,7 @@ public class DashboardFragment extends Fragment {
     private LunchDatabaseHelper dbHelperLunch = null;
     private DinnerDatabaseHelper dbHelperDinner = null;
     private ProductDatabaseHelper dbHelper2 = null;
+    private DatabaseHelper dbHelperPerson = null;
 
     // Добавьте TextView для отображения суммы калорий
     private TextView sumCalorieBreakfast;
@@ -294,6 +296,11 @@ public class DashboardFragment extends Fragment {
             dbHelper = new BreakfastDatabaseHelper(requireContext());
         }
 
+        // Проверяем, не является ли dbHelperPerson null, и инициализируем его при необходимости
+        if (dbHelperPerson == null) {
+            dbHelperPerson = new DatabaseHelper(requireContext());
+        }
+
         // Находим TextView для отображения суммы калорий обеда
         sumCalorieLunch = root.findViewById(R.id.sumCalorieLunch);
         // Проверяем, не является ли dbHelper null, и инициализируем его при необходимости
@@ -437,7 +444,8 @@ public class DashboardFragment extends Fragment {
         double totalCaloriesDinner = dbHelperDinner.getTotalCaloriesSummaryDinner(selectedDate);
 
         double totalCaloriesFinal = totalCaloriesBreakfast + totalCaloriesLunch + totalCaloriesDinner;
-
+        // Обновляем общую сумму калорий за день в таблице calories_summary_day
+        dbHelperPerson.updateCaloriesSummaryDay(selectedDate, totalCaloriesFinal);
         calorieSum.setText(String.format(Locale.getDefault(), "%.2f калорий", totalCaloriesFinal));
     }
 

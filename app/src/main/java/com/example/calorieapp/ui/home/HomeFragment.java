@@ -18,10 +18,14 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.calorieapp.R;
 import com.example.calorieapp.databinding.FragmentHomeBinding;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -77,6 +81,7 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         loadWeightChartData(); // Загрузка данных для графика веса
+        loadCaloriesSummaryChartData();
     }
 
     public void loadPersonData() {
@@ -207,6 +212,96 @@ public class HomeFragment extends Fragment {
         weightDataSet.setValueTextSize(12f); // Замените 12f на желаемый размер
         weightChart.invalidate(); // Обновляем график
     }
+
+
+    private void loadCaloriesSummaryChartData() {
+        DatabaseHelper dbHelper = new DatabaseHelper(requireContext());
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        // Запрос для получения данных о сумме калорий за день, отсортированных по дате в убывающем порядке
+        Cursor cursor = db.query(DatabaseHelper.TABLE_CALORIES_SUMMARY_DAY, new String[]{DatabaseHelper.COLUMN_TOTAL_CALORIES_DAY, DatabaseHelper.COLUMN_DATE_DAY},
+                null, null, null, null, DatabaseHelper.COLUMN_DATE_DAY);
+
+        ArrayList<BarEntry> caloriesEntries = new ArrayList<>();
+        ArrayList<String> dates = new ArrayList<>();
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                @SuppressLint("Range") float totalCalories = cursor.getFloat(cursor.getColumnIndex(DatabaseHelper.COLUMN_TOTAL_CALORIES_DAY));
+                @SuppressLint("Range") String date = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_DATE_DAY));
+
+                // Преобразуем дату в нужный формат (дд-мм)
+                SimpleDateFormat inputFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+                SimpleDateFormat outputFormat = new SimpleDateFormat("dd.MM", Locale.getDefault());
+                try {
+                    Date dateObject = inputFormat.parse(date);
+                    date = outputFormat.format(dateObject);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                // Проверяем, есть ли уже бар для этого дня
+                int existingIndex = -1;
+                for (int i = 0; i < dates.size(); i++) {
+                    if (dates.get(i).equals(date)) {
+                        existingIndex = i;
+                        break;
+                    }
+                }
+
+                if (existingIndex != -1) {
+                    // Обновляем значение существующего бара
+                    caloriesEntries.set(existingIndex, new BarEntry(existingIndex, totalCalories));
+                } else {
+                    // Добавляем новый бар
+                    caloriesEntries.add(new BarEntry(caloriesEntries.size(), totalCalories));
+                    dates.add(date);
+                }
+
+            } while (cursor.moveToNext());
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }
+        db.close();
+
+        BarDataSet caloriesDataSet = new BarDataSet(caloriesEntries, "Сумма калорий за день");
+        caloriesDataSet.setColor(Color.BLUE);
+        caloriesDataSet.setValueTextColor(Color.WHITE);
+        caloriesDataSet.setValueTextSize(12f);
+
+        BarData barData = new BarData(caloriesDataSet);
+
+        BarChart caloriesChart = requireView().findViewById(R.id.caloriesChart);
+        caloriesChart.setData(barData);
+        caloriesChart.getDescription().setEnabled(false);
+        caloriesDataSet.setColor(Color.WHITE); // Изменение цвета баров на красный
+
+        XAxis xAxis = caloriesChart.getXAxis();
+        xAxis.setTextColor(Color.WHITE); // Изменение цвета текста на оси X на желтый
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setGranularity(1f);
+        xAxis.setTextSize(14f);
+
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(dates));
+        xAxis.setLabelCount(dates.size());
+        xAxis.setAvoidFirstLastClipping(true);
+
+        YAxis yAxis = caloriesChart.getAxisLeft();
+        yAxis.setTextColor(Color.WHITE);
+        yAxis.setTextSize(14f);
+        yAxis.setGridColor(Color.WHITE); // Изменение цвета сетки на серый
+        YAxis yAxisR = caloriesChart.getAxisRight();
+        yAxisR.setDrawLabels(false);
+        Legend legend = caloriesChart.getLegend();
+        legend.setTextColor(Color.WHITE); // Изменение цвета текста в легенде на зеленый
+        legend.setTextSize(14f);
+        caloriesChart.invalidate();
+    }
+
+
+
 
 
     private float calculateCalorieNorm(float weight, float height, int age, String gender, float activityLevel) {

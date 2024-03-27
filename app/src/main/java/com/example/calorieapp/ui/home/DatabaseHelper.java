@@ -34,6 +34,52 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_ACTIVITY_LEVEL + " REAL," +
                     COLUMN_DATE + " TEXT)";
 
+
+
+    static final String TABLE_CALORIES_SUMMARY_DAY = "calories_summary_day";
+    public static final String COLUMN_DATE_DAY = "date_day";
+    public static final String COLUMN_TOTAL_CALORIES_DAY = "total_calories_day";
+    public static final String COLUMN_ID = "_id";
+
+    // SQL query to create the calories_summary_day table
+    private static final String CREATE_CALORIES_SUMMARY_DAY_TABLE = "CREATE TABLE " + TABLE_CALORIES_SUMMARY_DAY + " (" +
+            COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            COLUMN_DATE_DAY + " TEXT, " +
+            COLUMN_TOTAL_CALORIES_DAY + " REAL);";
+
+    public void updateCaloriesSummaryDay(String date, double totalCalories) {
+        // Вставляем или обновляем данные в таблице calories_summary_day
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_DATE_DAY, date);
+        values.put(COLUMN_TOTAL_CALORIES_DAY, totalCalories);
+        db.replace(TABLE_CALORIES_SUMMARY_DAY, null, values);
+        db.close();
+    }
+
+    public double getTotalCaloriesSummaryDay(String date) {
+        // Выполняем запрос для получения суммы калорий из таблицы calories_summary_day по выбранной дате
+        String query = "SELECT " + COLUMN_TOTAL_CALORIES_DAY + " FROM " + TABLE_CALORIES_SUMMARY_DAY +
+                " WHERE " + COLUMN_DATE_DAY + " = ?" +
+                " ORDER BY " + COLUMN_ID + " DESC";  // Упорядочиваем по убыванию id
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, new String[]{date});
+
+        double totalCalories = 0;
+
+        // Если есть результат, переходим к первой записи
+        if (cursor.moveToFirst()) {
+            totalCalories = cursor.getDouble(0);
+        }
+
+        cursor.close();
+        db.close();
+
+        return totalCalories;
+    }
+
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -41,13 +87,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_TABLE);
+        db.execSQL(CREATE_CALORIES_SUMMARY_DAY_TABLE);
     }
 
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
-        onCreate(db);
-    }
+
 
     public void insertData(String name, int age, float height, float weight, String gender, String activityLevel) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -66,6 +109,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        onCreate(db);
 
+
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_CALORIES_SUMMARY_DAY + " (" +
+                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_DATE_DAY + " TEXT, " +
+                COLUMN_TOTAL_CALORIES_DAY + " REAL);");
+
+
+    }
 
 }
