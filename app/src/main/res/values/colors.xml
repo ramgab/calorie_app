@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#808080</color>
     <color name="dark_grey">#121212</color>
+    <color name="dark_red">#7A1B1B</color>
     <color name="colorProtein">#01605A  </color> <!-- Красный цвет для белков -->
     <color name="colorFat">#FFD0A8  </color> <!-- Желтый цвет для жиров -->
     <color name="colorCarb">#FF862D  </color>
