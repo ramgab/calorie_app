@@ -1,0 +1,69 @@
+<!-- res/layout/item_breakfast_details.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/blocks"
+        app:cardCornerRadius="15dp">
+
+        <TextView
+            android:id="@+id/textViewProductNameSnack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Product Name"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/textViewGramsSnack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Граммы: "
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:id="@+id/textViewCaloriesSnack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Калории: "
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:id="@+id/textViewProteinSnack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Белки: "
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:id="@+id/textViewFatSnack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Жиры: "
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:id="@+id/textViewCarbohydrateSnack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Углеводы: "
+            android:layout_marginBottom="4dp"/>
+
+        <Button
+            android:id="@+id/deleteButtonSnack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Удалить"
+            android:layout_below="@id/textViewProductNameSnack"
+            android:layout_marginTop="8dp"/>
+
+    </LinearLayout>
+</LinearLayout>

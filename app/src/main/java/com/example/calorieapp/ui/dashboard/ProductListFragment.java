@@ -129,6 +129,10 @@ public class ProductListFragment extends Fragment {
                 if (Objects.equals(breakfast_lunch_or_dinner, "dinner")) {
                     showBottomSheetDinner(productName);
                 }
+
+                if (Objects.equals(breakfast_lunch_or_dinner, "snack")) {
+                    showBottomSheetSnack(productName);
+                }
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -566,6 +570,117 @@ public class ProductListFragment extends Fragment {
 
 
 
+    private void showBottomSheetSnack(String productName) {
+        // Inflate the bottom sheet layout
+        View bottomSheetViewSnack = getLayoutInflater().inflate(R.layout.bottom_sheet_layout_snack, null);
+
+        // Find views in the bottom sheet layout
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) TextView titleTextViewSnack = bottomSheetViewSnack.findViewById(R.id.bottomSheetTitleSnack);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) TextView compositionTextViewSnack = bottomSheetViewSnack.findViewById(R.id.bottomSheetCompositionSnack);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) TextView caloriesTextViewSnack = bottomSheetViewSnack.findViewById(R.id.bottomSheetCaloriesSnack);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) TextView proteinTextViewSnack = bottomSheetViewSnack.findViewById(R.id.bottomSheetProteinSnack);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) TextView fatTextViewSnack = bottomSheetViewSnack.findViewById(R.id.bottomSheetFatSnack);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) TextView carbohydrateTextViewSnack = bottomSheetViewSnack.findViewById(R.id.bottomSheetCarbohydrateSnack);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) TextView categoryTextViewSnack = bottomSheetViewSnack.findViewById(R.id.bottomSheetCategorySnack);
+
+
+        // Добавление поля ввода для грамм продукта
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) EditText editTextGramsSnack = bottomSheetViewSnack.findViewById(R.id.editTextGramsSnack);
+
+        // Добавьте слушателя для обработки событий клавиатуры
+        editTextGramsSnack.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    // Закрыть клавиатуру
+                    InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(editTextGramsSnack.getWindowToken(), 0);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        // Retrieve product details from the database based on the name
+        Product productDetails = getProductDetails(productName);
+
+        // Set values to views
+        titleTextViewSnack.setText(productDetails.getName());
+        compositionTextViewSnack.setText("Состав: " + productDetails.getComposition());
+        caloriesTextViewSnack.setText("Калории: " + String.valueOf(productDetails.getCalories()));
+        proteinTextViewSnack.setText("Белки: " + String.valueOf(productDetails.getProteins()));
+        fatTextViewSnack.setText("Жиры: " + String.valueOf(productDetails.getFats()));
+        carbohydrateTextViewSnack.setText("Углеводы: " + String.valueOf(productDetails.getCarbohydrates()));
+        categoryTextViewSnack.setText("Категория: " + productDetails.getCategory());
+
+        // Set up a TextWatcher to listen for changes in the grams input
+        editTextGramsSnack.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // Сохраните введенный текст
+                editTextValue = charSequence.toString();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // После изменения введенных граммов, обновите значения калорий, белка, жира и углеводов
+                updateNutritionValues(productDetails, editable.toString(), caloriesTextViewSnack, proteinTextViewSnack, fatTextViewSnack, carbohydrateTextViewSnack);
+
+
+            }
+        });
+
+        // Найти кнопку сохранения в макете нижнего листа
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) Button saveButtonSnack = bottomSheetViewSnack.findViewById(R.id.saveProductSnack);
+
+
+        // Create a BottomSheetDialog and set the layout
+        BottomSheetDialog bottomSheetDialogSnack = new BottomSheetDialog(requireContext());
+        bottomSheetDialogSnack.setContentView(bottomSheetViewSnack);
+
+
+        // Find the close button in the bottom sheet layout
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) Button closeButton = bottomSheetViewSnack.findViewById(R.id.buttonCloseBottomSheetSnack);
+
+        // Set an onClickListener for the close button
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Close the bottom sheet
+                bottomSheetDialogSnack.dismiss();
+            }
+        });
+
+
+        // Установить слушатель onClickListener для кнопки сохранения
+        saveButtonSnack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Установить флаг, указывающий, что кнопка сохранения была нажата
+                saveButtonClicked = true;
+
+                // Используйте значение editTextValue при сохранении данных
+                saveProductSnack(productDetails, editTextValue);
+
+                // Закрыть клавиатуру
+                InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(editTextGramsSnack.getWindowToken(), 0);
+
+                // Закрыть bottomSheetDialog
+                bottomSheetDialogSnack.dismiss();
+            }
+        });
+
+        // Show the bottom sheet
+        bottomSheetDialogSnack.show();
+    }
+
+
+
 
 
     private void saveProductBreakfast(Product product, String gramsInput) {
@@ -632,6 +747,7 @@ public class ProductListFragment extends Fragment {
         new LunchDatabaseHelper(requireContext()).updateCarbSummaryLunch(selectedDate);
     }
 
+
     private void saveProductDinner(Product product, String gramsInput) {
         double grams = tryParseDouble(gramsInput);
         double calories = product.getCalories() * (grams / 100.0);
@@ -662,6 +778,38 @@ public class ProductListFragment extends Fragment {
         new DinnerDatabaseHelper(requireContext()).updateProteinSummaryDinner(selectedDate);
         new DinnerDatabaseHelper(requireContext()).updateFatSummaryDinner(selectedDate);
         new DinnerDatabaseHelper(requireContext()).updateCarbSummaryDinner(selectedDate);
+    }
+
+    private void saveProductSnack(Product product, String gramsInput) {
+        double grams = tryParseDouble(gramsInput);
+        double calories = product.getCalories() * (grams / 100.0);
+        double protein = product.getProteins() * (grams / 100.0);
+        double fat = product.getFats() * (grams / 100.0);
+        double carbohydrate = product.getCarbohydrates() * (grams / 100.0);
+
+        // Откройте базу данных для записи
+        SQLiteDatabase db = new SnackDatabaseHelper(requireContext()).getWritableDatabase();
+
+        // Вставьте данные в таблицу завтрака
+        ContentValues values = new ContentValues();
+        values.put(SnackDatabaseHelper.COLUMN_PRODUCT_NAME, product.getName());
+        values.put(SnackDatabaseHelper.COLUMN_GRAMS, grams);
+        values.put(SnackDatabaseHelper.COLUMN_CALORIES, calories);
+        values.put(SnackDatabaseHelper.COLUMN_PROTEIN, protein);
+        values.put(SnackDatabaseHelper.COLUMN_FAT, fat);
+        values.put(SnackDatabaseHelper.COLUMN_CARBOHYDRATE, carbohydrate);
+        values.put(SnackDatabaseHelper.COLUMN_DATE, selectedDate);
+
+        db.insert(SnackDatabaseHelper.TABLE_SNACK, null, values);
+
+        // Закройте базу данных
+        db.close();
+
+        // Обновите сумму калорий в таблице calories_summary
+        new SnackDatabaseHelper(requireContext()).updateCaloriesSummarySnack(selectedDate);
+        new SnackDatabaseHelper(requireContext()).updateProteinSummarySnack(selectedDate);
+        new SnackDatabaseHelper(requireContext()).updateFatSummarySnack(selectedDate);
+        new SnackDatabaseHelper(requireContext()).updateCarbSummarySnack(selectedDate);
     }
 
 

@@ -1,10 +1,12 @@
 package com.example.calorieapp.ui.dashboard;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -44,6 +46,7 @@ public class DashboardFragment extends Fragment {
     private BreakfastDatabaseHelper dbHelper = null;
     private LunchDatabaseHelper dbHelperLunch = null;
     private DinnerDatabaseHelper dbHelperDinner = null;
+    private SnackDatabaseHelper dbHelperSnack = null;
     private ProductDatabaseHelper dbHelper2 = null;
     private DatabaseHelper dbHelperPerson = null;
 
@@ -51,6 +54,7 @@ public class DashboardFragment extends Fragment {
     private TextView sumCalorieBreakfast;
     private TextView sumCalorieLunch;
     private TextView sumCalorieDinner;
+    private TextView sumCalorieSnack;
     private TextView calorieSum;
     private TextView proteinSum;
     private TextView fatSum;
@@ -79,6 +83,8 @@ public class DashboardFragment extends Fragment {
         Button buttonAddLunch = root.findViewById(R.id.buttonAddLunch);
         // Найти кнопку добавления ужина
         Button buttonAddDinner = root.findViewById(R.id.buttonAddDinner);
+        // Найти кнопку добавления перекусв
+        Button buttonAddSnack = root.findViewById(R.id.buttonAddSnack);
         // Установить слушатель нажатия
         buttonAddBreakfast.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,6 +179,37 @@ public class DashboardFragment extends Fragment {
             }
         });
 
+        buttonAddSnack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // Create a new instance of the ProductListFragment
+                ProductListFragment productListFragment = new ProductListFragment();
+                // Получите выбранную дату из вашего текстового поля
+                String selectedDate = currentDateTextView.getText().toString();
+                // Сохраняем выбранную дату в базу данных
+                selectedDateDBHelper.insertSelectedDate(selectedDate);
+
+                breakfast_lunch_or_dinner = "snack";
+                selectedButtonDBHelper.insertSelectedButton(breakfast_lunch_or_dinner);
+
+                // Get the FragmentManager
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+
+                // Start a FragmentTransaction
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                // Replace the current fragment (DashboardFragment) with the new one (ProductListFragment)
+                fragmentTransaction.replace(R.id.nav_host_fragment_activity_main, productListFragment);
+
+                // Add the transaction to the back stack, so you can return to the previous fragment
+                fragmentTransaction.addToBackStack(null);
+
+                // Apply the transaction
+                fragmentTransaction.commit();
+            }
+        });
+
         // Найти CardView с id cardViewBreakfast
         CardView cardViewBreakfast = root.findViewById(R.id.cardViewBreakfast);
 
@@ -201,7 +238,7 @@ public class DashboardFragment extends Fragment {
             }
         });
 
-        // Найти CardView с id cardViewBreakfast
+        // Найти CardView с id cardViewLunch
         CardView cardViewLunch = root.findViewById(R.id.cardViewLunch);
 
         // Установить слушатель нажатия
@@ -229,7 +266,7 @@ public class DashboardFragment extends Fragment {
             }
         });
 
-        // Найти CardView с id cardViewBreakfast
+        // Найти CardView с id cardViewDinner
         CardView cardViewDinner = root.findViewById(R.id.cardViewDinner);
 
         // Установить слушатель нажатия
@@ -258,20 +295,76 @@ public class DashboardFragment extends Fragment {
             }
         });
 
+        // Найти CardView с id cardViewSnack
+        CardView cardViewSnack = root.findViewById(R.id.cardViewSnack);
+
+        // Установить слушатель нажатия
+        cardViewSnack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Создайте новый экземпляр BreakfastDetailsFragment
+                SnackDetailsFragment snackDetailsFragment = new SnackDetailsFragment();
+
+
+                // Получите выбранную дату из вашего текстового поля
+                String selectedDate = currentDateTextView.getText().toString();
+
+                // Передайте выбранную дату в ProductListFragment через аргументы
+                Bundle bundle = new Bundle();
+                bundle.putString("selectedDate", selectedDate);
+                snackDetailsFragment.setArguments(bundle);
+
+
+                // Замените текущий фрагмент на BreakfastDetailsFragment
+                requireActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.nav_host_fragment_activity_main, snackDetailsFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
         homeHorizontalRec = root.findViewById(R.id.home_hor_rec);
+
+
 
         homeHorModelList = new ArrayList<>();
         homeHorModelList.add(new HomeHorModel(R.drawable.pizza, "Pizza"));
         homeHorModelList.add(new HomeHorModel(R.drawable.hamburger, "Hamburger"));
         homeHorModelList.add(new HomeHorModel(R.drawable.fried_potatoes, "Fries"));
         homeHorModelList.add(new HomeHorModel(R.drawable.ice_cream, "Ice Cream"));
-        homeHorModelList.add(new HomeHorModel(R.drawable.sandwich, "Sandwich"));
+        homeHorModelList.add(new HomeHorModel(R.drawable.sandwich, "Sandwich")); 
 
         homeHorAdapter = new HomeHorAdapter(getActivity(), homeHorModelList);
         homeHorizontalRec.setAdapter(homeHorAdapter);
         homeHorizontalRec.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         homeHorizontalRec.setHasFixedSize(true);
         homeHorizontalRec.setNestedScrollingEnabled(false);
+
+
+        homeHorizontalRec.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                if (e.getAction() == MotionEvent.ACTION_UP) {
+                    View childView = rv.findChildViewUnder(e.getX(), e.getY());
+                    if (childView != null) {
+                        int position = rv.getChildAdapterPosition(childView);
+                        Intent intent = new Intent(getActivity(), StoryActivity.class);
+                        intent.putExtra("position", position); // передаем позицию выбранного элемента сториса
+                        startActivity(intent);
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {}
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {}
+        });
+
 
         currentDateTextView = root.findViewById(R.id.currentDateTextView);
 
@@ -315,6 +408,13 @@ public class DashboardFragment extends Fragment {
             dbHelperDinner = new DinnerDatabaseHelper(requireContext());
         }
 
+        // Находим TextView для отображения суммы калорий ужина
+        sumCalorieSnack = root.findViewById(R.id.sumCalorieSnack);
+        // Проверяем, не является ли dbHelper null, и инициализируем его при необходимости
+        if (dbHelperSnack == null) {
+            dbHelperSnack = new SnackDatabaseHelper(requireContext());
+        }
+
         calorieSum = root.findViewById(R.id.calorie_sum);
         proteinSum = root.findViewById(R.id.proteinValue);
         fatSum = root.findViewById(R.id.fatValue);
@@ -327,6 +427,7 @@ public class DashboardFragment extends Fragment {
         loadCaloriesSummaryFromDatabase(selectedDate);
         loadCaloriesSummaryLunchFromDatabase(selectedDate);
         loadCaloriesSummaryDinnerFromDatabase(selectedDate);
+        loadCaloriesSummarySnackFromDatabase(selectedDate);
         loadTotalCaloriesSummaryFromDatabase(selectedDate);
         loadTotalProteinSummaryFromDatabase(selectedDate);
         loadTotalFatSummaryFromDatabase(selectedDate);
@@ -335,34 +436,6 @@ public class DashboardFragment extends Fragment {
         // Добавьте слушатель изменений даты
         currentDateTextView.addTextChangedListener(dateTextWatcher);
 
-
-        /**
-        String stringProteinValue = proteinSum.getText().toString();
-        String stringFatValue = fatSum.getText().toString();
-        String stringCarbValue = carbohydrateSum.getText().toString();
-
-        stringProteinValue = stringProteinValue.replace(",", ".");
-        stringFatValue = stringFatValue.replace(",", ".");
-        stringCarbValue = stringCarbValue.replace(",", ".");
-
-        // Предположим, у вас есть значения для белков, жиров и углеводов
-        double proteinValue = Double.parseDouble(stringProteinValue);
-        double fatValue = Double.parseDouble(stringFatValue);
-        double carbValue = Double.parseDouble(stringCarbValue);
-
-        // Вычислите общую сумму, чтобы распределить прогресс в зависимости от общего значения
-        double total = proteinValue + fatValue + carbValue;
-
-        // Вычислите проценты для каждой части прогресс-бара
-        int proteinPercentage = (int) ((proteinValue / total) * 100);
-        int fatPercentage = (int) ((fatValue / total) * 100);
-        int carbPercentage = (int) ((carbValue / total) * 100);
-
-        // Установите ширину каждой части прогресс-бара
-        setProgressBarWidth(binding.proteinProgress, proteinPercentage);
-        setProgressBarWidth(binding.fatProgress, fatPercentage);
-        setProgressBarWidth(binding.carbProgress, carbPercentage);
-        **/
         return root;
     }
 
@@ -406,6 +479,7 @@ public class DashboardFragment extends Fragment {
             loadCaloriesSummaryFromDatabase(selectedDate);
             loadCaloriesSummaryLunchFromDatabase(selectedDate);
             loadCaloriesSummaryDinnerFromDatabase(selectedDate);
+            loadCaloriesSummarySnackFromDatabase(selectedDate);
             loadTotalCaloriesSummaryFromDatabase(selectedDate);
             loadTotalProteinSummaryFromDatabase(selectedDate);
             loadTotalFatSummaryFromDatabase(selectedDate);
@@ -438,12 +512,21 @@ public class DashboardFragment extends Fragment {
         sumCalorieDinner.setText(String.format(Locale.getDefault(), "%.2f калорий", totalCaloriesDinner));
     }
 
+    private void loadCaloriesSummarySnackFromDatabase(String selectedDate) {
+        // Получите сумму калорий из базы данных для выбранной даты
+        double totalCaloriesSnack = dbHelperSnack.getTotalCaloriesSummarySnack(selectedDate);
+
+        // Установите значение в TextView с округлением до сотых
+        sumCalorieSnack.setText(String.format(Locale.getDefault(), "%.2f калорий", totalCaloriesSnack));
+    }
+
     private void loadTotalCaloriesSummaryFromDatabase(String selectedDate){
         double totalCaloriesBreakfast = dbHelper.getTotalCaloriesSummary(selectedDate);
         double totalCaloriesLunch = dbHelperLunch.getTotalCaloriesSummaryLunch(selectedDate);
         double totalCaloriesDinner = dbHelperDinner.getTotalCaloriesSummaryDinner(selectedDate);
+        double totalCaloriesSnack = dbHelperSnack.getTotalCaloriesSummarySnack(selectedDate);
 
-        double totalCaloriesFinal = totalCaloriesBreakfast + totalCaloriesLunch + totalCaloriesDinner;
+        double totalCaloriesFinal = totalCaloriesBreakfast + totalCaloriesLunch + totalCaloriesDinner + totalCaloriesSnack;
         // Обновляем общую сумму калорий за день в таблице calories_summary_day
         dbHelperPerson.updateCaloriesSummaryDay(selectedDate, totalCaloriesFinal);
         calorieSum.setText(String.format(Locale.getDefault(), "%.2f калорий", totalCaloriesFinal));
@@ -453,8 +536,9 @@ public class DashboardFragment extends Fragment {
         double totalProteinBreakfast = dbHelper.getTotalProteinSummary(selectedDate);
         double totalProteinLunch = dbHelperLunch.getTotalProteinSummaryLunch(selectedDate);
         double totalProteinDinner = dbHelperDinner.getTotalProteinSummaryDinner(selectedDate);
+        double totalProteinSnack = dbHelperSnack.getTotalProteinSummarySnack(selectedDate);
 
-        double totalProteinFinal = totalProteinBreakfast + totalProteinLunch + totalProteinDinner;
+        double totalProteinFinal = totalProteinBreakfast + totalProteinLunch + totalProteinDinner + totalProteinSnack;
 
         dbHelper.updateProteinSummaryFinal(selectedDate, totalProteinFinal);
         proteinSum.setText(String.format(Locale.getDefault(), "%.2f", totalProteinFinal));
@@ -464,8 +548,9 @@ public class DashboardFragment extends Fragment {
         double totalFatBreakfast = dbHelper.getTotalFatSummary(selectedDate);
         double totalFatLunch = dbHelperLunch.getTotalFatSummaryLunch(selectedDate);
         double totalFatDinner = dbHelperDinner.getTotalFatSummaryDinner(selectedDate);
+        double totalFatSnack = dbHelperSnack.getTotalFatSummarySnack(selectedDate);
 
-        double totalFatFinal = totalFatBreakfast + totalFatLunch + totalFatDinner;
+        double totalFatFinal = totalFatBreakfast + totalFatLunch + totalFatDinner + totalFatSnack;
 
         dbHelper.updateFatSummaryFinal(selectedDate, totalFatFinal);
         fatSum.setText(String.format(Locale.getDefault(), "%.2f", totalFatFinal));
@@ -475,8 +560,9 @@ public class DashboardFragment extends Fragment {
         double totalCarbBreakfast = dbHelper.getTotalCarbSummary(selectedDate);
         double totalCarbLunch = dbHelperLunch.getTotalCarbSummaryLunch(selectedDate);
         double totalCarbDinner = dbHelperDinner.getTotalCarbSummaryDinner(selectedDate);
+        double totalCarbSnack = dbHelperSnack.getTotalCarbSummarySnack(selectedDate);
 
-        double totalCarbFinal = totalCarbBreakfast + totalCarbLunch + totalCarbDinner;
+        double totalCarbFinal = totalCarbBreakfast + totalCarbLunch + totalCarbDinner + totalCarbSnack;
 
         dbHelper.updateCarbSummaryFinal(selectedDate, totalCarbFinal);
         carbohydrateSum.setText(String.format(Locale.getDefault(), "%.2f", totalCarbFinal));
