@@ -23,11 +23,13 @@ import android.widget.TextView;
 import android.view.inputmethod.EditorInfo;
 
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.calorieapp.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -78,23 +80,21 @@ public class ProductListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_product_list, container, false);
 
+        /**
+        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
+
+        // Скройте BottomNavigationView
+        bottomNavigationView.setVisibility(View.GONE);
+         **/
+
+        // Удаляем свечение при прокрутке
+        RecyclerView recyclerViewForProductList = root.findViewById(R.id.productListRecyclerView);
+        recyclerViewForProductList.setOverScrollMode(View.OVER_SCROLL_NEVER);
+
+
         // Получаем выбранную дату из базы данных
         selectedDate = selectedDateDBHelper.getSelectedDate();
         breakfast_lunch_or_dinner = selectedButtonDBHelper.getSelectedButton();
-
-        //selectedDate = getArguments().getString("selectedDate");
-        /**
-        // Получите переданный аргумент из Bundle
-        Bundle args = getArguments();
-        if (args != null) {
-
-        } else {
-            // Обработайте ситуацию, когда аргументы равны null
-            selectedDate = "default_value"; // Установите значение по умолчанию или выполните другие действия
-        }
-        **/
-
-
 
         // Initialize the database helper
         databaseHelper = new ProductDatabaseHelper(requireContext());
@@ -241,11 +241,11 @@ public class ProductListFragment extends Fragment {
 
         // Set values to views
         titleTextView.setText(productDetails.getName());
-        compositionTextView.setText("Состав: " + productDetails.getComposition());
-        caloriesTextView.setText("Калории: " + String.valueOf(productDetails.getCalories()));
-        proteinTextView.setText("Белки: " + String.valueOf(productDetails.getProteins()));
-        fatTextView.setText("Жиры: " + String.valueOf(productDetails.getFats()));
-        carbohydrateTextView.setText("Углеводы: " + String.valueOf(productDetails.getCarbohydrates()));
+        compositionTextView.setText(productDetails.getComposition());
+        caloriesTextView.setText(String.valueOf(productDetails.getCalories()));
+        proteinTextView.setText(String.valueOf(productDetails.getProteins()) + "г");
+        fatTextView.setText(String.valueOf(productDetails.getFats()) + "г");
+        carbohydrateTextView.setText(String.valueOf(productDetails.getCarbohydrates()) + "г");
         categoryTextView.setText("Категория: " + productDetails.getCategory());
         barcodeTextView.setText("Штрихкод: " + productDetails.getBarcode());
 
@@ -829,10 +829,10 @@ public class ProductListFragment extends Fragment {
         String formattedCarbohydrate = String.format("%.2f", carbohydrate);
 
         // Установите новые значения в соответствующие TextView
-        caloriesTextView.setText("Калории: " + formattedCalories);
-        proteinTextView.setText("Белки: " + formattedProtein);
-        fatTextView.setText("Жиры: " + formattedFat);
-        carbohydrateTextView.setText("Углеводы: " + formattedCarbohydrate);
+        caloriesTextView.setText(formattedCalories);
+        proteinTextView.setText(formattedProtein + "г");
+        fatTextView.setText(formattedFat + "г");
+        carbohydrateTextView.setText(formattedCarbohydrate + "г");
     }
 
     private Product getProductDetails(String productName) {

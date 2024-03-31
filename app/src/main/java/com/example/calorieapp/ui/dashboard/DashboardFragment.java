@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -24,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.calorieapp.R;
 import com.example.calorieapp.databinding.FragmentDashboardBinding;
 import com.example.calorieapp.ui.home.DatabaseHelper;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -77,6 +79,16 @@ public class DashboardFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
+
+        // Скройте BottomNavigationView
+        bottomNavigationView.setVisibility(View.VISIBLE);
+
+        // Удаляем свечение при прокрутке
+        NestedScrollView nestedScrollView = root.findViewById(R.id.nestedscrollview_dashboard);
+        nestedScrollView.setOverScrollMode(View.OVER_SCROLL_NEVER);
+
         // Найти кнопку добавления завтрака
         Button buttonAddBreakfast = root.findViewById(R.id.buttonAddBreakfast);
         // Найти кнопку добавления обеда

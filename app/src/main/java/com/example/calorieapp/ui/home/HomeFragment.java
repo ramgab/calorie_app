@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -30,6 +31,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -48,6 +50,12 @@ public class HomeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+
+
+        // Удаляем свечение при прокрутке
+        NestedScrollView nestedScrollView = root.findViewById(R.id.nestedscrollview_home);
+        nestedScrollView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         personNameTextView = root.findViewById(R.id.person_name);
         calorieNormTextView = root.findViewById(R.id.calorie_norm);
@@ -73,6 +81,8 @@ public class HomeFragment extends Fragment {
             }
         });
         //loadWeightChartData(); // Загрузка данных для графика веса
+
+
         return root;
     }
 
@@ -99,7 +109,7 @@ public class HomeFragment extends Fragment {
             @SuppressLint("Range") float activityLevel = cursor.getFloat(cursor.getColumnIndex(DatabaseHelper.COLUMN_ACTIVITY_LEVEL));
 
             // Устанавливаем данные в TextView'ы
-            personNameTextView.setText(name);
+            personNameTextView.setText(name + "!");
             calorieNormTextView.setText(String.format(Locale.getDefault(), "%.2f калорий", calculateCalorieNorm(weight, height, age, gender, activityLevel)));
             genderValueTextView.setText(gender);
 

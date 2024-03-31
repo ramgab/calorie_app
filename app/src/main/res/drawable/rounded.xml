@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <solid android:color="@color/blocks">
     </solid>
+
     <corners
         android:topLeftRadius="32dp"
         android:topRightRadius="32dp">
