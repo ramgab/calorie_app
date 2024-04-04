@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -62,6 +64,7 @@ public class DashboardFragment extends Fragment {
     private TextView fatSum;
     private TextView carbohydrateSum;
 
+
     // Объявляем экземпляр класса базы данных для выбранной даты
     private SelectedDateDatabaseHelper selectedDateDBHelper;
     private SelectedButtonDatabaseHelper selectedButtonDBHelper;
@@ -80,6 +83,8 @@ public class DashboardFragment extends Fragment {
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+
+
         BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
 
         // Скройте BottomNavigationView
@@ -90,13 +95,13 @@ public class DashboardFragment extends Fragment {
         nestedScrollView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         // Найти кнопку добавления завтрака
-        Button buttonAddBreakfast = root.findViewById(R.id.buttonAddBreakfast);
+        ImageView buttonAddBreakfast = root.findViewById(R.id.buttonAddBreakfast);
         // Найти кнопку добавления обеда
-        Button buttonAddLunch = root.findViewById(R.id.buttonAddLunch);
+        ImageView buttonAddLunch = root.findViewById(R.id.buttonAddLunch);
         // Найти кнопку добавления ужина
-        Button buttonAddDinner = root.findViewById(R.id.buttonAddDinner);
+        ImageView buttonAddDinner = root.findViewById(R.id.buttonAddDinner);
         // Найти кнопку добавления перекусв
-        Button buttonAddSnack = root.findViewById(R.id.buttonAddSnack);
+        ImageView buttonAddSnack = root.findViewById(R.id.buttonAddSnack);
         // Установить слушатель нажатия
         buttonAddBreakfast.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -448,6 +453,13 @@ public class DashboardFragment extends Fragment {
         // Добавьте слушатель изменений даты
         currentDateTextView.addTextChangedListener(dateTextWatcher);
 
+        selectedDate = selectedDateDBHelper.getSelectedDate();
+        if(selectedDate != null && !selectedDate.isEmpty()) {
+            // Если база данных содержит значение, используем его
+            currentDateTextView.setText(selectedDate);
+            Log.d("DashboardFragment", "Установлена дата из базы данных: " + selectedDate);
+        }
+
         return root;
     }
 
@@ -583,7 +595,6 @@ public class DashboardFragment extends Fragment {
     private void setCurrentDate() {
         // Получение текущей даты
         Date currentDate = Calendar.getInstance().getTime();
-
         // Форматирование и установка текущей даты в текстовом поле
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
         String formattedDate = dateFormat.format(currentDate);
@@ -617,8 +628,12 @@ public class DashboardFragment extends Fragment {
         // Форматирование и установка текущей даты в текстовом поле
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
         String formattedDate = dateFormat.format(selectedDate.getTime());
+        selectedDateDBHelper.insertSelectedDate(formattedDate);
         currentDateTextView.setText(formattedDate);
+
     }
+
+
 
 
     private void setProgressBarWidth(View progressBarPart, int percentage) {

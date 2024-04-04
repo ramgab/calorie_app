@@ -316,7 +316,7 @@
             android:layout_height="100dp"
             tools:ignore="MissingConstraints"
             app:layout_constraintTop_toBottomOf="@+id/layout_for_person_info_2"
-            android:layout_marginTop="5dp">
+            >
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardViewTraining"

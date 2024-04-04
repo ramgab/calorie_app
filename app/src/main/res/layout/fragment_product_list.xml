@@ -15,37 +15,47 @@
         android:orientation="horizontal"
         android:background="@color/dark_grey">
 
-        <Button
+
+        <ImageView
             android:id="@+id/buttonCloseFragment"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:text="x"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/icon_back"
             android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             tools:ignore="MissingConstraints" />
 
-        <Button
+        <ImageView
             android:id="@+id/createProduct"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:text="+"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/icon_plus"
+            android:scaleType="centerCrop"
             android:layout_gravity="center"
+
+            android:layout_marginLeft="10dp"
+
+
             app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginRight="10dp"
             app:layout_constraintTop_toTopOf="@+id/buttonCloseFragment" />
 
 
         <TextView
             android:id="@+id/textViewBreakfast"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:paddingTop="10dp"
             android:text="Выберите продукт(ы)"
             android:textColor="@color/white"
-            android:textSize="18dp"
+            android:textSize="20dp"
             android:textStyle="bold"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="-16dp"
-            tools:layout_editor_absoluteY="0dp" />
+            tools:ignore="MissingConstraints" />
 
         <SearchView
             android:id="@+id/searchView"

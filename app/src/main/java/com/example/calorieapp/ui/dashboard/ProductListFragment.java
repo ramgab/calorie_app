@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.view.inputmethod.EditorInfo;
@@ -139,7 +140,7 @@ public class ProductListFragment extends Fragment {
         recyclerView.setAdapter(productAdapter);
 
         // Add a button to close the fragment and go back to DashboardFragment
-        Button closeButton = root.findViewById(R.id.buttonCloseFragment);
+        ImageView closeButton = root.findViewById(R.id.buttonCloseFragment);
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -170,7 +171,7 @@ public class ProductListFragment extends Fragment {
         });
 
 
-        Button createProductButton = root.findViewById(R.id.createProduct);
+        ImageView createProductButton = root.findViewById(R.id.createProduct);
         createProductButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -246,11 +247,11 @@ public class ProductListFragment extends Fragment {
         proteinTextView.setText(String.valueOf(productDetails.getProteins()) + "г");
         fatTextView.setText(String.valueOf(productDetails.getFats()) + "г");
         carbohydrateTextView.setText(String.valueOf(productDetails.getCarbohydrates()) + "г");
-        categoryTextView.setText("Категория: " + productDetails.getCategory());
-        barcodeTextView.setText("Штрихкод: " + productDetails.getBarcode());
+        categoryTextView.setText(productDetails.getCategory());
+        barcodeTextView.setText(productDetails.getBarcode());
 
         // Найти кнопку добавления штрихкода в макете нижнего листа
-        Button addBarcodeButton = bottomSheetView.findViewById(R.id.add_barcode);
+        ImageView addBarcodeButton = bottomSheetView.findViewById(R.id.add_barcode);
 
         // Установить слушатель onClickListener для кнопки добавления штрихкода
         addBarcodeButton.setOnClickListener(new View.OnClickListener() {
@@ -294,7 +295,7 @@ public class ProductListFragment extends Fragment {
 
 
         // Find the close button in the bottom sheet layout
-        Button closeButton = bottomSheetView.findViewById(R.id.buttonCloseBottomSheet);
+        ImageView closeButton = bottomSheetView.findViewById(R.id.buttonCloseBottomSheet);
 
         // Set an onClickListener for the close button
         closeButton.setOnClickListener(new View.OnClickListener() {

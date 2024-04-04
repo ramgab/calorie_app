@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp"
+        android:padding="5dp"
         android:background="@color/dark_grey">
 
         <!-- Здесь вы можете добавить виджеты и макеты для отображения деталей завтрака -->
@@ -25,6 +25,7 @@
             android:text="Завтрак: ваш рацион"
             android:textSize="18sp"
             android:textStyle="bold"
+            android:layout_gravity="center"
             android:textColor="@color/white"
             android:layout_marginBottom="8dp"/>
 

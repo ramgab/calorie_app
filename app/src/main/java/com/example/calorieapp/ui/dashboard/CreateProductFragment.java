@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +49,19 @@ public class CreateProductFragment extends Fragment {
         editTextCarbohydrate = view.findViewById(R.id.editTextCreateCarbohydrate);
         textViewCalories = view.findViewById(R.id.textViewCreateCalories);
         Button saveButton = view.findViewById(R.id.saveCreateProduct);
+
+
+        ImageView closeButton = view.findViewById(R.id.buttonCloseCreateFragment);
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ProductListFragment productListFragment = new ProductListFragment();
+                // Получаем FragmentManager и начинаем транзакцию
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.nav_host_fragment_activity_main, productListFragment) // Заменяем текущий фрагмент на ProductListFragment
+                        .commit(); // Применяем транзакцию
+            }
+        });
 
         // Устанавливаем слушатель изменения текста для автоматического рассчета калорий
         TextWatcher textWatcher = new TextWatcher() {

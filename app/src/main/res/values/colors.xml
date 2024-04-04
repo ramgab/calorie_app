@@ -21,6 +21,7 @@
     <color name="colorLunch">#98fb98</color> <!-- Светло-зеленый -->
     <color name="colorDinner">#87ceeb</color> <!-- Светло-синий -->
     <color name="transparent">#070707</color>
+    <color name="newColor">#FFFFFFFF </color>
 
 
 
