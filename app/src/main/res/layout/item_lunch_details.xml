@@ -1,69 +1,191 @@
 <!-- res/layout/item_breakfast_details.xml -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:padding="5dp">
+    app:cardCornerRadius="10dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginBottom="10dp"
+    android:layout_marginTop="5dp"
+    >
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/blocks"
-        app:cardCornerRadius="15dp">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/textViewProductNameLunch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Product Name"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp"/>
 
-        <TextView
-            android:id="@+id/textViewGramsLunch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Граммы: "
-            android:layout_marginBottom="4dp"/>
 
-        <TextView
-            android:id="@+id/textViewCaloriesLunch"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Калории: "
-            android:layout_marginBottom="4dp"/>
+            android:orientation="vertical"
+            android:background="@color/dark_grey"
 
-        <TextView
-            android:id="@+id/textViewProteinLunch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Белки: "
-            android:layout_marginBottom="4dp"/>
+            app:cardCornerRadius="15dp">
 
-        <TextView
-            android:id="@+id/textViewFatLunch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Жиры: "
-            android:layout_marginBottom="4dp"/>
 
-        <TextView
-            android:id="@+id/textViewCarbohydrateLunch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Углеводы: "
-            android:layout_marginBottom="4dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/deleteButtonLunch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Удалить"
-            android:layout_below="@id/textViewProductNameLunch"
-            android:layout_marginTop="8dp"/>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/blocks"
+                    app:cardCornerRadius="15dp"
+                    >
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/textViewProductNameLunch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="16dp"
+                            android:textStyle="bold"
+                            android:text="Название"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="5dp"/>
+
+                        <TextView
+                            android:id="@+id/textViewCaloriesLunch"
+                            android:layout_width="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@id/textViewProductNameLunch"
+                            android:paddingTop="10dp"
+                            android:paddingLeft="10dp"
+                            android:textSize="16dp"
+                            android:layout_height="wrap_content"
+                            tools:ignore="MissingConstraints" />
+
+
+                        <TextView
+                            android:id="@+id/textViewGramsLunch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@id/textViewProductNameLunch"
+                            app:layout_constraintLeft_toRightOf="@+id/textViewCaloriesLunch"
+                            android:paddingTop="10dp"
+                            android:paddingLeft="5dp"
+                            android:textSize="16dp"/>
+
+
+                        <TextView
+                            android:id="@+id/textViewProteinLunch"
+                            android:layout_width="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@id/textViewCaloriesLunch"
+
+                            android:paddingTop="5dp"
+                            android:paddingLeft="10dp"
+                            android:textSize="14dp"
+                            android:layout_height="wrap_content"
+                            tools:ignore="MissingConstraints" />
+
+                        <TextView
+                            android:id="@+id/textViewFatLunch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@id/textViewCaloriesLunch"
+                            app:layout_constraintLeft_toRightOf="@+id/textViewProteinLunch"
+                            android:paddingTop="5dp"
+                            android:paddingLeft="10dp"
+                            android:textSize="14dp"/>
+
+                        <TextView
+                            android:id="@+id/textViewCarbohydrateLunch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@id/textViewCaloriesLunch"
+                            app:layout_constraintLeft_toRightOf="@+id/textViewFatLunch"
+                            android:paddingTop="5dp"
+                            android:paddingLeft="10dp"
+                            android:textSize="14dp"/>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardViewForProteinLunch"
+                            android:layout_width="0dp"
+                            android:layout_height="5dp"
+                            app:cardCornerRadius="15dp"
+                            android:backgroundTint="@color/protein"
+                            app:layout_constraintTop_toBottomOf="@id/textViewProteinLunch"
+                            app:layout_constraintStart_toStartOf="@id/textViewProteinLunch"
+                            app:layout_constraintEnd_toEndOf="@id/textViewProteinLunch"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="10dp"
+
+                            android:layout_marginBottom="5dp"
+                            tools:ignore="MissingConstraints" />
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardViewForFatLunch"
+                            android:layout_width="0dp"
+                            android:layout_height="5dp"
+                            app:cardCornerRadius="15dp"
+                            android:backgroundTint="@color/fat"
+                            app:layout_constraintTop_toBottomOf="@id/textViewFatLunch"
+                            app:layout_constraintStart_toStartOf="@id/textViewFatLunch"
+                            app:layout_constraintEnd_toEndOf="@id/textViewFatLunch"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="10dp"
+
+                            android:layout_marginBottom="5dp"
+                            tools:ignore="MissingConstraints" />
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardViewForCarbLunch"
+                            android:layout_width="0dp"
+                            android:layout_height="5dp"
+                            app:cardCornerRadius="15dp"
+                            android:backgroundTint="@color/carb"
+                            app:layout_constraintTop_toBottomOf="@id/textViewCarbohydrateLunch"
+                            app:layout_constraintStart_toStartOf="@id/textViewCarbohydrateLunch"
+                            app:layout_constraintEnd_toEndOf="@id/textViewCarbohydrateLunch"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="10dp"
+
+                            android:layout_marginBottom="5dp"
+                            tools:ignore="MissingConstraints" />
+
+
+                        <ImageView
+                            android:id="@+id/deleteButtonLunch"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/icon_del"
+                            android:layout_gravity="end"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:layout_marginRight="10dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            app:layout_constraintTop_toBottomOf="@id/cardViewForCarbLunch"
+                            android:layout_height="10dp">
+
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+        </LinearLayout>
+
+
 
     </LinearLayout>
-</LinearLayout>
+</androidx.cardview.widget.CardView>

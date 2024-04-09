@@ -395,6 +395,7 @@ public class DashboardFragment extends Fragment {
         binding.layoutForDateToday.setOnClickListener(v -> {
             // При нажатии, отобразите DatePicker
             datePickerDialog.show();
+            datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
         });
 
         // Находим TextView для отображения суммы калорий завтрака
@@ -618,6 +619,7 @@ public class DashboardFragment extends Fragment {
         // Настройка режима отображения DatePicker в виде спиннера
         datePickerDialog.getDatePicker().setSpinnersShown(true);
         datePickerDialog.getDatePicker().setCalendarViewShown(false);
+
     }
 
     private void onDateSelected(int year, int month, int day) {

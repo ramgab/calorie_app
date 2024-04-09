@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -56,10 +57,10 @@ public class BreakfastDetailsAdapter extends RecyclerView.Adapter<BreakfastDetai
 
             holder.textViewProductName.setText(productName);
             holder.textViewGrams.setText(String.format(Locale.getDefault(), "%.2fг.", grams));
-            holder.textViewCalories.setText(String.format(Locale.getDefault(), "%.2fккал", calories));
-            holder.textViewProtein.setText(String.format(Locale.getDefault(), "%.2fг.", protein));
-            holder.textViewFat.setText(String.format(Locale.getDefault(), "%.2fг.", fat));
-            holder.textViewCarbohydrate.setText(String.format(Locale.getDefault(), "%.2fг.", carbohydrate));
+            holder.textViewCalories.setText(String.format(Locale.getDefault(), "%.2fккал,", calories));
+            holder.textViewProtein.setText(String.format(Locale.getDefault(), "Б: %.2fг.", protein));
+            holder.textViewFat.setText(String.format(Locale.getDefault(), "Ж: %.2fг.", fat));
+            holder.textViewCarbohydrate.setText(String.format(Locale.getDefault(), "У: %.2fг.", carbohydrate));
 
             // Находим кнопку удаления в макете элемента списка
             holder.deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -144,7 +145,7 @@ public class BreakfastDetailsAdapter extends RecyclerView.Adapter<BreakfastDetai
         TextView textViewProtein;
         TextView textViewFat;
         TextView textViewCarbohydrate;
-        Button deleteButton;
+        ImageView deleteButton;
 
         ViewHolder(View itemView) {
             super(itemView);
