@@ -100,18 +100,10 @@ public class ProductListFragment extends Fragment {
         // Initialize the database helper
         databaseHelper = new ProductDatabaseHelper(requireContext());
 
-        // Check if data has already been initialized
-        boolean dataInitialized = loadDataInitializationStatus();
-        if (!dataInitialized) {
-            // Add products to the database by reading from CSV
-            insertDataFromCSV();
 
-            // Mark data as initialized
-            saveDataInitializationStatus(true);
-        }
 
         // Retrieve product names from the database
-        List<String> productNames = getProductNames();
+        List<String> productNames = new ArrayList<>(); // Создаем новый список для хранения найденных продуктов
 
         // Set up RecyclerView
         RecyclerView recyclerView = root.findViewById(R.id.productListRecyclerView);
@@ -158,14 +150,13 @@ public class ProductListFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // Выполняется при подтверждении поиска (например, по нажатию Enter)
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                // Выполняется при изменении текста в SearchView
-                filterProducts(newText, productNames, recyclerView);
+                // Фильтруем продукты и обновляем адаптер
+                filterProducts(newText, recyclerView);
                 return true;
             }
         });
@@ -191,16 +182,16 @@ public class ProductListFragment extends Fragment {
 
 
     // Добавлен метод для фильтрации продуктов
-    private void filterProducts(String query, List<String> productNames, RecyclerView recyclerView) {
-        List<String> filteredProductNames = new ArrayList<>();
+    private void filterProducts(String query, RecyclerView recyclerView) {
+        // Получаем отфильтрованный список продуктов по запросу
+        List<String> filteredProductNames = getFilteredProductNames(query);
 
-        for (String productName : productNames) {
-            if (productName.toLowerCase().contains(query.toLowerCase())) {
-                filteredProductNames.add(productName);
-            }
+        // Ограничиваем количество отображаемых продуктов до 100
+        if (filteredProductNames.size() > 50) {
+            filteredProductNames = filteredProductNames.subList(0, 50);
         }
 
-        // Обновление адаптера RecyclerView
+        // Обновляем данные в адаптере
         ((ProductAdapter) recyclerView.getAdapter()).filterList(filteredProductNames);
     }
 
@@ -890,61 +881,6 @@ public class ProductListFragment extends Fragment {
         }
     }
 
-    private void insertDataFromCSV() {
-        try {
-            InputStream inputStream = getResources().openRawResource(R.raw.data4); // Replace 'data' with your file name in res/raw/
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            String line;
-
-            // Open the database for writing
-            SQLiteDatabase db = databaseHelper.getWritableDatabase();
-
-            // Read the first line (header) without processing it
-            reader.readLine();
-
-            // Read each subsequent line from the CSV file and insert into the database
-            while ((line = reader.readLine()) != null) {
-                String[] data = line.split(";");
-
-                // Assuming the CSV columns order is: title, squad, calories, protein, fat, carbohydrate, category, barcode
-                String productName = data[0].trim();
-                String composition = data[1].trim();
-                double calories = tryParseDouble(data[2].trim().replace(",", "."));
-                double protein = tryParseDouble(data[3].trim().replace(",", "."));
-                double fat = tryParseDouble(data[4].trim().replace(",", "."));
-                double carbohydrate = tryParseDouble(data[5].trim().replace(",", "."));
-                String category = data[6].trim();
-                String barcode = data[7].trim();
-
-                // Insert the data into the products table
-                String insertQuery = "INSERT INTO " + ProductDatabaseHelper.TABLE_PRODUCTS + " (" +
-                        ProductDatabaseHelper.COLUMN_NAME + ", " +
-                        ProductDatabaseHelper.COLUMN_COMPOSITION + ", " +
-                        ProductDatabaseHelper.COLUMN_CALORIES + ", " +
-                        ProductDatabaseHelper.COLUMN_PROTEIN + ", " +
-                        ProductDatabaseHelper.COLUMN_FAT + ", " +
-                        ProductDatabaseHelper.COLUMN_CARBOHYDRATE + ", " +
-                        ProductDatabaseHelper.COLUMN_CATEGORY + ", " +
-                        ProductDatabaseHelper.COLUMN_BARCODE + ") VALUES ('" +
-                        productName + "', '" +
-                        composition + "', " +
-                        calories + ", " +
-                        protein + ", " +
-                        fat + ", " +
-                        carbohydrate + ", '" +
-                        category + "', '" +
-                        barcode + "');";  // Добавлено значение barcode
-                db.execSQL(insertQuery);
-            }
-
-            // Close the reader and database
-            reader.close();
-            db.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     private List<String> getProductNames() {
         List<String> productList = new ArrayList<>();
@@ -971,7 +907,29 @@ public class ProductListFragment extends Fragment {
     }
 
 
+    private List<String> getFilteredProductNames(String query) {
+        List<String> filteredProductNames = new ArrayList<>();
 
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+
+        // Выполняем запрос к базе данных для поиска продуктов по названию
+        Cursor cursor = db.query(ProductDatabaseHelper.TABLE_PRODUCTS,
+                new String[]{ProductDatabaseHelper.COLUMN_NAME},
+                ProductDatabaseHelper.COLUMN_NAME + " LIKE ?",
+                new String[]{"%" + query + "%"},
+                null, null, null);
+
+        // Перебираем результаты запроса и добавляем найденные продукты в список
+        while (cursor.moveToNext()) {
+            @SuppressLint("Range") String productName = cursor.getString(cursor.getColumnIndex(ProductDatabaseHelper.COLUMN_NAME));
+            filteredProductNames.add(productName);
+        }
+
+        cursor.close();
+        db.close();
+
+        return filteredProductNames;
+    }
 
 
 
