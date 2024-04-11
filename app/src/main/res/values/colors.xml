@@ -22,6 +22,13 @@
     <color name="colorDinner">#87ceeb</color> <!-- Светло-синий -->
     <color name="transparent">#070707</color>
     <color name="newColor">#FFFFFFFF </color>
+    <color name="blue">#1E90FF </color>
+    <color name="Orchid">#DA70D6 </color>
+    <color name="Maroon">#800000 </color>
+    <color name="DarkSlateGray">#2F4F4F </color>
+    <color name="LimeGreen">#32CD32 </color>
+    <color name="Cyan">#00FFFF </color>
+
 
 
 

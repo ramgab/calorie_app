@@ -1,16 +1,20 @@
 package com.example.calorieapp.ui.dashboard;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,6 +32,9 @@ import com.example.calorieapp.R;
 import com.example.calorieapp.databinding.FragmentDashboardBinding;
 import com.example.calorieapp.ui.home.DatabaseHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.zxing.integration.android.IntentIntegrator;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -83,7 +90,71 @@ public class DashboardFragment extends Fragment {
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        CardView story1 = root.findViewById(R.id.story1);
+        CardView story2 = root.findViewById(R.id.story2);
+        CardView story3 = root.findViewById(R.id.story3);
+        CardView story4 = root.findViewById(R.id.story4);
+        CardView story5 = root.findViewById(R.id.story5);
+        CardView story6 = root.findViewById(R.id.story6);
+        CardView story7 = root.findViewById(R.id.story7);
+        CardView story8 = root.findViewById(R.id.story8);
 
+
+        story1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showBottomSheetStory(R.layout.bottom_sheet_story1);
+            }
+        });
+
+        story2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showBottomSheetStory(R.layout.bottom_sheet_story2);
+            }
+        });
+
+        story3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showBottomSheetStory(R.layout.bottom_sheet_story3);
+            }
+        });
+
+        story4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showBottomSheetStory(R.layout.bottom_sheet_story4);
+            }
+        });
+
+        story5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showBottomSheetStory(R.layout.bottom_sheet_story5);
+            }
+        });
+
+        story6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showBottomSheetStory(R.layout.bottom_sheet_story6);
+            }
+        });
+
+        story7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showBottomSheetStory(R.layout.bottom_sheet_story7);
+            }
+        });
+
+        story8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showBottomSheetStory(R.layout.bottom_sheet_story8);
+            }
+        });
 
         BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
 
@@ -341,46 +412,7 @@ public class DashboardFragment extends Fragment {
             }
         });
 
-        homeHorizontalRec = root.findViewById(R.id.home_hor_rec);
 
-
-
-        homeHorModelList = new ArrayList<>();
-        homeHorModelList.add(new HomeHorModel(R.drawable.pizza, "Pizza"));
-        homeHorModelList.add(new HomeHorModel(R.drawable.hamburger, "Hamburger"));
-        homeHorModelList.add(new HomeHorModel(R.drawable.fried_potatoes, "Fries"));
-        homeHorModelList.add(new HomeHorModel(R.drawable.ice_cream, "Ice Cream"));
-        homeHorModelList.add(new HomeHorModel(R.drawable.sandwich, "Sandwich")); 
-
-        homeHorAdapter = new HomeHorAdapter(getActivity(), homeHorModelList);
-        homeHorizontalRec.setAdapter(homeHorAdapter);
-        homeHorizontalRec.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        homeHorizontalRec.setHasFixedSize(true);
-        homeHorizontalRec.setNestedScrollingEnabled(false);
-
-
-        homeHorizontalRec.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-            @Override
-            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
-                if (e.getAction() == MotionEvent.ACTION_UP) {
-                    View childView = rv.findChildViewUnder(e.getX(), e.getY());
-                    if (childView != null) {
-                        int position = rv.getChildAdapterPosition(childView);
-                        Intent intent = new Intent(getActivity(), StoryActivity.class);
-                        intent.putExtra("position", position); // передаем позицию выбранного элемента сториса
-                        startActivity(intent);
-                        return true;
-                    }
-                }
-                return false;
-            }
-
-            @Override
-            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {}
-
-            @Override
-            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {}
-        });
 
 
         currentDateTextView = root.findViewById(R.id.currentDateTextView);
@@ -653,4 +685,32 @@ public class DashboardFragment extends Fragment {
         // Получите ширину экрана устройства
         return getResources().getDisplayMetrics().widthPixels;
     }
+
+    private void showBottomSheetStory(int bottomSheetLayoutId) {
+        // Inflate the bottom sheet layout
+        View bottomSheetView = getLayoutInflater().inflate(bottomSheetLayoutId, null);
+
+        // Create a BottomSheetDialog and set the layout
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext());
+        bottomSheetDialog.setContentView(bottomSheetView);
+
+        // Show the bottom sheet
+        bottomSheetDialog.show();
+
+        // Установим высоту нижнего листа на весь экран
+        View parentLayout = bottomSheetDialog.findViewById(com.google.android.material.R.id.design_bottom_sheet);
+        ViewGroup.LayoutParams layoutParams = parentLayout.getLayoutParams();
+        layoutParams.height = getResources().getDisplayMetrics().heightPixels;
+        parentLayout.setLayoutParams(layoutParams);
+
+        // Установим состояние нижнего листа в STATE_EXPANDED
+        BottomSheetBehavior<View> bottomSheetBehavior = BottomSheetBehavior.from(parentLayout);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+    }
+
+
+
+
+
+
 }

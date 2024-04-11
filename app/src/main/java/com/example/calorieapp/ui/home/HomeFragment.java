@@ -292,7 +292,7 @@ public class HomeFragment extends Fragment {
         xAxis.setTextColor(Color.WHITE); // Изменение цвета текста на оси X на желтый
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setGranularity(1f);
-        xAxis.setTextSize(14f);
+        xAxis.setTextSize(12f);
 
         xAxis.setValueFormatter(new IndexAxisValueFormatter(dates));
         xAxis.setLabelCount(dates.size());
