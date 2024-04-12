@@ -204,13 +204,6 @@
 
         </HorizontalScrollView>
 
-
-
-
-
-
-
-
         <TextView
             android:id="@+id/calorie_sum"
             android:layout_width="match_parent"

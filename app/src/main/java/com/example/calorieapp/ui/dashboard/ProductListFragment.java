@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,6 +16,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -150,14 +152,15 @@ public class ProductListFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                // Вызываем метод для фильтрации продуктов при нажатии на кнопку поиска
+                filterProducts(query, recyclerView);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                // Фильтруем продукты и обновляем адаптер
-                filterProducts(newText, recyclerView);
-                return true;
+                // Возвращаем false, чтобы не фильтровать продукты при каждом изменении текста
+                return false;
             }
         });
 
@@ -186,7 +189,7 @@ public class ProductListFragment extends Fragment {
         // Получаем отфильтрованный список продуктов по запросу
         List<String> filteredProductNames = getFilteredProductNames(query);
 
-        // Ограничиваем количество отображаемых продуктов до 100
+        // Ограничиваем количество отображаемых продуктов до 50
         if (filteredProductNames.size() > 50) {
             filteredProductNames = filteredProductNames.subList(0, 50);
         }
@@ -194,6 +197,11 @@ public class ProductListFragment extends Fragment {
         // Обновляем данные в адаптере
         ((ProductAdapter) recyclerView.getAdapter()).filterList(filteredProductNames);
     }
+    // Добавим метод для обработки события сворачивания клавиатуры
+
+
+
+
 
     private void showBottomSheet(String productName) {
         // Inflate the bottom sheet layout
@@ -681,6 +689,7 @@ public class ProductListFragment extends Fragment {
         double protein = product.getProteins() * (grams / 100.0);
         double fat = product.getFats() * (grams / 100.0);
         double carbohydrate = product.getCarbohydrates() * (grams / 100.0);
+        String category = product.getCategory();
 
         // Откройте базу данных для записи
         SQLiteDatabase db = new BreakfastDatabaseHelper(requireContext()).getWritableDatabase();
@@ -693,6 +702,7 @@ public class ProductListFragment extends Fragment {
         values.put(BreakfastDatabaseHelper.COLUMN_PROTEIN, protein);
         values.put(BreakfastDatabaseHelper.COLUMN_FAT, fat);
         values.put(BreakfastDatabaseHelper.COLUMN_CARBOHYDRATE, carbohydrate);
+        values.put(BreakfastDatabaseHelper.COLUMN_CATEGORY, category);
         values.put(BreakfastDatabaseHelper.COLUMN_DATE, selectedDate);
 
         db.insert(BreakfastDatabaseHelper.TABLE_BREAKFAST, null, values);
@@ -713,6 +723,7 @@ public class ProductListFragment extends Fragment {
         double protein = product.getProteins() * (grams / 100.0);
         double fat = product.getFats() * (grams / 100.0);
         double carbohydrate = product.getCarbohydrates() * (grams / 100.0);
+        String category = product.getCategory();
 
         // Откройте базу данных для записи
         SQLiteDatabase db = new LunchDatabaseHelper(requireContext()).getWritableDatabase();
@@ -725,6 +736,7 @@ public class ProductListFragment extends Fragment {
         values.put(LunchDatabaseHelper.COLUMN_PROTEIN, protein);
         values.put(LunchDatabaseHelper.COLUMN_FAT, fat);
         values.put(LunchDatabaseHelper.COLUMN_CARBOHYDRATE, carbohydrate);
+        values.put(LunchDatabaseHelper.COLUMN_CATEGORY, category);
         values.put(LunchDatabaseHelper.COLUMN_DATE, selectedDate);
 
         db.insert(LunchDatabaseHelper.TABLE_LUNCH, null, values);
@@ -746,6 +758,7 @@ public class ProductListFragment extends Fragment {
         double protein = product.getProteins() * (grams / 100.0);
         double fat = product.getFats() * (grams / 100.0);
         double carbohydrate = product.getCarbohydrates() * (grams / 100.0);
+        String category = product.getCategory();
 
         // Откройте базу данных для записи
         SQLiteDatabase db = new DinnerDatabaseHelper(requireContext()).getWritableDatabase();
@@ -758,6 +771,7 @@ public class ProductListFragment extends Fragment {
         values.put(DinnerDatabaseHelper.COLUMN_PROTEIN, protein);
         values.put(DinnerDatabaseHelper.COLUMN_FAT, fat);
         values.put(DinnerDatabaseHelper.COLUMN_CARBOHYDRATE, carbohydrate);
+        values.put(DinnerDatabaseHelper.COLUMN_CATEGORY, category);
         values.put(DinnerDatabaseHelper.COLUMN_DATE, selectedDate);
 
         db.insert(DinnerDatabaseHelper.TABLE_DINNER, null, values);
@@ -778,6 +792,7 @@ public class ProductListFragment extends Fragment {
         double protein = product.getProteins() * (grams / 100.0);
         double fat = product.getFats() * (grams / 100.0);
         double carbohydrate = product.getCarbohydrates() * (grams / 100.0);
+        String category = product.getCategory();
 
         // Откройте базу данных для записи
         SQLiteDatabase db = new SnackDatabaseHelper(requireContext()).getWritableDatabase();
@@ -790,6 +805,7 @@ public class ProductListFragment extends Fragment {
         values.put(SnackDatabaseHelper.COLUMN_PROTEIN, protein);
         values.put(SnackDatabaseHelper.COLUMN_FAT, fat);
         values.put(SnackDatabaseHelper.COLUMN_CARBOHYDRATE, carbohydrate);
+        values.put(SnackDatabaseHelper.COLUMN_CATEGORY, category);
         values.put(SnackDatabaseHelper.COLUMN_DATE, selectedDate);
 
         db.insert(SnackDatabaseHelper.TABLE_SNACK, null, values);
@@ -912,11 +928,27 @@ public class ProductListFragment extends Fragment {
 
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
 
-        // Выполняем запрос к базе данных для поиска продуктов по названию
+        // Разделим запрос пользователя на отдельные слова
+        String[] searchWords = query.split("\\s+");
+
+        // Переменная для хранения параметров запроса
+        StringBuilder selection = new StringBuilder();
+        String[] selectionArgs = new String[searchWords.length];
+
+        // Формируем параметры запроса для каждого слова
+        for (int i = 0; i < searchWords.length; i++) {
+            selection.append(ProductDatabaseHelper.COLUMN_NAME).append(" LIKE ?");
+            selectionArgs[i] = "%" + searchWords[i] + "%";
+            if (i < searchWords.length - 1) {
+                selection.append(" AND ");
+            }
+        }
+
+        // Выполняем запрос к базе данных
         Cursor cursor = db.query(ProductDatabaseHelper.TABLE_PRODUCTS,
                 new String[]{ProductDatabaseHelper.COLUMN_NAME},
-                ProductDatabaseHelper.COLUMN_NAME + " LIKE ?",
-                new String[]{"%" + query + "%"},
+                selection.toString(),
+                selectionArgs,
                 null, null, null);
 
         // Перебираем результаты запроса и добавляем найденные продукты в список
@@ -930,6 +962,8 @@ public class ProductListFragment extends Fragment {
 
         return filteredProductNames;
     }
+
+
 
 
 

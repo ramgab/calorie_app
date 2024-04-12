@@ -26,6 +26,7 @@ public class BreakfastDatabaseHelper extends SQLiteOpenHelper {
 
     public static final String COLUMN_CARBOHYDRATE = "carbohydrate";
     public static final String COLUMN_DATE = "date";
+    public static final String COLUMN_CATEGORY = "category";
 
     // SQL query to create the breakfast table
     private static final String CREATE_BREAKFAST_TABLE = "CREATE TABLE " + TABLE_BREAKFAST + " (" +
@@ -36,6 +37,7 @@ public class BreakfastDatabaseHelper extends SQLiteOpenHelper {
             COLUMN_PROTEIN + " REAL, " +
             COLUMN_FAT + " REAL, " +
             COLUMN_CARBOHYDRATE + " REAL, " +
+            COLUMN_CATEGORY + " TEXT, " +
             COLUMN_DATE + " TEXT);"; // Новое поле с значением по умолчанию
 
 

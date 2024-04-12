@@ -24,6 +24,7 @@ public class SnackDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_PROTEIN = "protein";
     public static final String COLUMN_FAT = "fat";
     public static final String COLUMN_CARBOHYDRATE = "carbohydrate";
+    public static final String COLUMN_CATEGORY = "category";
     public static final String COLUMN_DATE = "date";
 
     // SQL query to create the snack table
@@ -35,6 +36,7 @@ public class SnackDatabaseHelper extends SQLiteOpenHelper {
             COLUMN_PROTEIN + " REAL, " +
             COLUMN_FAT + " REAL, " +
             COLUMN_CARBOHYDRATE + " REAL, " +
+            COLUMN_CATEGORY + " TEXT, " +
             COLUMN_DATE + " TEXT);";
 
 
