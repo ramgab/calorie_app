@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.calorieapp.R;
 import com.example.calorieapp.databinding.FragmentHomeBinding;
+import com.example.calorieapp.ui.dashboard.BreakfastDatabaseHelper;
+import com.example.calorieapp.ui.dashboard.DinnerDatabaseHelper;
+import com.example.calorieapp.ui.dashboard.LunchDatabaseHelper;
+import com.example.calorieapp.ui.dashboard.SnackDatabaseHelper;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
@@ -31,6 +37,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.ParseException;
@@ -38,7 +45,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class HomeFragment extends Fragment {
     // Внутри класса HomeFragment
@@ -92,6 +102,7 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         loadWeightChartData(); // Загрузка данных для графика веса
         loadCaloriesSummaryChartData();
+        setupTopCategoriesChart(); // Инициализация гистограммы топ-3 категорий
     }
 
     public void loadPersonData() {
@@ -300,13 +311,13 @@ public class HomeFragment extends Fragment {
 
         YAxis yAxis = caloriesChart.getAxisLeft();
         yAxis.setTextColor(Color.WHITE);
-        yAxis.setTextSize(14f);
+        yAxis.setTextSize(12f);
         yAxis.setGridColor(Color.WHITE); // Изменение цвета сетки на серый
         YAxis yAxisR = caloriesChart.getAxisRight();
         yAxisR.setDrawLabels(false);
         Legend legend = caloriesChart.getLegend();
         legend.setTextColor(Color.WHITE); // Изменение цвета текста в легенде на зеленый
-        legend.setTextSize(14f);
+        legend.setTextSize(12f);
         caloriesChart.invalidate();
     }
 
@@ -326,6 +337,108 @@ public class HomeFragment extends Fragment {
 
         return bmr;
     }
+
+
+    private void setupTopCategoriesChart() {
+        // Получаем топ-3 категорий завтраков
+        List<Pair<String, Integer>> breakfastCategories = new BreakfastDatabaseHelper(requireContext()).getTop3CategoriesWithCount();
+        // Получаем топ-3 категорий обедов
+        List<Pair<String, Integer>> lunchCategories = new LunchDatabaseHelper(requireContext()).getTop3CategoriesWithCount();
+        // Получаем топ-3 категорий ужинов
+        List<Pair<String, Integer>> dinnerCategories = new DinnerDatabaseHelper(requireContext()).getTop3CategoriesWithCount();
+        // Получаем топ-3 категорий закусок
+        List<Pair<String, Integer>> snackCategories = new SnackDatabaseHelper(requireContext()).getTop3CategoriesWithCount();
+
+        // Объединяем все категории в один список
+        List<Pair<String, Integer>> allCategories = new ArrayList<>();
+        allCategories.addAll(breakfastCategories);
+        allCategories.addAll(lunchCategories);
+        allCategories.addAll(dinnerCategories);
+        allCategories.addAll(snackCategories);
+
+        // Подсчитываем общее количество продуктов для каждой категории
+        Map<String, Integer> categoryCountMap = new HashMap<>();
+        for (Pair<String, Integer> category : allCategories) {
+            String categoryName = category.first;
+            int categoryCount = category.second;
+            categoryCountMap.put(categoryName, categoryCountMap.getOrDefault(categoryName, 0) + categoryCount);
+        }
+
+        // Сортируем категории по количеству продуктов
+        List<Map.Entry<String, Integer>> sortedCategoryList = new ArrayList<>(categoryCountMap.entrySet());
+        sortedCategoryList.sort((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()));
+
+        // Создаем данные для гистограммы
+        ArrayList<BarEntry> entries = new ArrayList<>();
+        ArrayList<String> labels = new ArrayList<>();
+
+        // Добавляем топ-3 категорий в данные для гистограммы
+        int count = Math.min(sortedCategoryList.size(), 3); // Выводим только топ-3 категорий
+        for (int i = 0; i < count; i++) {
+            Map.Entry<String, Integer> entry = sortedCategoryList.get(i);
+            String categoryName = entry.getKey();
+            int categoryCount = entry.getValue();
+            entries.add(new BarEntry(i, categoryCount));
+            labels.add(categoryName);
+        }
+
+        // Создаем набор данных для гистограммы
+        BarDataSet dataSet = new BarDataSet(entries, "Top 3 Categories");
+        dataSet.setColor(Color.rgb(0, 155, 0)); // Зеленый цвет для столбцов
+
+        // Создаем объект данных для гистограммы
+        BarData barData = new BarData(dataSet);
+        class IntegerValueFormatter extends ValueFormatter {
+            @Override
+            public String getFormattedValue(float value) {
+                // Преобразуем значение в целое число и возвращаем его в виде строки
+                return String.valueOf((int) value);
+            }
+        }
+        // Находим гистограмму по идентификатору в макете
+        BarChart topCategoriesChart = requireView().findViewById(R.id.topCategoriesChart);
+        barData.setValueFormatter(new IntegerValueFormatter());
+
+        // Устанавливаем данные для гистограммы
+        topCategoriesChart.setData(barData);
+        topCategoriesChart.getDescription().setEnabled(false);
+        dataSet.setColor(Color.WHITE); // Изменение цвета баров на красный
+        dataSet.setValueTextColor(Color.WHITE);
+        dataSet.setValueTextSize(12f);
+
+        // Настраиваем ось X
+        XAxis xAxis = topCategoriesChart.getXAxis();
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setTextColor(Color.WHITE);
+        xAxis.setGranularity(1f);
+        xAxis.setTextSize(12f);
+        xAxis.setLabelRotationAngle(-45); // Поворачиваем метки по оси X для лучшей читаемости
+        xAxis.setDrawGridLines(false);
+
+        // Настраиваем ось Y
+        topCategoriesChart.getAxisLeft().setEnabled(false);
+        topCategoriesChart.getAxisRight().setEnabled(false);
+        topCategoriesChart.getLegend().setEnabled(false);
+        topCategoriesChart.getDescription().setEnabled(false);
+
+
+        YAxis yAxis = topCategoriesChart.getAxisLeft();
+
+        yAxis.setTextColor(Color.WHITE);
+        yAxis.setTextSize(12f);
+        yAxis.setGridColor(Color.WHITE); // Изменение цвета сетки на серый
+        YAxis yAxisR = topCategoriesChart.getAxisRight();
+        yAxisR.setDrawLabels(false);
+        Legend legend = topCategoriesChart.getLegend();
+        legend.setTextColor(Color.WHITE); // Изменение цвета текста в легенде на зеленый
+        legend.setTextSize(12f);
+
+        // Обновляем гистограмму
+        topCategoriesChart.invalidate();
+    }
+
+
 
     @Override
     public void onDestroyView() {

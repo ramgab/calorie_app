@@ -1,14 +1,18 @@
 package com.example.calorieapp.ui.dashboard;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.util.Pair;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 public class BreakfastDatabaseHelper extends SQLiteOpenHelper {
@@ -443,6 +447,27 @@ public class BreakfastDatabaseHelper extends SQLiteOpenHelper {
 
         return totalCarb;
     }
+
+    // Метод для получения топ-3 категорий завтраков вместе с количеством продуктов
+    public List<Pair<String, Integer>> getTop3CategoriesWithCount() {
+        List<Pair<String, Integer>> top3Categories = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "SELECT " + COLUMN_CATEGORY + ", COUNT(*) AS count FROM " + TABLE_BREAKFAST +
+                " GROUP BY " + COLUMN_CATEGORY + " ORDER BY count DESC LIMIT 3";
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                @SuppressLint("Range") String category = cursor.getString(cursor.getColumnIndex(COLUMN_CATEGORY));
+                @SuppressLint("Range") int count = cursor.getInt(cursor.getColumnIndex("count"));
+                top3Categories.add(new Pair<>(category, count));
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+        db.close();
+        return top3Categories;
+    }
+
+
 
 
     @Override
