@@ -8,7 +8,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.example.calorieapp.ui.dashboard.BreakfastDetailsFragment;
+import com.example.calorieapp.ui.dashboard.CreateProductFragment;
+import com.example.calorieapp.ui.dashboard.DashboardFragment;
+import com.example.calorieapp.ui.dashboard.DinnerDetailsFragment;
+import com.example.calorieapp.ui.dashboard.LunchDetailsFragment;
 import com.example.calorieapp.ui.dashboard.ProductDatabaseHelper;
+import com.example.calorieapp.ui.dashboard.ProductListFragment;
+import com.example.calorieapp.ui.dashboard.SnackDetailsFragment;
 import com.example.calorieapp.ui.home.EditPersonValueFragment;
 import com.example.calorieapp.ui.home.HomeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -16,6 +23,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
@@ -32,6 +41,9 @@ import java.io.InputStreamReader;
 public class MainActivity extends AppCompatActivity {
     private ProductDatabaseHelper databaseHelper;
     private ActivityMainBinding binding;
+    private BottomNavigationView bottomNavigationView;
+
+
     private static final String PREF_FIRST_LAUNCH = "first_launch";
 
     @Override
@@ -46,14 +58,12 @@ public class MainActivity extends AppCompatActivity {
         if (isFirstLaunch()) {
             openEditPersonValueFragment();
             insertDataFromCSV();
-        } else {
-            openHomeFragment();
         }
 
 
+        bottomNavigationView = findViewById(R.id.nav_view); // Инициализируем bottomNavigationView
 
-
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+        ;
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -64,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+
     }
 
     private boolean isFirstLaunch() {
@@ -157,4 +168,49 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.nav_host_fragment_activity_main, homeFragment)
                 .commit();
     }
+
+    @Override
+    public void onBackPressed() {
+        // Проверяем, есть ли что-то в стеке обратного вызова
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            // Получаем текущий фрагмент
+            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main);
+
+            // Проверяем, является ли текущий фрагмент одним из фрагментов детальной информации
+            if (currentFragment instanceof BreakfastDetailsFragment ||
+                    currentFragment instanceof LunchDetailsFragment ||
+                    currentFragment instanceof DinnerDetailsFragment ||
+                    currentFragment instanceof ProductListFragment ||
+                    currentFragment instanceof SnackDetailsFragment) {
+
+                // Удаляем DashboardFragment из стека обратного вызова
+                getSupportFragmentManager().popBackStack("dashboard_fragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+                // Показываем BottomNavigationView
+                bottomNavigationView.setVisibility(View.VISIBLE);
+            } else if (currentFragment instanceof CreateProductFragment) {
+                // Если текущий фрагмент - CreateProductFragment, переходим к ProductListFragment
+                getSupportFragmentManager().popBackStack("product_list_fragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+                // Не отображаем BottomNavigationView
+                bottomNavigationView.setVisibility(View.GONE);
+            } else if (currentFragment instanceof EditPersonValueFragment) {
+                // Если текущий фрагмент - EditPersonValueFragment, переходим к HomeFragment
+                getSupportFragmentManager().popBackStack("home_fragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+                // Отображаем BottomNavigationView
+                bottomNavigationView.setVisibility(View.VISIBLE);
+            } else {
+                // Если текущий фрагмент не является детальным фрагментом или CreateProductFragment, вызываем стандартное поведение кнопки "назад"
+                super.onBackPressed();
+            }
+        } else {
+            // Если стек обратного вызова пуст, вызываем стандартное поведение кнопки "назад"
+            super.onBackPressed();
+        }
+    }
+
+
+
+
 }

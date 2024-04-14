@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -90,6 +91,16 @@ public class DashboardFragment extends Fragment {
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        // Установка цвета статус-бара
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            // Для API 30 и выше
+            requireActivity().getWindow().setStatusBarColor(ContextCompat.getColor(requireContext(), R.color.dark_grey));
+        } else {
+            // Для API ниже 30
+            requireActivity().getWindow().setStatusBarColor(ContextCompat.getColor(requireContext(), R.color.dark_grey));
+            // Убедитесь, что ваш стиль активности не устанавливает прозрачный статус-бар (android:windowTranslucentStatus)
+        }
+
         CardView story1 = root.findViewById(R.id.story1);
         CardView story2 = root.findViewById(R.id.story2);
         CardView story3 = root.findViewById(R.id.story3);
@@ -156,10 +167,10 @@ public class DashboardFragment extends Fragment {
             }
         });
 
-        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
 
-        // Скройте BottomNavigationView
-        bottomNavigationView.setVisibility(View.VISIBLE);
+
+
+
 
         // Удаляем свечение при прокрутке
         NestedScrollView nestedScrollView = root.findViewById(R.id.nestedscrollview_dashboard);
@@ -198,7 +209,7 @@ public class DashboardFragment extends Fragment {
                 fragmentTransaction.replace(R.id.nav_host_fragment_activity_main, productListFragment);
 
                 // Add the transaction to the back stack, so you can return to the previous fragment
-                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.addToBackStack("dashboard_fragment");
 
                 // Apply the transaction
                 fragmentTransaction.commit();
@@ -229,7 +240,7 @@ public class DashboardFragment extends Fragment {
                 fragmentTransaction.replace(R.id.nav_host_fragment_activity_main, productListFragment);
 
                 // Add the transaction to the back stack, so you can return to the previous fragment
-                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.addToBackStack("dashboard_fragment");
 
                 // Apply the transaction
                 fragmentTransaction.commit();
@@ -260,7 +271,7 @@ public class DashboardFragment extends Fragment {
                 fragmentTransaction.replace(R.id.nav_host_fragment_activity_main, productListFragment);
 
                 // Add the transaction to the back stack, so you can return to the previous fragment
-                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.addToBackStack("dashboard_fragment");
 
                 // Apply the transaction
                 fragmentTransaction.commit();
@@ -291,7 +302,7 @@ public class DashboardFragment extends Fragment {
                 fragmentTransaction.replace(R.id.nav_host_fragment_activity_main, productListFragment);
 
                 // Add the transaction to the back stack, so you can return to the previous fragment
-                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.addToBackStack("dashboard_fragment");
 
                 // Apply the transaction
                 fragmentTransaction.commit();
@@ -321,7 +332,7 @@ public class DashboardFragment extends Fragment {
                 requireActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.nav_host_fragment_activity_main, breakfastDetailsFragment)
-                        .addToBackStack(null)
+                        .addToBackStack("dashboard_fragment")
                         .commit();
             }
         });
@@ -349,7 +360,7 @@ public class DashboardFragment extends Fragment {
                 requireActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.nav_host_fragment_activity_main, lunchDetailsFragment)
-                        .addToBackStack(null)
+                        .addToBackStack("dashboard_fragment")
                         .commit();
             }
         });
@@ -378,7 +389,7 @@ public class DashboardFragment extends Fragment {
                 requireActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.nav_host_fragment_activity_main, dinnerDetailsFragment)
-                        .addToBackStack(null)
+                        .addToBackStack("dashboard_fragment")
                         .commit();
             }
         });
@@ -407,7 +418,7 @@ public class DashboardFragment extends Fragment {
                 requireActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.nav_host_fragment_activity_main, snackDetailsFragment)
-                        .addToBackStack(null)
+                        .addToBackStack("dashboard_fragment")
                         .commit();
             }
         });
@@ -493,6 +504,11 @@ public class DashboardFragment extends Fragment {
             Log.d("DashboardFragment", "Установлена дата из базы данных: " + selectedDate);
         }
 
+
+        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
+
+        // Скройте BottomNavigationView
+        bottomNavigationView.setVisibility(View.VISIBLE);
         return root;
     }
 

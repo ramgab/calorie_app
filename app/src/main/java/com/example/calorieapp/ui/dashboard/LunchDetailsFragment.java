@@ -10,18 +10,24 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.calorieapp.R;
 import com.example.calorieapp.ui.dashboard.LunchDetailsAdapter;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class LunchDetailsFragment extends Fragment {
 
     private String selectedDate;
     private RecyclerView recyclerView;
     private LunchDetailsAdapter adapter;
+
+
+
+    private BottomNavigationView bottomNavigationView; // Добавляем BottomNavigationView
 
     public LunchDetailsFragment() {
         // Обязательный пустой конструктор
@@ -33,6 +39,26 @@ public class LunchDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Инфлейтинг макета для этого фрагмента
         View rootView = inflater.inflate(R.layout.fragment_lunch_details, container, false);
+
+        // Установка цвета статус-бара
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            // Для API 30 и выше
+            requireActivity().getWindow().setStatusBarColor(ContextCompat.getColor(requireContext(), R.color.blocks));
+        } else {
+            // Для API ниже 30
+            requireActivity().getWindow().setStatusBarColor(ContextCompat.getColor(requireContext(), R.color.blocks));
+            // Убедитесь, что ваш стиль активности не устанавливает прозрачный статус-бар (android:windowTranslucentStatus)
+        }
+
+
+        bottomNavigationView = requireActivity().findViewById(R.id.nav_view);
+
+        // Скрываем BottomNavigationView
+        bottomNavigationView.setVisibility(View.GONE);
+
+        // Удаляем свечение при прокрутке
+        RecyclerView recyclerViewLunch = rootView.findViewById(R.id.recyclerViewLunchDetails);
+        recyclerViewLunch.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         // Найти кнопку для закрытия фрагмента
         ImageView buttonCloseFragment = rootView.findViewById(R.id.buttonCloseLunchFragment);

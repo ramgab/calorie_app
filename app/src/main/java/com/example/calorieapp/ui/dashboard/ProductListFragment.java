@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.view.inputmethod.EditorInfo;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -70,6 +71,7 @@ public class ProductListFragment extends Fragment {
     // Объявляем экземпляр класса базы данных для выбранной даты
     private SelectedDateDatabaseHelper selectedDateDBHelper;
     private SelectedButtonDatabaseHelper selectedButtonDBHelper;
+    private BottomNavigationView bottomNavigationView; // Добавляем BottomNavigationView
 
     // В методе onCreate() инициализируем экземпляр
     @Override
@@ -83,12 +85,19 @@ public class ProductListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_product_list, container, false);
 
-        /**
-        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
-
-        // Скройте BottomNavigationView
+        bottomNavigationView = requireActivity().findViewById(R.id.nav_view);
+        // Скрываем BottomNavigationView
         bottomNavigationView.setVisibility(View.GONE);
-         **/
+
+        // Установка цвета статус-бара
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            // Для API 30 и выше
+            requireActivity().getWindow().setStatusBarColor(ContextCompat.getColor(requireContext(), R.color.dark_grey));
+        } else {
+            // Для API ниже 30
+            requireActivity().getWindow().setStatusBarColor(ContextCompat.getColor(requireContext(), R.color.dark_grey));
+            // Убедитесь, что ваш стиль активности не устанавливает прозрачный статус-бар (android:windowTranslucentStatus)
+        }
 
         // Удаляем свечение при прокрутке
         RecyclerView recyclerViewForProductList = root.findViewById(R.id.productListRecyclerView);
@@ -175,7 +184,7 @@ public class ProductListFragment extends Fragment {
                 // Получаем FragmentManager и начинаем транзакцию
                 requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.nav_host_fragment_activity_main, createProductFragment) // Заменяем текущий фрагмент на новый
-                        .addToBackStack(null) // Добавляем транзакцию в стек возврата
+                        .addToBackStack("product_list_fragment") // Добавляем транзакцию в стек возврата
                         .commit(); // Применяем транзакцию
             }
         });

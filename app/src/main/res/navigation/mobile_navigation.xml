@@ -19,6 +19,30 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
 
+        <action
+            android:id="@+id/action_home_to_edit_person"
+            app:destination="@id/navigation_edit_person"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_edit_person"
+        android:name="com.example.calorieapp.ui.home.EditPersonValueFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_edit_person_value">
+
+        <action
+            android:id="@+id/edit_person_to_action_home"
+            app:destination="@id/navigation_home"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
 
 
     </fragment>
@@ -37,10 +61,145 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
 
+        <action
+            android:id="@+id/action_dashboard_to_product_list"
+            app:destination="@id/navigation_product_list"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
 
+        <action
+            android:id="@+id/action_dashboard_to_breakfast_details"
+            app:destination="@id/navigation_breakfast_details"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+        <action
+            android:id="@+id/action_dashboard_to_lunch_details"
+            app:destination="@id/navigation_lunch_details"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+        <action
+            android:id="@+id/action_dashboard_to_dinner_details"
+            app:destination="@id/navigation_dinner_details"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+        <action
+            android:id="@+id/action_dashboard_to_snack_details"
+            app:destination="@id/navigation_snack_details"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
 
     </fragment>
 
+    <fragment
+        android:id="@+id/navigation_breakfast_details"
+        android:name="com.example.calorieapp.ui.dashboard.BreakfastDetailsFragment"
+        tools:layout="@layout/fragment_breakfast_details">
+
+        <action
+            android:id="@+id/action_breakfast_details_to_dashboard"
+            app:destination="@id/navigation_dashboard"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_lunch_details"
+        android:name="com.example.calorieapp.ui.dashboard.LunchDetailsFragment"
+        tools:layout="@layout/fragment_lunch_details">
+
+        <action
+            android:id="@+id/action_lunch_details_to_dashboard"
+            app:destination="@id/navigation_dashboard"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_dinner_details"
+        android:name="com.example.calorieapp.ui.dashboard.DinnerDetailsFragment"
+        tools:layout="@layout/fragment_dinner_details">
+
+        <action
+            android:id="@+id/action_dinner_details_to_dashboard"
+            app:destination="@id/navigation_dashboard"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_snack_details"
+        android:name="com.example.calorieapp.ui.dashboard.SnackDetailsFragment"
+        tools:layout="@layout/fragment_snack_details">
+
+        <action
+            android:id="@+id/action_snack_details_to_dashboard"
+            app:destination="@id/navigation_dashboard"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_product_list"
+        android:name="com.example.calorieapp.ui.dashboard.ProductListFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_product_list">
+
+        <action
+            android:id="@+id/action_product_list_to_dashboard"
+            app:destination="@id/navigation_home"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+
+        <action
+            android:id="@+id/action_product_list_to_create_product"
+            app:destination="@id/navigation_create_product"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_create_product"
+        android:name="com.example.calorieapp.ui.dashboard.CreateProductFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_create_product">
+
+        <action
+            android:id="@+id/action_create_product_to_product_list"
+            app:destination="@id/navigation_product_list"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
 
 
 

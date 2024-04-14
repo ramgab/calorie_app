@@ -13,21 +13,38 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.calorieapp.R;
 import com.example.calorieapp.ui.dashboard.ProductListFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class EditPersonValueFragment extends Fragment {
 
     private EditText editTextName, editTextAge, editTextHeight, editTextWeight;
     private Spinner spinnerGender, spinnerActivityLevel;
     private Button buttonSave;
+    private BottomNavigationView bottomNavigationView; // Добавляем BottomNavigationView
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_person_value, container, false);
+
+        // Установка цвета статус-бара
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            // Для API 30 и выше
+            requireActivity().getWindow().setStatusBarColor(ContextCompat.getColor(requireContext(), R.color.dark_grey));
+        } else {
+            // Для API ниже 30
+            requireActivity().getWindow().setStatusBarColor(ContextCompat.getColor(requireContext(), R.color.dark_grey));
+            // Убедитесь, что ваш стиль активности не устанавливает прозрачный статус-бар (android:windowTranslucentStatus)
+        }
+
+        bottomNavigationView = requireActivity().findViewById(R.id.nav_view);
+        // Скрываем BottomNavigationView
+        bottomNavigationView.setVisibility(View.GONE);
 
         // Инициализация views
         editTextName = view.findViewById(R.id.editTextName);

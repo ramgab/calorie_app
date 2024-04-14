@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -61,7 +62,15 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-
+        // Установка цвета статус-бара
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            // Для API 30 и выше
+            requireActivity().getWindow().setStatusBarColor(ContextCompat.getColor(requireContext(), R.color.dark_grey));
+        } else {
+            // Для API ниже 30
+            requireActivity().getWindow().setStatusBarColor(ContextCompat.getColor(requireContext(), R.color.dark_grey));
+            // Убедитесь, что ваш стиль активности не устанавливает прозрачный статус-бар (android:windowTranslucentStatus)
+        }
 
         // Удаляем свечение при прокрутке
         NestedScrollView nestedScrollView = root.findViewById(R.id.nestedscrollview_home);
@@ -87,6 +96,7 @@ public class HomeFragment extends Fragment {
                 // Получаем FragmentManager и начинаем транзакцию
                 requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.nav_host_fragment_activity_main, editFragment) // Заменяем текущий фрагмент на ProductListFragment
+                        .addToBackStack("home_fragment")
                         .commit(); // Применяем транзакцию
             }
         });

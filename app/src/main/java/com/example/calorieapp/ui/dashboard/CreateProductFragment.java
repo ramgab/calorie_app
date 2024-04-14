@@ -16,9 +16,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.calorieapp.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.DecimalFormat;
 
@@ -26,6 +28,7 @@ public class CreateProductFragment extends Fragment {
 
     private EditText editTextName, editTextProtein, editTextFat, editTextCarbohydrate;
     private TextView textViewCalories;
+    private BottomNavigationView bottomNavigationView; // Добавляем BottomNavigationView
 
     public CreateProductFragment() {
         // Пустой обязательный публичный конструктор
@@ -36,11 +39,26 @@ public class CreateProductFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Надуваем макет фрагмента для отображения пользовательского интерфейса
         return inflater.inflate(R.layout.fragment_create_product, container, false);
+
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Установка цвета статус-бара
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            // Для API 30 и выше
+            requireActivity().getWindow().setStatusBarColor(ContextCompat.getColor(requireContext(), R.color.dark_grey));
+        } else {
+            // Для API ниже 30
+            requireActivity().getWindow().setStatusBarColor(ContextCompat.getColor(requireContext(), R.color.dark_grey));
+            // Убедитесь, что ваш стиль активности не устанавливает прозрачный статус-бар (android:windowTranslucentStatus)
+        }
+
+        bottomNavigationView = requireActivity().findViewById(R.id.nav_view);
+        // Скрываем BottomNavigationView
+        bottomNavigationView.setVisibility(View.GONE);
 
         // Находим все необходимые элементы управления
         editTextName = view.findViewById(R.id.editTextCreateProductName);
