@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -25,7 +26,7 @@ public class LunchDetailsFragment extends Fragment {
     private RecyclerView recyclerView;
     private LunchDetailsAdapter adapter;
 
-
+    private TextView calLunch; // Добавляем TextView
 
     private BottomNavigationView bottomNavigationView; // Добавляем BottomNavigationView
 
@@ -92,7 +93,21 @@ public class LunchDetailsFragment extends Fragment {
         // Загрузите данные из базы данных и установите их в адаптер
         loadLunchDetailsFromDatabase();
 
+        // Найдем TextView по его id
+        calLunch = rootView.findViewById(R.id.calLunch);
+
+        // Загружаем суммарное количество калорий и устанавливаем его в TextView
+        loadCaloriesSummaryFromDatabase(selectedDate);
+
         return rootView;
+    }
+
+    private void loadCaloriesSummaryFromDatabase(String selectedDate) {
+        LunchDatabaseHelper dbHelper = new LunchDatabaseHelper(requireContext());
+        double totalCalories = dbHelper.getTotalCaloriesSummaryLunch(selectedDate);
+        // Устанавливаем значение в TextView
+        calLunch.setText(String.format("%sккал", totalCalories));
+
     }
 
     private void loadLunchDetailsFromDatabase() {

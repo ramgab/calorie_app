@@ -108,7 +108,10 @@ public class EditPersonValueFragment extends Fragment {
                 // Возвращаемся в HomeFragment
                 HomeFragment homeFragment = new HomeFragment();
 
+                BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
 
+                // Скройте BottomNavigationView
+                bottomNavigationView.setVisibility(View.VISIBLE);
 
                 // Получаем FragmentManager и начинаем транзакцию
                 requireActivity().getSupportFragmentManager().beginTransaction()

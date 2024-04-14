@@ -186,8 +186,21 @@ public class MainActivity extends AppCompatActivity {
                 // Удаляем DashboardFragment из стека обратного вызова
                 getSupportFragmentManager().popBackStack("dashboard_fragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
+
+                // Установка цвета статус-бара
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    // Для API 30 и выше
+                    getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.dark_grey));
+                } else {
+                    // Для API ниже 30
+                    getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.dark_grey));
+                    // Убедитесь, что ваш стиль активности не устанавливает прозрачный статус-бар (android:windowTranslucentStatus)
+                }
                 // Показываем BottomNavigationView
                 bottomNavigationView.setVisibility(View.VISIBLE);
+
+
+
             } else if (currentFragment instanceof CreateProductFragment) {
                 // Если текущий фрагмент - CreateProductFragment, переходим к ProductListFragment
                 getSupportFragmentManager().popBackStack("product_list_fragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
