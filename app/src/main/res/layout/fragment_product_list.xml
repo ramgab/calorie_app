@@ -57,15 +57,22 @@
             android:textStyle="bold"
             tools:ignore="MissingConstraints" />
 
-        <SearchView
+        <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:iconifiedByDefault="false"
-            android:queryHint="Введите название "
+            app:queryHint="Введите название"
+            app:queryBackground="@null"
+            android:background="@drawable/rounded_search_view_background"
+            android:textColor="@color/white"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:layout_margin="10dp"
             app:layout_constraintTop_toBottomOf="@id/textViewBreakfast"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+
+            app:layout_constraintEnd_toEndOf="parent" />
+
 
 
 

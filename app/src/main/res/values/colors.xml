@@ -7,7 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="grey">#808080</color>
+    <color name="grey">#C0C0C0</color>
     <color name="dark_grey">#121212</color>
     <color name="dark_red">#7A1B1B</color>
     <color name="colorProtein">#01605A  </color> <!-- Красный цвет для белков -->

@@ -65,6 +65,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:textColor="@color/grey"
+            android:textColorHint="@color/grey"
+            app:backgroundTint="@color/grey"
             android:hint="Название продукта"/>
 
         </androidx.cardview.widget.CardView>
@@ -104,6 +107,8 @@
                         android:inputType="numberDecimal"
                         android:layout_margin="5dp"
                         android:textSize="14dp"
+                        android:textColor="@color/grey"
+                        android:textColorHint="@color/grey"
                         app:backgroundTint="@color/colorProtein"
                         android:digits="0123456789.,"/>
 
@@ -133,6 +138,8 @@
                         android:layout_margin="5dp"
                         android:textSize="14dp"
                         android:inputType="numberDecimal"
+                        android:textColor="@color/grey"
+                        android:textColorHint="@color/grey"
                         app:backgroundTint="@color/colorFat"
                         android:digits="0123456789.,"/>
 
@@ -161,6 +168,8 @@
                         android:textSize="14dp"
                         android:layout_margin="5dp"
                         android:inputType="numberDecimal"
+                        android:textColor="@color/grey"
+                        android:textColorHint="@color/grey"
                         app:backgroundTint="@color/colorCarb"
                         android:digits="0123456789.,"/>
 
@@ -203,7 +212,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-
+                    android:textColor="@color/grey"
                     android:layout_gravity="center_vertical"
                     android:textSize="14dp"
                     android:layout_marginTop="15dp"

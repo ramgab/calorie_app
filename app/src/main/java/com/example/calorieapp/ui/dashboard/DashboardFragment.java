@@ -602,7 +602,7 @@ public class DashboardFragment extends Fragment {
         double totalCaloriesFinal = totalCaloriesBreakfast + totalCaloriesLunch + totalCaloriesDinner + totalCaloriesSnack;
         // Обновляем общую сумму калорий за день в таблице calories_summary_day
         dbHelperPerson.updateCaloriesSummaryDay(selectedDate, totalCaloriesFinal);
-        calorieSum.setText(String.format(Locale.getDefault(), "%.2f калорий", totalCaloriesFinal));
+        calorieSum.setText(String.format(Locale.getDefault(), "%.2fккал", totalCaloriesFinal));
     }
 
     private void loadTotalProteinSummaryFromDatabase(String selectedDate){

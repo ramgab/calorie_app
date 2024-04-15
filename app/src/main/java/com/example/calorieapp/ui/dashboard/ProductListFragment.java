@@ -157,8 +157,24 @@ public class ProductListFragment extends Fragment {
 
 
         // Инициализация SearchView
-        SearchView searchView = root.findViewById(R.id.searchView);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        androidx.appcompat.widget.SearchView searchView = root.findViewById(R.id.searchView);
+
+        searchView.setIconifiedByDefault(false);
+
+        ImageView searchIcon=
+                searchView.findViewById(androidx.appcompat.R.id.search_mag_icon);
+
+        // To change color of close button, use:
+        ImageView searchCloseIcon = (ImageView)searchView
+                .findViewById(androidx.appcompat.R.id.search_close_btn);
+
+        searchIcon.setColorFilter(getResources().getColor(R.color.grey),
+                android.graphics.PorterDuff.Mode.SRC_IN);
+
+        searchCloseIcon.setColorFilter(getResources().getColor(R.color.grey),
+                android.graphics.PorterDuff.Mode.SRC_IN);
+
+        searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // Вызываем метод для фильтрации продуктов при нажатии на кнопку поиска
@@ -251,7 +267,7 @@ public class ProductListFragment extends Fragment {
         // Set values to views
         titleTextView.setText(productDetails.getName());
         compositionTextView.setText(productDetails.getComposition());
-        caloriesTextView.setText(String.valueOf(productDetails.getCalories()));
+        caloriesTextView.setText(String.valueOf(productDetails.getCalories()) + "ккал");
         proteinTextView.setText(String.valueOf(productDetails.getProteins()) + "г");
         fatTextView.setText(String.valueOf(productDetails.getFats()) + "г");
         carbohydrateTextView.setText(String.valueOf(productDetails.getCarbohydrates()) + "г");
@@ -391,12 +407,12 @@ public class ProductListFragment extends Fragment {
 
         // Set values to views
         titleTextViewLunch.setText(productDetails.getName());
-        compositionTextViewLunch.setText("Состав: " + productDetails.getComposition());
-        caloriesTextViewLunch.setText("Калории: " + String.valueOf(productDetails.getCalories()));
-        proteinTextViewLunch.setText("Белки: " + String.valueOf(productDetails.getProteins()));
-        fatTextViewLunch.setText("Жиры: " + String.valueOf(productDetails.getFats()));
-        carbohydrateTextViewLunch.setText("Углеводы: " + String.valueOf(productDetails.getCarbohydrates()));
-        categoryTextViewLunch.setText("Категория: " + productDetails.getCategory());
+        compositionTextViewLunch.setText(productDetails.getComposition());
+        caloriesTextViewLunch.setText(String.valueOf(productDetails.getCalories()) + "ккал");
+        proteinTextViewLunch.setText(String.valueOf(productDetails.getProteins()) + "г");
+        fatTextViewLunch.setText(String.valueOf(productDetails.getFats()) + "г");
+        carbohydrateTextViewLunch.setText(String.valueOf(productDetails.getCarbohydrates()) + "г");
+        categoryTextViewLunch.setText(productDetails.getCategory());
 
         // Устанавливаем значение переменной productName
         this.productName = productName;
@@ -431,7 +447,7 @@ public class ProductListFragment extends Fragment {
 
 
         // Find the close button in the bottom sheet layout
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) Button closeButton = bottomSheetViewLunch.findViewById(R.id.buttonCloseBottomSheetLunch);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) ImageView closeButton = bottomSheetViewLunch.findViewById(R.id.buttonCloseBottomSheetLunch);
 
         // Set an onClickListener for the close button
         closeButton.setOnClickListener(new View.OnClickListener() {
@@ -505,12 +521,12 @@ public class ProductListFragment extends Fragment {
 
         // Set values to views
         titleTextViewDinner.setText(productDetails.getName());
-        compositionTextViewDinner.setText("Состав: " + productDetails.getComposition());
-        caloriesTextViewDinner.setText("Калории: " + String.valueOf(productDetails.getCalories()));
-        proteinTextViewDinner.setText("Белки: " + String.valueOf(productDetails.getProteins()));
-        fatTextViewDinner.setText("Жиры: " + String.valueOf(productDetails.getFats()));
-        carbohydrateTextViewDinner.setText("Углеводы: " + String.valueOf(productDetails.getCarbohydrates()));
-        categoryTextViewDinner.setText("Категория: " + productDetails.getCategory());
+        compositionTextViewDinner.setText(productDetails.getComposition());
+        caloriesTextViewDinner.setText(String.valueOf(productDetails.getCalories()) + "ккал");
+        proteinTextViewDinner.setText(String.valueOf(productDetails.getProteins()) + "г");
+        fatTextViewDinner.setText(String.valueOf(productDetails.getFats()) + "г");
+        carbohydrateTextViewDinner.setText(String.valueOf(productDetails.getCarbohydrates()) + "г");
+        categoryTextViewDinner.setText(productDetails.getCategory());
 
         // Set up a TextWatcher to listen for changes in the grams input
         editTextGramsDinner.addTextChangedListener(new TextWatcher() {
@@ -542,7 +558,7 @@ public class ProductListFragment extends Fragment {
 
 
         // Find the close button in the bottom sheet layout
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) Button closeButton = bottomSheetViewDinner.findViewById(R.id.buttonCloseBottomSheetDinner);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) ImageView closeButton = bottomSheetViewDinner.findViewById(R.id.buttonCloseBottomSheetDinner);
 
         // Set an onClickListener for the close button
         closeButton.setOnClickListener(new View.OnClickListener() {
@@ -616,12 +632,12 @@ public class ProductListFragment extends Fragment {
 
         // Set values to views
         titleTextViewSnack.setText(productDetails.getName());
-        compositionTextViewSnack.setText("Состав: " + productDetails.getComposition());
-        caloriesTextViewSnack.setText("Калории: " + String.valueOf(productDetails.getCalories()));
-        proteinTextViewSnack.setText("Белки: " + String.valueOf(productDetails.getProteins()));
-        fatTextViewSnack.setText("Жиры: " + String.valueOf(productDetails.getFats()));
-        carbohydrateTextViewSnack.setText("Углеводы: " + String.valueOf(productDetails.getCarbohydrates()));
-        categoryTextViewSnack.setText("Категория: " + productDetails.getCategory());
+        compositionTextViewSnack.setText(productDetails.getComposition());
+        caloriesTextViewSnack.setText(String.valueOf(productDetails.getCalories()) + "ккал");
+        proteinTextViewSnack.setText(String.valueOf(productDetails.getProteins()) + "г");
+        fatTextViewSnack.setText(String.valueOf(productDetails.getFats()) + "г");
+        carbohydrateTextViewSnack.setText(String.valueOf(productDetails.getCarbohydrates()) + "г");
+        categoryTextViewSnack.setText(productDetails.getCategory());
 
         // Set up a TextWatcher to listen for changes in the grams input
         editTextGramsSnack.addTextChangedListener(new TextWatcher() {
@@ -653,7 +669,7 @@ public class ProductListFragment extends Fragment {
 
 
         // Find the close button in the bottom sheet layout
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) Button closeButton = bottomSheetViewSnack.findViewById(R.id.buttonCloseBottomSheetSnack);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) ImageView closeButton = bottomSheetViewSnack.findViewById(R.id.buttonCloseBottomSheetSnack);
 
         // Set an onClickListener for the close button
         closeButton.setOnClickListener(new View.OnClickListener() {
@@ -846,7 +862,7 @@ public class ProductListFragment extends Fragment {
         String formattedCarbohydrate = String.format("%.2f", carbohydrate);
 
         // Установите новые значения в соответствующие TextView
-        caloriesTextView.setText(formattedCalories);
+        caloriesTextView.setText(formattedCalories + "ккал");
         proteinTextView.setText(formattedProtein + "г");
         fatTextView.setText(formattedFat + "г");
         carbohydrateTextView.setText(formattedCarbohydrate + "г");

@@ -73,6 +73,7 @@
                             android:id="@+id/textViewCaloriesSnack"
                             android:layout_width="wrap_content"
                             app:layout_constraintTop_toBottomOf="@id/textViewProductNameLayoutSnack"
+                            android:textColor="@color/grey"
                             android:paddingTop="5dp"
                             android:paddingLeft="10dp"
                             android:textSize="16dp"
@@ -86,6 +87,7 @@
                             android:layout_height="wrap_content"
                             app:layout_constraintTop_toBottomOf="@id/textViewProductNameLayoutSnack"
                             app:layout_constraintLeft_toRightOf="@+id/textViewCaloriesSnack"
+                            android:textColor="@color/grey"
                             android:paddingTop="5dp"
                             android:paddingLeft="5dp"
                             android:textSize="16dp"/>
@@ -95,7 +97,7 @@
                             android:id="@+id/textViewProteinSnack"
                             android:layout_width="wrap_content"
                             app:layout_constraintTop_toBottomOf="@id/textViewCaloriesSnack"
-
+                            android:textColor="@color/grey"
                             android:paddingTop="5dp"
                             android:paddingLeft="10dp"
                             android:textSize="14dp"
@@ -108,6 +110,7 @@
                             android:layout_height="wrap_content"
                             app:layout_constraintTop_toBottomOf="@id/textViewCaloriesSnack"
                             app:layout_constraintLeft_toRightOf="@+id/textViewProteinSnack"
+                            android:textColor="@color/grey"
                             android:paddingTop="5dp"
                             android:paddingLeft="10dp"
                             android:textSize="14dp"/>
@@ -118,6 +121,7 @@
                             android:layout_height="wrap_content"
                             app:layout_constraintTop_toBottomOf="@id/textViewCaloriesSnack"
                             app:layout_constraintLeft_toRightOf="@+id/textViewFatSnack"
+                            android:textColor="@color/grey"
                             android:paddingTop="5dp"
                             android:paddingLeft="10dp"
                             android:textSize="14dp"/>

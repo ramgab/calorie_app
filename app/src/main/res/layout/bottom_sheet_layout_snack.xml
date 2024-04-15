@@ -3,6 +3,8 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/transparent"
     android:fillViewport="true"
     xmlns:android="http://schemas.android.com/apk/res/android">
@@ -16,17 +18,49 @@
         android:background="@drawable/border_radius">
 
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:orientation="horizontal">
+
+
+            <!-- Кнопка закрытия -->
+            <ImageView
+                android:id="@+id/buttonCloseBottomSheetSnack"
+                android:layout_width="10dp"
+                android:scaleType="centerCrop"
+
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/icon_close"
+                android:layout_height="10dp"
+                tools:ignore="MissingConstraints" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="30dp"
+                android:layout_height="3dp"
+                app:cardCornerRadius="15dp"
+                android:backgroundTint="@color/grey"
+
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                tools:ignore="MissingConstraints" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
-            <!-- Кнопка закрытия -->
-            <Button
-                android:id="@+id/buttonCloseBottomSheetSnack"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:text="X" />
+
 
             <!-- Заголовок -->
             <TextView
@@ -36,47 +70,359 @@
                 android:layout_weight="1"
                 android:text="Selected Product Details"
                 android:textStyle="bold"
+                android:paddingRight="5dp"
                 android:layout_gravity="center"
-                android:paddingLeft="10dp"
+                android:paddingLeft="5dp"
                 android:textSize="18sp"
                 android:textColor="@android:color/white"/>
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/bottomSheetCompositionSnack"
+        <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
-            android:textStyle="bold"
-            android:layout_height="wrap_content"/>
+            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            app:cardCornerRadius="8dp"
+            android:backgroundTint="@color/blocks">
 
-        <TextView
-            android:id="@+id/bottomSheetCaloriesSnack"
-            android:layout_width="wrap_content"
-            android:textStyle="bold"
-            android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/bottomSheetCategorySnack"
+                android:layout_width="wrap_content"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
 
-        <TextView
-            android:id="@+id/bottomSheetProteinSnack"
-            android:layout_width="wrap_content"
-            android:textStyle="bold"
-            android:layout_height="wrap_content"/>
+                android:textSize="14dp"
+                android:paddingRight="5dp"
+                android:textColor="@color/grey"
+                android:layout_height="wrap_content"/>
+        </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/bottomSheetFatSnack"
-            android:layout_width="wrap_content"
-            android:textStyle="bold"
-            android:layout_height="wrap_content"/>
 
-        <TextView
-            android:id="@+id/bottomSheetCarbohydrateSnack"
-            android:layout_width="wrap_content"
-            android:textStyle="bold"
-            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:id="@+id/cal_layout"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            tools:ignore="MissingConstraints"
+            android:layout_marginTop="5dp">
 
-        <TextView
-            android:id="@+id/bottomSheetCategorySnack"
-            android:layout_width="wrap_content"
-            android:textStyle="bold"
-            android:layout_height="wrap_content"/>
+            <androidx.cardview.widget.CardView
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/blocks"
+                app:cardCornerRadius="15dp"
+                android:layout_margin="5dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:textStyle="bold"
+                    android:textSize="16dp"
+                    android:text="Калории">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/bottomSheetCaloriesSnack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/grey"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="14dp">
+
+                </TextView>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/protein_fat_carb"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/calorie_norm"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            tools:ignore="MissingConstraints">
+
+            <LinearLayout
+                android:id="@+id/pr"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_weight="1">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/blocks"
+                    app:cardCornerRadius="15dp"
+                    android:layout_margin="5dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/protein_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="16dp"
+                            android:textStyle="bold"
+                            android:text="Белки"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="5dp"/>
+
+                        <TextView
+                            android:id="@+id/bottomSheetProteinSnack"
+                            android:layout_width="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@id/protein_text"
+                            android:paddingTop="5dp"
+                            android:paddingLeft="10dp"
+                            android:textSize="14dp"
+                            android:textColor="@color/grey"
+                            android:layout_height="wrap_content"/>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="5dp"
+                            app:cardCornerRadius="15dp"
+                            android:backgroundTint="@color/protein"
+                            app:layout_constraintTop_toBottomOf="@id/bottomSheetProteinSnack"
+                            android:layout_gravity="bottom"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ft"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_weight="1">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/blocks"
+                    app:cardCornerRadius="15dp"
+                    android:layout_margin="5dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/fat_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="16dp"
+                            android:textStyle="bold"
+                            android:text="Жиры"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="5dp"/>
+
+                        <TextView
+                            android:id="@+id/bottomSheetFatSnack"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@id/fat_text"
+                            android:paddingTop="5dp"
+                            android:paddingLeft="10dp"
+                            android:textColor="@color/grey"
+                            android:textSize="14dp"/>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="5dp"
+                            app:cardCornerRadius="15dp"
+                            android:backgroundTint="@color/fat"
+                            app:layout_constraintTop_toBottomOf="@id/bottomSheetFatSnack"
+                            android:layout_gravity="bottom"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/cb"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_weight="1">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/blocks"
+                    app:cardCornerRadius="15dp"
+                    android:layout_margin="5dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/carb_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="16dp"
+                            android:textStyle="bold"
+                            android:text="Углеводы"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="5dp"/>
+
+
+                        <TextView
+                            android:id="@+id/bottomSheetCarbohydrateSnack"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@id/carb_text"
+                            android:paddingTop="5dp"
+                            android:paddingLeft="10dp"
+                            android:textColor="@color/grey"
+                            android:textSize="14dp"/>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="5dp"
+                            app:cardCornerRadius="15dp"
+                            android:backgroundTint="@color/carb"
+                            app:layout_constraintTop_toBottomOf="@id/bottomSheetCarbohydrateSnack"
+                            android:layout_gravity="bottom"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/comp_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints"
+            android:layout_marginTop="5dp">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/blocks"
+                app:cardCornerRadius="15dp"
+                android:layout_margin="5dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/comp_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:paddingTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:textStyle="bold"
+                        android:textSize="16dp"
+                        android:text="Состав продукта">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/bottomSheetCompositionSnack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/grey"
+                        app:layout_constraintTop_toBottomOf="@id/comp_text"
+                        android:paddingTop="5dp"
+                        android:paddingLeft="10dp"
+                        android:paddingBottom="10dp"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="14dp">
+                    </TextView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:text="Штрихкод: ">
+            </TextView>
+
+            <TextView
+                android:id="@+id/bottomSheetBarcodeSnack"
+                android:layout_width="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:id="@+id/add_barcode"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/icon_add"
+                android:layout_marginTop="3dp"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:text="Добавить штрихкод"/>
+
+
+
+        </LinearLayout>
+
+
+
+
 
 
         <EditText
@@ -92,11 +438,17 @@
 
         <Button
             android:id="@+id/saveProductSnack"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="Сохранить"/>
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"
+            android:textColor="@color/dark_grey"
+            android:textSize="14dp"
+            android:background="@drawable/button_save"
+            app:backgroundTint="@null"
+            android:text="Учесть"/>
 
 
     </LinearLayout>

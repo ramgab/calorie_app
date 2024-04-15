@@ -77,6 +77,7 @@
                             android:paddingTop="5dp"
                             android:paddingLeft="10dp"
                             android:textSize="16dp"
+                            android:textColor="@color/grey"
                             android:layout_height="wrap_content"
                             tools:ignore="MissingConstraints" />
 
@@ -87,6 +88,7 @@
                             android:layout_height="wrap_content"
                             app:layout_constraintTop_toBottomOf="@id/textViewProductNameLayoutLunch"
                             app:layout_constraintLeft_toRightOf="@+id/textViewCaloriesLunch"
+                            android:textColor="@color/grey"
                             android:paddingTop="5dp"
                             android:paddingLeft="5dp"
                             android:textSize="16dp"/>
@@ -96,7 +98,7 @@
                             android:id="@+id/textViewProteinLunch"
                             android:layout_width="wrap_content"
                             app:layout_constraintTop_toBottomOf="@id/textViewCaloriesLunch"
-
+                            android:textColor="@color/grey"
                             android:paddingTop="5dp"
                             android:paddingLeft="10dp"
                             android:textSize="14dp"
@@ -109,6 +111,7 @@
                             android:layout_height="wrap_content"
                             app:layout_constraintTop_toBottomOf="@id/textViewCaloriesLunch"
                             app:layout_constraintLeft_toRightOf="@+id/textViewProteinLunch"
+                            android:textColor="@color/grey"
                             android:paddingTop="5dp"
                             android:paddingLeft="10dp"
                             android:textSize="14dp"/>
@@ -119,6 +122,7 @@
                             android:layout_height="wrap_content"
                             app:layout_constraintTop_toBottomOf="@id/textViewCaloriesLunch"
                             app:layout_constraintLeft_toRightOf="@+id/textViewFatLunch"
+                            android:textColor="@color/grey"
                             android:paddingTop="5dp"
                             android:paddingLeft="10dp"
                             android:textSize="14dp"/>

@@ -131,7 +131,7 @@ public class HomeFragment extends Fragment {
 
             // Устанавливаем данные в TextView'ы
             personNameTextView.setText(name + "!");
-            calorieNormTextView.setText(String.format(Locale.getDefault(), "%.2f калорий", calculateCalorieNorm(weight, height, age, gender, activityLevel)));
+            calorieNormTextView.setText(String.format(Locale.getDefault(), "%.2fккал", calculateCalorieNorm(weight, height, age, gender, activityLevel)));
             genderValueTextView.setText(gender);
 
             // Определяем, какое окончание использовать для слова "год"

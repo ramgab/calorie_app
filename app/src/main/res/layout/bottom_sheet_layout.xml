@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             app:cardCornerRadius="8dp"
-            android:backgroundTint="@color/white">
+            android:backgroundTint="@color/blocks">
 
             <TextView
                 android:id="@+id/bottomSheetCategory"
@@ -89,9 +89,8 @@
                 android:paddingLeft="5dp"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
-                android:textColor="@color/dark_grey"
-                android:textSize="16dp"
                 android:paddingRight="5dp"
+                android:textColor="@color/grey"
                 android:layout_height="wrap_content"/>
         </androidx.cardview.widget.CardView>
 
@@ -127,11 +126,11 @@
                     android:id="@+id/bottomSheetCalories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
+                    android:textColor="@color/grey"
                     android:layout_gravity="center_vertical"
-                    android:textSize="16dp">
+                    android:textSize="14dp">
 
                 </TextView>
             </androidx.cardview.widget.CardView>
@@ -182,6 +181,7 @@
                             android:layout_width="wrap_content"
                             app:layout_constraintTop_toBottomOf="@id/protein_text"
                             android:paddingTop="5dp"
+                            android:textColor="@color/grey"
                             android:paddingLeft="10dp"
                             android:textSize="14dp"
                             android:layout_height="wrap_content"/>
@@ -240,6 +240,7 @@
                             android:layout_height="wrap_content"
                             app:layout_constraintTop_toBottomOf="@id/fat_text"
                             android:paddingTop="5dp"
+                            android:textColor="@color/grey"
                             android:paddingLeft="10dp"
                             android:textSize="14dp"/>
 
@@ -300,6 +301,7 @@
                             android:layout_height="wrap_content"
                             app:layout_constraintTop_toBottomOf="@id/carb_text"
                             android:paddingTop="5dp"
+                            android:textColor="@color/grey"
                             android:paddingLeft="10dp"
                             android:textSize="14dp"/>
 
@@ -361,13 +363,13 @@
                         android:id="@+id/bottomSheetComposition"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
                         app:layout_constraintTop_toBottomOf="@id/comp_text"
                         android:paddingTop="5dp"
+                        android:textColor="@color/grey"
                         android:paddingLeft="10dp"
                         android:paddingBottom="10dp"
                         android:layout_gravity="center_vertical"
-                        android:textSize="16dp">
+                        android:textSize="14dp">
                     </TextView>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -425,6 +427,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="Введите количество грамм"
+            android:textColor="@color/grey"
+            android:textColorHint="@color/grey"
+            app:backgroundTint="@color/grey"
             android:inputType="numberDecimal"
             android:digits="0123456789.,"
             android:maxLength="4" />

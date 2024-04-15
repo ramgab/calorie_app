@@ -210,7 +210,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/stoies"
             android:layout_marginTop="10dp"
-            android:text="2024 калорий"
+            android:text="2024ккал"
             android:textAlignment="center"
             android:textSize="20sp"
             android:textColor="@color/white"
