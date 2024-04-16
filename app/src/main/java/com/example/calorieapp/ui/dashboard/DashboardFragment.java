@@ -177,13 +177,13 @@ public class DashboardFragment extends Fragment {
         nestedScrollView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         // Найти кнопку добавления завтрака
-        ImageView buttonAddBreakfast = root.findViewById(R.id.buttonAddBreakfast);
+        CardView buttonAddBreakfast = root.findViewById(R.id.buttonAddBreakfast);
         // Найти кнопку добавления обеда
-        ImageView buttonAddLunch = root.findViewById(R.id.buttonAddLunch);
+        CardView buttonAddLunch = root.findViewById(R.id.buttonAddLunch);
         // Найти кнопку добавления ужина
-        ImageView buttonAddDinner = root.findViewById(R.id.buttonAddDinner);
+        CardView buttonAddDinner = root.findViewById(R.id.buttonAddDinner);
         // Найти кнопку добавления перекусв
-        ImageView buttonAddSnack = root.findViewById(R.id.buttonAddSnack);
+        CardView buttonAddSnack = root.findViewById(R.id.buttonAddSnack);
         // Установить слушатель нажатия
         buttonAddBreakfast.setOnClickListener(new View.OnClickListener() {
             @Override

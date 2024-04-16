@@ -45,6 +45,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
+
+
+
+
+
+
                         <LinearLayout
                             android:id="@+id/textViewProductNameLayout"
                             android:layout_width="match_parent"
@@ -171,6 +177,9 @@
 
                             android:layout_marginBottom="5dp"
                             tools:ignore="MissingConstraints" />
+
+
+
 
 
                         <ImageView

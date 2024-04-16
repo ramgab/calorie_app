@@ -1,83 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nestedscrollview_edit_person"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/dark_grey">
+    android:background="@color/black">
 
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-
-
-        <LinearLayout
-            android:id="@+id/editTextNameLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:backgroundTint="@color/blocks"
-                android:layout_margin="5dp">
-
-                <EditText
-                    android:id="@+id/editTextName"
-                    android:padding="20dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:digits="абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
-                    android:hint="Имя" />
-            </androidx.cardview.widget.CardView>
-        </LinearLayout>
 
 
     <LinearLayout
-        android:id="@+id/layout_for_person_info_12"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNameLayout"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal"
-        tools:ignore="MissingConstraints">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/shape4"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:background="@color/dark_grey">
+
+                <ImageView
+                    android:id="@+id/buttonCloseEditPersonFragment"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/icon_back"
+                    android:layout_gravity="center"
+                    android:scaleType="centerCrop"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:ignore="MissingConstraints" />
+
+
+                <TextView
+                    android:id="@+id/textViewBreakfast"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:text="Заполните форму"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    tools:ignore="MissingConstraints" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Цель"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="50dp"
+                android:textStyle="bold">
+
+            </TextView>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+
+            android:background="@drawable/shape_3"
+            android:padding="16dp">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="О себе"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="5dp"
+                android:textStyle="bold">
+
+            </TextView>
+
+
+
+            <LinearLayout
+                android:id="@+id/editTextNameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/blocks"
+                    android:layout_margin="5dp">
+
+                    <EditText
+                        android:id="@+id/editTextName"
+                        android:padding="20dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:digits="абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
+                        android:hint="Имя" />
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
 
 
         <LinearLayout
-            android:layout_width="0dp"
-
+            android:id="@+id/layout_for_person_info_12"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            app:layout_constraintTop_toBottomOf="@+id/editTextNameLayout"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal"
+            tools:ignore="MissingConstraints">
 
-            tools:ignore="Orientation">
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="0dp"
+
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/blocks"
+                android:layout_weight="1"
 
-                app:cardCornerRadius="15dp"
-                android:layout_margin="2dp">
-                <EditText
-                    android:id="@+id/editTextAge"
+                tools:ignore="Orientation">
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-
                     android:layout_height="wrap_content"
-                    android:digits="0123456789"
-                    android:inputType="numberDecimal"
-                    android:maxLength="2"
-                    android:hint="Возраст" />
+                    android:backgroundTint="@color/blocks"
+
+                    app:cardCornerRadius="15dp"
+                    android:layout_margin="2dp">
+                    <EditText
+                        android:id="@+id/editTextAge"
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:digits="0123456789"
+                        android:inputType="numberDecimal"
+                        android:maxLength="2"
+                        android:hint="Возраст" />
 
 
-            </androidx.cardview.widget.CardView>
+                </androidx.cardview.widget.CardView>
 
-        </LinearLayout>
+            </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextNameLayout"
+                    tools:ignore="Orientation">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/blocks"
+                        app:cardCornerRadius="15dp"
+                        android:layout_margin="2dp">
+
+                        <EditText
+                            android:id="@+id/editTextHeight"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:digits="0123456789"
+                            android:inputType="numberDecimal"
+                            android:maxLength="3"
+                            android:hint="Рост" />
+
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -93,218 +207,197 @@
                     android:layout_margin="2dp">
 
                     <EditText
-                        android:id="@+id/editTextHeight"
+                        android:id="@+id/editTextWeight"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:digits="0123456789"
                         android:inputType="numberDecimal"
                         android:maxLength="3"
-                        android:hint="Рост" />
+                        android:hint="Вес" />
 
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:layout_constraintTop_toBottomOf="@+id/editTextNameLayout"
-            tools:ignore="Orientation">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/blocks"
-                app:cardCornerRadius="15dp"
-                android:layout_margin="2dp">
-
-                <EditText
-                    android:id="@+id/editTextWeight"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:digits="0123456789"
-                    android:inputType="numberDecimal"
-                    android:maxLength="3"
-                    android:hint="Вес" />
-
-            </androidx.cardview.widget.CardView>
         </LinearLayout>
 
-    </LinearLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/viberite_pol"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Выберите пол:"
-                android:textStyle="bold"
-                android:paddingTop="10dp"
-                android:paddingLeft="10dp"
-                android:textColor="@color/white"
-                android:textSize="16dp"
-                tools:ignore="MissingConstraints">
-            </TextView>
-
-            <Spinner
-                android:id="@+id/spinnerGender"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/dark_grey"
-                android:prompt="@string/prompt_gender"
-                android:paddingTop="10dp"
-                app:layout_constraintStart_toEndOf="@id/viberite_pol"
-                tools:ignore="MissingConstraints" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/viberite_activnost"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Выберите коэф. активности:"
-                android:textStyle="bold"
-                android:paddingTop="10dp"
-                android:paddingLeft="10dp"
-                android:textColor="@color/white"
-                android:textSize="16dp"
-                tools:ignore="MissingConstraints">
-            </TextView>
-
-            <Spinner
-                android:id="@+id/spinnerActivityLevel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/dark_grey"
-
-                android:paddingTop="10dp"
-                app:layout_constraintStart_toEndOf="@id/viberite_activnost"
-                android:prompt="@string/prompt_activity_level"
-                tools:ignore="MissingConstraints" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp">
-
-            <androidx.cardview.widget.CardView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:backgroundTint="@color/dark_red"
-                app:cardCornerRadius="15dp"
-                tools:ignore="MissingConstraints">
+                android:layout_height="wrap_content">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <TextView
+                    android:id="@+id/viberite_pol"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/qwerty"
+                    android:layout_height="wrap_content"
+                    android:text="Выберите пол:"
+                    android:textStyle="bold"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    tools:ignore="MissingConstraints">
+                </TextView>
+
+                <Spinner
+                    android:id="@+id/spinnerGender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/dark_grey"
+                    android:prompt="@string/prompt_gender"
+                    android:paddingTop="10dp"
+                    android:layout_marginLeft="5dp"
+                    app:layout_constraintStart_toEndOf="@id/viberite_pol"
+                    tools:ignore="MissingConstraints" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/viberite_activnost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Выберите коэф. активности:"
+                    android:textStyle="bold"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    tools:ignore="MissingConstraints">
+                </TextView>
+
+                <Spinner
+                    android:id="@+id/spinnerActivityLevel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/dark_grey"
+                    android:layout_marginLeft="5dp"
+                    android:paddingTop="10dp"
+                    app:layout_constraintStart_toEndOf="@id/viberite_activnost"
+                    android:prompt="@string/prompt_activity_level"
+                    tools:ignore="MissingConstraints" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/dark_red"
+                    app:cardCornerRadius="15dp"
+                    tools:ignore="MissingConstraints">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:textColor="@color/grey"
-                        android:textSize="14dp"
-                        android:textStyle="italic"
-                        android:text="Коэффициент активности помогает определить ваш общий уровень физической активности. "
-                        tools:ignore="MissingConstraints">
-                    </TextView>
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/qwerty"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:textColor="@color/grey"
+                            android:textSize="14dp"
+                            android:textStyle="italic"
+                            android:text="Коэффициент активности помогает определить ваш общий уровень физической активности. "
+                            tools:ignore="MissingConstraints">
+                        </TextView>
 
-                    <TextView
-                        android:id="@+id/for_1_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14dp"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:textColor="@color/grey"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/qwerty"
-                        android:text="1. Минимальная активность (1,2): Сидячая работа без значительных физических нагрузок."></TextView>
+                        <TextView
+                            android:id="@+id/for_1_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14dp"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:textColor="@color/grey"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/qwerty"
+                            android:text="1. Минимальная активность (1,2): Сидячая работа без значительных физических нагрузок."></TextView>
 
-                    <TextView
-                        android:id="@+id/for_1_3_7_5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14dp"
-                        android:paddingTop="5dp"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:textColor="@color/grey"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/for_1_2"
-                        android:text="2. Слабый уровень активности (1,375): Интенсивные упражнения 1-3 раза в неделю (20 минут), либо занятый образ жизни, включающий частую ходьбу."></TextView>
+                        <TextView
+                            android:id="@+id/for_1_3_7_5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14dp"
+                            android:paddingTop="5dp"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:textColor="@color/grey"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/for_1_2"
+                            android:text="2. Слабый уровень активности (1,375): Интенсивные упражнения 1-3 раза в неделю (20 минут), либо занятый образ жизни, включающий частую ходьбу."></TextView>
 
-                    <TextView
-                        android:id="@+id/for_1_5_5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14dp"
-                        android:paddingTop="5dp"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:textColor="@color/grey"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/for_1_3_7_5"
-                        android:text="3. Умеренный уровень активности (1,55): Интенсивные тренировки 3-4 раза в неделю (30-60 минут)."></TextView>
+                        <TextView
+                            android:id="@+id/for_1_5_5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14dp"
+                            android:paddingTop="5dp"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:textColor="@color/grey"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/for_1_3_7_5"
+                            android:text="3. Умеренный уровень активности (1,55): Интенсивные тренировки 3-4 раза в неделю (30-60 минут)."></TextView>
 
-                    <TextView
-                        android:id="@+id/for_1_7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14dp"
-                        android:paddingTop="5dp"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:textColor="@color/grey"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/for_1_5_5"
-                        android:text="4. Тяжелая или трудоемкая активность (1,7): Интенсивные упражнения 5-7 раз в неделю, либо трудоемкая работа."></TextView>
+                        <TextView
+                            android:id="@+id/for_1_7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14dp"
+                            android:paddingTop="5dp"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:textColor="@color/grey"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/for_1_5_5"
+                            android:text="4. Тяжелая или трудоемкая активность (1,7): Интенсивные упражнения 5-7 раз в неделю, либо трудоемкая работа."></TextView>
 
-                    <TextView
-                        android:id="@+id/for_1_9"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14dp"
-                        android:paddingTop="5dp"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingBottom="10dp"
-                        android:textColor="@color/grey"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/for_1_7"
-                        android:text="5. Экстремальный уровень (1,9): Очень активный образ жизни с почти ежедневными тренировками или очень трудоемкая работа."></TextView>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            </androidx.cardview.widget.CardView>
-
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                        <TextView
+                            android:id="@+id/for_1_9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14dp"
+                            android:paddingTop="5dp"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingBottom="10dp"
+                            android:textColor="@color/grey"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/for_1_7"
+                            android:text="5. Экстремальный уровень (1,9): Очень активный образ жизни с почти ежедневными тренировками или очень трудоемкая работа."></TextView>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+                </androidx.cardview.widget.CardView>
 
 
 
-        <Button
-            android:id="@+id/buttonSave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Сохранить"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+
+
+
+            <Button
+                android:id="@+id/buttonSave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/button_save"
+                android:text="Сохранить"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp" />
+
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

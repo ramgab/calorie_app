@@ -1,5 +1,6 @@
 package com.example.calorieapp.ui.home;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,15 +9,18 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 
 import com.example.calorieapp.R;
+import com.example.calorieapp.ui.dashboard.DashboardFragment;
 import com.example.calorieapp.ui.dashboard.ProductListFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -40,11 +44,18 @@ public class EditPersonValueFragment extends Fragment {
             // Для API ниже 30
             requireActivity().getWindow().setStatusBarColor(ContextCompat.getColor(requireContext(), R.color.dark_grey));
             // Убедитесь, что ваш стиль активности не устанавливает прозрачный статус-бар (android:windowTranslucentStatus)
+
+
         }
+
+        // Удаляем свечение при прокрутке
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) NestedScrollView nestedScrollView = view.findViewById(R.id.nestedscrollview_edit_person);
+        nestedScrollView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         bottomNavigationView = requireActivity().findViewById(R.id.nav_view);
         // Скрываем BottomNavigationView
         bottomNavigationView.setVisibility(View.GONE);
+
 
         // Инициализация views
         editTextName = view.findViewById(R.id.editTextName);
@@ -57,14 +68,15 @@ public class EditPersonValueFragment extends Fragment {
 
         // Установка адаптеров для спиннеров
         ArrayAdapter<CharSequence> genderAdapter = ArrayAdapter.createFromResource(requireContext(),
-                R.array.gender_values, android.R.layout.simple_spinner_item);
-        genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                R.array.gender_values, R.layout.spinner_item);
+        genderAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinnerGender.setAdapter(genderAdapter);
 
         ArrayAdapter<CharSequence> activityLevelAdapter = ArrayAdapter.createFromResource(requireContext(),
-                R.array.activity_level_values, android.R.layout.simple_spinner_item);
-        activityLevelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                R.array.activity_level_values, R.layout.spinner_item);
+        activityLevelAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinnerActivityLevel.setAdapter(activityLevelAdapter);
+
 
         // Установка обработчика нажатия на кнопку Сохранить
         buttonSave.setOnClickListener(new View.OnClickListener() {
@@ -117,6 +129,25 @@ public class EditPersonValueFragment extends Fragment {
                 requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.nav_host_fragment_activity_main, homeFragment) // Заменяем текущий фрагмент на ProductListFragment
                         .commit(); // Применяем транзакцию
+            }
+        });
+
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) ImageView closeButton = view.findViewById(R.id.buttonCloseEditPersonFragment);
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+
+                HomeFragment homeFragment = new HomeFragment();
+
+                // Получаем FragmentManager и начинаем транзакцию
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.nav_host_fragment_activity_main, homeFragment) // Заменяем текущий фрагмент на ProductListFragment
+                        .commit(); // Применяем транзакцию
+
+                // Отображаем BottomNavigationView
+                bottomNavigationView.setVisibility(View.VISIBLE);
             }
         });
 

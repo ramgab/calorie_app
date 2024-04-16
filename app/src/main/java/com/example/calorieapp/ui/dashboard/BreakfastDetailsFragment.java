@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -58,6 +59,10 @@ public class BreakfastDetailsFragment extends Fragment {
         // Удаляем свечение при прокрутке
         RecyclerView recyclerViewBreakfast = rootView.findViewById(R.id.recyclerViewBreakfastDetails);
         recyclerViewBreakfast.setOverScrollMode(View.OVER_SCROLL_NEVER);
+
+        NestedScrollView nestedScrollView = rootView.findViewById(R.id.nestedscrollview_breakfast_details);
+        nestedScrollView.setOverScrollMode(View.OVER_SCROLL_NEVER);
+
         // Найти кнопку для закрытия фрагмента
         ImageView buttonCloseFragment = rootView.findViewById(R.id.buttonCloseBreakfastFragment);
 

@@ -31,7 +31,7 @@
             tools:ignore="MissingConstraints">
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
-                android:backgroundTint="@color/newColor"
+                android:backgroundTint="@color/white"
                 app:cardCornerRadius="10dp"
                 android:layout_height="wrap_content">
 
@@ -536,19 +536,46 @@
                     android:layout_height="match_parent">
 
 
-                    <ImageView
+
+                    <androidx.cardview.widget.CardView
                         android:id="@+id/buttonAddBreakfast"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/icon_add"
-                        android:layout_gravity="end"
+                        android:layout_width="80dp"
+                        android:layout_height="90dp"
                         android:clickable="true"
                         android:focusable="true"
-                        android:layout_marginRight="20dp"
+                        app:cardBackgroundColor="@color/plus_card"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        tools:ignore="MissingConstraints">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <!-- Вертикальная линия плюса -->
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="4dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="34dp"
+                                android:layout_marginBottom="34dp"
+                                android:layout_centerHorizontal="true"
+                                android:backgroundTint="@color/dark_grey" />
+
+                            <!-- Горизонтальная линия плюса -->
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="4dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="28dp"
+                                android:layout_marginRight="28dp"
+                                android:backgroundTint="@color/dark_grey" />
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>
@@ -608,17 +635,43 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <ImageView
+                    <androidx.cardview.widget.CardView
                         android:id="@+id/buttonAddLunch"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:scaleType="centerCrop"
-                        android:layout_gravity="end"
-                        android:src="@drawable/icon_add"
-                        android:layout_marginRight="20dp"
+                        android:layout_width="80dp"
+                        android:layout_height="90dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:cardBackgroundColor="@color/plus_card"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        tools:ignore="MissingConstraints">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <!-- Вертикальная линия плюса -->
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="4dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="34dp"
+                                android:layout_marginBottom="34dp"
+                                android:layout_centerHorizontal="true"
+                                android:backgroundTint="@color/dark_grey" />
+
+                            <!-- Горизонтальная линия плюса -->
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="4dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="28dp"
+                                android:layout_marginRight="28dp"
+                                android:backgroundTint="@color/dark_grey" />
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -675,17 +728,42 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <ImageView
+                    <androidx.cardview.widget.CardView
                         android:id="@+id/buttonAddDinner"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/icon_add"
-                        android:layout_gravity="end"
-                        android:layout_marginRight="20dp"
+                        android:layout_width="80dp"
+                        android:layout_height="90dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:cardBackgroundColor="@color/plus_card"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        tools:ignore="MissingConstraints">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <!-- Вертикальная линия плюса -->
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="4dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="34dp"
+                                android:layout_marginBottom="34dp"
+                                android:layout_centerHorizontal="true"
+                                android:backgroundTint="@color/dark_grey" />
+
+                            <!-- Горизонтальная линия плюса -->
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="4dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="28dp"
+                                android:layout_marginRight="28dp"
+                                android:backgroundTint="@color/dark_grey" />
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -742,17 +820,42 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <ImageView
+                    <androidx.cardview.widget.CardView
                         android:id="@+id/buttonAddSnack"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/icon_add"
-                        android:scaleType="centerCrop"
-                        android:layout_gravity="end"
-                        android:layout_marginRight="20dp"
+                        android:layout_width="80dp"
+                        android:layout_height="90dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:cardBackgroundColor="@color/plus_card"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        tools:ignore="MissingConstraints">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <!-- Вертикальная линия плюса -->
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="4dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="34dp"
+                                android:layout_marginBottom="34dp"
+                                android:layout_centerHorizontal="true"
+                                android:backgroundTint="@color/dark_grey" />
+
+                            <!-- Горизонтальная линия плюса -->
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="4dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="28dp"
+                                android:layout_marginRight="28dp"
+                                android:backgroundTint="@color/dark_grey" />
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
