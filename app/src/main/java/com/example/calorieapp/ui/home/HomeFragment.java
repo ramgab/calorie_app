@@ -131,7 +131,7 @@ public class HomeFragment extends Fragment {
 
             // Устанавливаем данные в TextView'ы
             personNameTextView.setText(name + "!");
-            calorieNormTextView.setText(String.format(Locale.getDefault(), "%.2fккал", calculateCalorieNorm(weight, height, age, gender, activityLevel)));
+            calorieNormTextView.setText(String.format(Locale.getDefault(), "%.2f ккал", calculateCalorieNorm(weight, height, age, gender, activityLevel)));
             genderValueTextView.setText(gender);
 
             // Определяем, какое окончание использовать для слова "год"
@@ -324,6 +324,9 @@ public class HomeFragment extends Fragment {
         yAxis.setTextSize(12f);
         yAxis.setGridColor(Color.WHITE); // Изменение цвета сетки на серый
         YAxis yAxisR = caloriesChart.getAxisRight();
+        // Скрытие значений по оси Y
+        yAxis.setDrawLabels(false);
+
         yAxisR.setDrawLabels(false);
         Legend legend = caloriesChart.getLegend();
         legend.setTextColor(Color.WHITE); // Изменение цвета текста в легенде на зеленый

@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.calorieapp.R;
 import com.example.calorieapp.ui.dashboard.DashboardFragment;
@@ -124,6 +125,8 @@ public class EditPersonValueFragment extends Fragment {
 
                 // Скройте BottomNavigationView
                 bottomNavigationView.setVisibility(View.VISIBLE);
+
+
 
                 // Получаем FragmentManager и начинаем транзакцию
                 requireActivity().getSupportFragmentManager().beginTransaction()

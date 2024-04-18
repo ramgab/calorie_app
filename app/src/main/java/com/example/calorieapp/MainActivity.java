@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.example.calorieapp.ui.dashboard.BreakfastDetailsFragment;
 import com.example.calorieapp.ui.dashboard.CreateProductFragment;
@@ -168,6 +169,8 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.nav_host_fragment_activity_main, homeFragment)
                 .commit();
     }
+
+
 
     @Override
     public void onBackPressed() {

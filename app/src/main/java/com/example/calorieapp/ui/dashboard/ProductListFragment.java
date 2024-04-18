@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.view.inputmethod.EditorInfo;
 
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
@@ -51,6 +52,7 @@ public class ProductListFragment extends Fragment {
 
 
     private TextView barcodeTextView;
+    private TextView textForInfo;
     private String selectedDate;
     private String breakfast_lunch_or_dinner;
 
@@ -86,6 +88,11 @@ public class ProductListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_product_list, container, false);
 
+        textForInfo = root.findViewById(R.id.text_for_info);
+        RecyclerView recyclerView = root.findViewById(R.id.productListRecyclerView);
+        ConstraintLayout layoutProductBlock2 = recyclerView.getRootView().findViewById(R.id.layout_product_block_2);
+        layoutProductBlock2.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.black));
+
         bottomNavigationView = requireActivity().findViewById(R.id.nav_view);
         // Скрываем BottomNavigationView
         bottomNavigationView.setVisibility(View.GONE);
@@ -117,8 +124,7 @@ public class ProductListFragment extends Fragment {
         // Retrieve product names from the database
         List<String> productNames = new ArrayList<>(); // Создаем новый список для хранения найденных продуктов
 
-        // Set up RecyclerView
-        RecyclerView recyclerView = root.findViewById(R.id.productListRecyclerView);
+
         ProductAdapter productAdapter = new ProductAdapter(productNames, new ProductAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(String productName) {
@@ -223,6 +229,19 @@ public class ProductListFragment extends Fragment {
 
         // Обновляем данные в адаптере
         ((ProductAdapter) recyclerView.getAdapter()).filterList(filteredProductNames);
+
+        // Получаем ConstraintLayout для изменения его цвета
+        ConstraintLayout layoutProductBlock2 = recyclerView.getRootView().findViewById(R.id.layout_product_block_2);
+
+        // Проверяем, если размер отфильтрованного списка равен 0, меняем цвет ConstraintLayout
+        if (filteredProductNames.size() == 0) {
+            layoutProductBlock2.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.black));
+            textForInfo.setText("Продукт не найден");
+        } else {
+            // Возвращаем исходный цвет, если список не пуст
+            layoutProductBlock2.setBackgroundResource(R.drawable.shape_3);
+            textForInfo.setText("");
+        }
     }
     // Добавим метод для обработки события сворачивания клавиатуры
 

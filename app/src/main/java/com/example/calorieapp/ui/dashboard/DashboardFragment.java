@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
@@ -190,6 +191,10 @@ public class DashboardFragment extends Fragment {
             public void onClick(View view) {
                 // Create a new instance of the ProductListFragment
                 ProductListFragment productListFragment = new ProductListFragment();
+
+
+
+
 
                 // Получите выбранную дату из вашего текстового поля
                 String selectedDate = currentDateTextView.getText().toString();
@@ -509,6 +514,9 @@ public class DashboardFragment extends Fragment {
 
         // Скройте BottomNavigationView
         bottomNavigationView.setVisibility(View.VISIBLE);
+
+
+
         return root;
     }
 
@@ -566,7 +574,7 @@ public class DashboardFragment extends Fragment {
         double totalCalories = dbHelper.getTotalCaloriesSummary(selectedDate);
 
         // Установите значение в TextView с округлением до сотых
-        sumCalorieBreakfast.setText(String.format(Locale.getDefault(), "%.2f калорий", totalCalories));
+        sumCalorieBreakfast.setText(String.format(Locale.getDefault(), "%.2f ккал", totalCalories));
     }
 
     private void loadCaloriesSummaryLunchFromDatabase(String selectedDate) {
@@ -574,7 +582,7 @@ public class DashboardFragment extends Fragment {
         double totalCaloriesLunch = dbHelperLunch.getTotalCaloriesSummaryLunch(selectedDate);
 
         // Установите значение в TextView с округлением до сотых
-        sumCalorieLunch.setText(String.format(Locale.getDefault(), "%.2f калорий", totalCaloriesLunch));
+        sumCalorieLunch.setText(String.format(Locale.getDefault(), "%.2f ккал", totalCaloriesLunch));
     }
 
     private void loadCaloriesSummaryDinnerFromDatabase(String selectedDate) {
@@ -582,7 +590,7 @@ public class DashboardFragment extends Fragment {
         double totalCaloriesDinner = dbHelperDinner.getTotalCaloriesSummaryDinner(selectedDate);
 
         // Установите значение в TextView с округлением до сотых
-        sumCalorieDinner.setText(String.format(Locale.getDefault(), "%.2f калорий", totalCaloriesDinner));
+        sumCalorieDinner.setText(String.format(Locale.getDefault(), "%.2f ккал", totalCaloriesDinner));
     }
 
     private void loadCaloriesSummarySnackFromDatabase(String selectedDate) {
@@ -590,7 +598,7 @@ public class DashboardFragment extends Fragment {
         double totalCaloriesSnack = dbHelperSnack.getTotalCaloriesSummarySnack(selectedDate);
 
         // Установите значение в TextView с округлением до сотых
-        sumCalorieSnack.setText(String.format(Locale.getDefault(), "%.2f калорий", totalCaloriesSnack));
+        sumCalorieSnack.setText(String.format(Locale.getDefault(), "%.2f ккал", totalCaloriesSnack));
     }
 
     private void loadTotalCaloriesSummaryFromDatabase(String selectedDate){
@@ -602,7 +610,7 @@ public class DashboardFragment extends Fragment {
         double totalCaloriesFinal = totalCaloriesBreakfast + totalCaloriesLunch + totalCaloriesDinner + totalCaloriesSnack;
         // Обновляем общую сумму калорий за день в таблице calories_summary_day
         dbHelperPerson.updateCaloriesSummaryDay(selectedDate, totalCaloriesFinal);
-        calorieSum.setText(String.format(Locale.getDefault(), "%.2fккал", totalCaloriesFinal));
+        calorieSum.setText(String.format(Locale.getDefault(), "%.2f ккал", totalCaloriesFinal));
     }
 
     private void loadTotalProteinSummaryFromDatabase(String selectedDate){
