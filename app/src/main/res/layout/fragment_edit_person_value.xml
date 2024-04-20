@@ -184,9 +184,9 @@
                             android:id="@+id/editTextHeight"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:digits="0123456789"
+                            android:digits="0123456789.,"
                             android:inputType="numberDecimal"
-                            android:maxLength="3"
+                            android:maxLength="5"
                             android:hint="Рост" />
 
                     </androidx.cardview.widget.CardView>
@@ -210,9 +210,9 @@
                         android:id="@+id/editTextWeight"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:digits="0123456789"
+                        android:digits="0123456789.,"
                         android:inputType="numberDecimal"
-                        android:maxLength="3"
+                        android:maxLength="6"
                         android:hint="Вес" />
 
                 </androidx.cardview.widget.CardView>

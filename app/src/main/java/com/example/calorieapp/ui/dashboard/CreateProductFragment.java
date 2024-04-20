@@ -68,6 +68,98 @@ public class CreateProductFragment extends Fragment {
         textViewCalories = view.findViewById(R.id.textViewCreateCalories);
         Button saveButton = view.findViewById(R.id.saveCreateProduct);
 
+        editTextProtein.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Ничего не делаем перед изменением текста
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Ничего не делаем при изменении текста
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text = s.toString();
+                if (text.startsWith(".") || text.startsWith(",")) {
+                    // Если текст начинается с 0, точки или запятой, удаляем первый символ
+                    s.delete(0, 1);
+                } else if (text.contains(".") && text.contains(",")) {
+                    // Если текст содержит и точку, и запятую, удаляем последний введенный символ
+                    s.delete(s.length() - 1, s.length());
+                } else if (text.contains(".") && hasMultiplePoints(text)) {
+                    // Если текст содержит более одной точки, удаляем последний введенный символ
+                    s.delete(s.length() - 1, s.length());
+                } else if (text.contains(",") && hasMultipleCommas(text)) {
+                    // Если текст содержит более одной запятой, удаляем последний введенный символ
+                    s.delete(s.length() - 1, s.length());
+                }
+            }
+        });
+
+        editTextFat.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Ничего не делаем перед изменением текста
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Ничего не делаем при изменении текста
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text = s.toString();
+                if (text.startsWith(".") || text.startsWith(",")) {
+                    // Если текст начинается с 0, точки или запятой, удаляем первый символ
+                    s.delete(0, 1);
+                } else if (text.contains(".") && text.contains(",")) {
+                    // Если текст содержит и точку, и запятую, удаляем последний введенный символ
+                    s.delete(s.length() - 1, s.length());
+                } else if (text.contains(".") && hasMultiplePoints(text)) {
+                    // Если текст содержит более одной точки, удаляем последний введенный символ
+                    s.delete(s.length() - 1, s.length());
+                } else if (text.contains(",") && hasMultipleCommas(text)) {
+                    // Если текст содержит более одной запятой, удаляем последний введенный символ
+                    s.delete(s.length() - 1, s.length());
+                }
+            }
+        });
+
+        editTextCarbohydrate.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Ничего не делаем перед изменением текста
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Ничего не делаем при изменении текста
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text = s.toString();
+                if (text.startsWith(".") || text.startsWith(",")) {
+                    // Если текст начинается с 0, точки или запятой, удаляем первый символ
+                    s.delete(0, 1);
+                } else if (text.contains(".") && text.contains(",")) {
+                    // Если текст содержит и точку, и запятую, удаляем последний введенный символ
+                    s.delete(s.length() - 1, s.length());
+                } else if (text.contains(".") && hasMultiplePoints(text)) {
+                    // Если текст содержит более одной точки, удаляем последний введенный символ
+                    s.delete(s.length() - 1, s.length());
+                } else if (text.contains(",") && hasMultipleCommas(text)) {
+                    // Если текст содержит более одной запятой, удаляем последний введенный символ
+                    s.delete(s.length() - 1, s.length());
+                }
+            }
+        });
+
+
+
 
         ImageView closeButton = view.findViewById(R.id.buttonCloseCreateFragment);
         closeButton.setOnClickListener(new View.OnClickListener() {

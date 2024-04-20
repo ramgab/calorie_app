@@ -2,6 +2,8 @@ package com.example.calorieapp.ui.home;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,6 +81,97 @@ public class EditPersonValueFragment extends Fragment {
         spinnerActivityLevel.setAdapter(activityLevelAdapter);
 
 
+        editTextAge.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Ничего не делаем перед изменением текста
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int beжfore, int count) {
+                // Ничего не делаем при изменении текста
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text = s.toString();
+                if (text.startsWith("0") || text.startsWith(".") || text.startsWith(",")) {
+                    // Если текст начинается с 0, точки или запятой, удаляем первый символ
+                    s.delete(0, 1);
+                } else if (text.contains(".") && text.contains(",")) {
+                    // Если текст содержит и точку, и запятую, удаляем последний введенный символ
+                    s.delete(s.length() - 1, s.length());
+                } else if (text.contains(".") && hasMultiplePoints(text)) {
+                    // Если текст содержит более одной точки, удаляем последний введенный символ
+                    s.delete(s.length() - 1, s.length());
+                } else if (text.contains(",") && hasMultipleCommas(text)) {
+                    // Если текст содержит более одной запятой, удаляем последний введенный символ
+                    s.delete(s.length() - 1, s.length());
+                }
+            }
+        });
+
+        editTextWeight.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Ничего не делаем перед изменением текста
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int beжfore, int count) {
+                // Ничего не делаем при изменении текста
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text = s.toString();
+                if (text.startsWith("0") || text.startsWith(".") || text.startsWith(",")) {
+                    // Если текст начинается с 0, точки или запятой, удаляем первый символ
+                    s.delete(0, 1);
+                } else if (text.contains(".") && text.contains(",")) {
+                    // Если текст содержит и точку, и запятую, удаляем последний введенный символ
+                    s.delete(s.length() - 1, s.length());
+                } else if (text.contains(".") && hasMultiplePoints(text)) {
+                    // Если текст содержит более одной точки, удаляем последний введенный символ
+                    s.delete(s.length() - 1, s.length());
+                } else if (text.contains(",") && hasMultipleCommas(text)) {
+                    // Если текст содержит более одной запятой, удаляем последний введенный символ
+                    s.delete(s.length() - 1, s.length());
+                }
+            }
+        });
+
+        editTextHeight.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Ничего не делаем перед изменением текста
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int beжfore, int count) {
+                // Ничего не делаем при изменении текста
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text = s.toString();
+                if (text.startsWith("0") || text.startsWith(".") || text.startsWith(",")) {
+                    // Если текст начинается с 0, точки или запятой, удаляем первый символ
+                    s.delete(0, 1);
+                } else if (text.contains(".") && text.contains(",")) {
+                    // Если текст содержит и точку, и запятую, удаляем последний введенный символ
+                    s.delete(s.length() - 1, s.length());
+                } else if (text.contains(".") && hasMultiplePoints(text)) {
+                    // Если текст содержит более одной точки, удаляем последний введенный символ
+                    s.delete(s.length() - 1, s.length());
+                } else if (text.contains(",") && hasMultipleCommas(text)) {
+                    // Если текст содержит более одной запятой, удаляем последний введенный символ
+                    s.delete(s.length() - 1, s.length());
+                }
+            }
+        });
+
+
         // Установка обработчика нажатия на кнопку Сохранить
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,15 +192,36 @@ public class EditPersonValueFragment extends Fragment {
                 }
 
                 // Проверка возраста, роста и веса на числовой формат
-                int age, height;
-                float weight;
+                int age;
+                double weight, height;
                 try {
                     age = Integer.parseInt(ageStr);
-                    height = Integer.parseInt(heightStr);
-                    weight = Float.parseFloat(weightStr);
+                    height = Double.parseDouble(heightStr.replace(',', '.')); // Заменяем запятую на точку, если она есть
+                    weight = Double.parseDouble(weightStr.replace(',', '.')); // Заменяем запятую на точку, если она есть
                 } catch (NumberFormatException e) {
                     // Если возраст, рост или вес не являются числами, выведите сообщение об ошибке
                     Toast.makeText(requireContext(), "Пожалуйста, введите числовые значения для возраста, роста и веса", Toast.LENGTH_SHORT).show();
+                    return; // Прерываем выполнение метода, чтобы данные не сохранялись
+                }
+
+                // Проверка значения роста
+                if (height > 250 || height < 100) {
+                    // Если рост выходит за допустимый диапазон, отобразить сообщение об ошибке
+                    Toast.makeText(requireContext(), "Неверный ввод: рост должен быть в диапазоне от 100 до 220 см", Toast.LENGTH_SHORT).show();
+                    return; // Прерываем выполнение метода, чтобы данные не сохранялись
+                }
+
+                // Проверка значения веса
+                if (weight > 250 || weight < 30) {
+                    // Если вес выходит за допустимый диапазон, отобразить сообщение об ошибке
+                    Toast.makeText(requireContext(), "Неверный ввод: вес должен быть в диапазоне от 30 до 200 кг", Toast.LENGTH_SHORT).show();
+                    return; // Прерываем выполнение метода, чтобы данные не сохранялись
+                }
+
+                // Проверка значения возраста
+                if (age > 100 || age < 10) {
+                    // Если возраст выходит за допустимый диапазон, отобразить сообщение об ошибке
+                    Toast.makeText(requireContext(), "Неверный ввод: возраст должен быть в диапазоне от 10 до 100 лет", Toast.LENGTH_SHORT).show();
                     return; // Прерываем выполнение метода, чтобы данные не сохранялись
                 }
 
@@ -123,8 +237,7 @@ public class EditPersonValueFragment extends Fragment {
 
                 BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
 
-                // Скройте BottomNavigationView
-                bottomNavigationView.setVisibility(View.VISIBLE);
+
 
 
 
@@ -132,6 +245,9 @@ public class EditPersonValueFragment extends Fragment {
                 requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.nav_host_fragment_activity_main, homeFragment) // Заменяем текущий фрагмент на ProductListFragment
                         .commit(); // Применяем транзакцию
+
+                // Скройте BottomNavigationView
+                bottomNavigationView.setVisibility(View.VISIBLE);
             }
         });
 
@@ -156,4 +272,44 @@ public class EditPersonValueFragment extends Fragment {
 
         return view;
     }
+
+
+    private boolean startsWithPoint(String str) {
+        // Проверяем, является ли первый символ точкой
+        return !str.isEmpty() && str.charAt(0) == '.';
+    }
+
+    private boolean hasMultiplePoints(String str) {
+        // Проверяем, содержит ли строка более одной точки
+        int count = 0;
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == '.') {
+                count++;
+                if (count > 1) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean startsWithComma(String str) {
+        // Проверяем, является ли первый символ запятой
+        return !str.isEmpty() && str.charAt(0) == ',';
+    }
+
+    private boolean hasMultipleCommas(String str) {
+        // Проверяем, содержит ли строка более одной запятой
+        int count = 0;
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == ',') {
+                count++;
+                if (count > 1) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }

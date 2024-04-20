@@ -92,7 +92,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
-    public void insertData(String name, int age, float height, float weight, String gender, String activityLevel) {
+    public void insertData(String name, int age, double height, double weight, String gender, String activityLevel) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, name);
