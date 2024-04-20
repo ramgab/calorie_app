@@ -1,17 +1,20 @@
 package com.example.calorieapp;
 
+import static com.example.calorieapp.NotificationHelper.setDailyNotification;
+
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.example.calorieapp.ui.dashboard.BreakfastDetailsFragment;
 import com.example.calorieapp.ui.dashboard.CreateProductFragment;
-import com.example.calorieapp.ui.dashboard.DashboardFragment;
 import com.example.calorieapp.ui.dashboard.DinnerDetailsFragment;
 import com.example.calorieapp.ui.dashboard.LunchDetailsFragment;
 import com.example.calorieapp.ui.dashboard.ProductDatabaseHelper;
@@ -23,12 +26,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
@@ -38,6 +39,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
     private ProductDatabaseHelper databaseHelper;
@@ -76,6 +78,11 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
+        // Создание канала уведомлений
+        NotificationHelper.createNotificationChannel(this);
+
+        // Установка уведомления на 19:05
+        setDailyNotification(this, 21, 00);
     }
 
     private boolean isFirstLaunch() {
@@ -226,7 +233,24 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void setNotification(Context context, int hour, int minute) {
+        // Создание интента для отправки уведомления
+        Intent intent = new Intent(context, NotificationReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+        // Установка времени для уведомления
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, 0);
+
+        // Получение AlarmManager
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        if (alarmManager != null) {
+            // Установка уведомления
+            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        }
+    }
 
 
 }
