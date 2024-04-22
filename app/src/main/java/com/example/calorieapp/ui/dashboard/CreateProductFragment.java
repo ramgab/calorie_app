@@ -26,7 +26,7 @@ import java.text.DecimalFormat;
 
 public class CreateProductFragment extends Fragment {
 
-    private EditText editTextName, editTextProtein, editTextFat, editTextCarbohydrate;
+    private EditText editTextName, editTextProtein, editTextFat, editTextCarbohydrate, editTextComposition, editTextCategory;
     private TextView textViewCalories;
     private BottomNavigationView bottomNavigationView; // Добавляем BottomNavigationView
 
@@ -62,6 +62,8 @@ public class CreateProductFragment extends Fragment {
 
         // Находим все необходимые элементы управления
         editTextName = view.findViewById(R.id.editTextCreateProductName);
+        editTextComposition = view.findViewById(R.id.editTextCreateComposition);
+        editTextCategory = view.findViewById(R.id.editTextCreateCategory);
         editTextProtein = view.findViewById(R.id.editTextCreateProtein);
         editTextFat = view.findViewById(R.id.editTextCreateFat);
         editTextCarbohydrate = view.findViewById(R.id.editTextCreateCarbohydrate);
@@ -316,13 +318,15 @@ public class CreateProductFragment extends Fragment {
 
         // Получаем значения из EditText
         String name = editTextName.getText().toString().trim();
+        String composition = editTextComposition.getText().toString().trim();
+        String category = editTextCategory.getText().toString().trim();
         double calories = Double.parseDouble(textViewCalories.getText().toString());
         double protein = Double.parseDouble(editTextProtein.getText().toString().trim().replace(",", "."));
         double fat = Double.parseDouble(editTextFat.getText().toString().trim().replace(",", "."));
         double carbohydrate = Double.parseDouble(editTextCarbohydrate.getText().toString().trim().replace(",", "."));
 
         // Создаем объект Product
-        Product product = new Product(name, calories, protein, fat, carbohydrate, null, null, null);
+        Product product = new Product(name, calories, protein, fat, carbohydrate, composition, category, null);
 
         // Добавляем продукт в базу данных
         addProductToDatabase(product);
@@ -343,6 +347,8 @@ public class CreateProductFragment extends Fragment {
         // Значения для вставки
         ContentValues values = new ContentValues();
         values.put(ProductDatabaseHelper.COLUMN_NAME, product.getName());
+        values.put(ProductDatabaseHelper.COLUMN_COMPOSITION, product.getComposition());
+        values.put(ProductDatabaseHelper.COLUMN_CATEGORY, product.getCategory());
         values.put(ProductDatabaseHelper.COLUMN_CALORIES, product.getCalories());
         values.put(ProductDatabaseHelper.COLUMN_PROTEIN, product.getProteins());
         values.put(ProductDatabaseHelper.COLUMN_FAT, product.getFats());

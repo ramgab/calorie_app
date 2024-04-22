@@ -21,6 +21,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_WEIGHT = "weight";
     public static final String COLUMN_GENDER = "gender";
     public static final String COLUMN_ACTIVITY_LEVEL = "activity_level";
+    public static final String COLUMN_CALORIE = "calorie";
+    public static final String COLUMN_PROTEIN = "protein";
+    public static final String COLUMN_FAT = "fat";
+    public static final String COLUMN_CARBOHYDRATE = "carbohydrate";
+    public static final String COLUMN_GOALS = "goals";
     public static final String COLUMN_DATE = "date";
 
     // Создание таблицы
@@ -32,6 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_WEIGHT + " REAL," +
                     COLUMN_GENDER + " TEXT," +
                     COLUMN_ACTIVITY_LEVEL + " REAL," +
+                    COLUMN_GOALS + " TEXT," +
                     COLUMN_DATE + " TEXT)";
 
 
@@ -92,7 +98,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
-    public void insertData(String name, int age, double height, double weight, String gender, String activityLevel) {
+    public void insertData(String name, int age, double height, double weight, String gender, String activityLevel, String goals) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, name);
@@ -101,6 +107,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_WEIGHT, weight);
         values.put(COLUMN_GENDER, gender);
         values.put(COLUMN_ACTIVITY_LEVEL, activityLevel);
+        values.put(COLUMN_GOALS, goals);
         // Добавление текущей даты в формате YYYY-MM-DD HH:MM:SS
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
