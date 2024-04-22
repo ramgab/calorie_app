@@ -33,7 +33,7 @@ public class EditPersonValueFragment extends Fragment {
 
     private EditText editTextName, editTextAge, editTextHeight, editTextWeight, editTextFatPercent;
     private EditText editTextCal, editTextProtein, editTextFat, editTextCarbohydrate;
-    private TextView CMTValue, BMRValue, TEFValue, CalDefValue, PFCDefValue, ProteinDefValue, FatDefValue, CarbohydrateDefValue, ProteinNormValue, FatNormValue, CarbohydrateNormValue, ProteinProfValue, FatProfValue, CarbohydrateProfValue,  CalNormValue, PFCNormValue, CalProfValue, PFCProfValue, WaterValue, FiberValue, SaltValue, CoffeeNormValue, CoffeeMaxValue;
+    private TextView CMTValue, BMRValue, TEFValue, CalDefMinValue, CalDefMaxValue, CalProfMinValue, CalProfMaxValue, ProteinDefValue, FatDefValue, CarbohydrateDefMinValue, CarbohydrateDefMaxValue, CarbohydrateProfMinValue, CarbohydrateProfMaxValue, ProteinNormValue, FatNormValue, CarbohydrateNormValue, ProteinProfValue, FatProfValue, CarbohydrateProfValue,  CalNormValue, PFCNormValue, CalProfValue, PFCProfValue, WaterValue, FiberValue, SaltValue, CoffeeNormValue, CoffeeMaxValue;
     private Spinner spinnerGender, spinnerActivityLevel;
     private Spinner spinnerGoals;
     private Button buttonSave;
@@ -79,11 +79,13 @@ public class EditPersonValueFragment extends Fragment {
         CMTValue = view.findViewById(R.id.CMTValue);
         BMRValue = view.findViewById(R.id.BMRValue);
         TEFValue = view.findViewById(R.id.TEFValue);
-        CalDefValue = view.findViewById(R.id.CalDefValue);
+        CalDefMinValue = view.findViewById(R.id.CalDefMinValue);
+        CalDefMaxValue = view.findViewById(R.id.CalDefMaxValue);
 
         ProteinDefValue = view.findViewById(R.id.ProteinDefValue);
         FatDefValue = view.findViewById(R.id.FatDefValue);
-        CarbohydrateDefValue= view.findViewById(R.id.CarbohydrateDefValue);
+        CarbohydrateDefMinValue= view.findViewById(R.id.CarbohydrateDefMinValue);
+        CarbohydrateDefMaxValue= view.findViewById(R.id.CarbohydrateDefMaxValue);
 
         ProteinNormValue = view.findViewById(R.id.ProteinNormValue);
         FatNormValue = view.findViewById(R.id.FatNormValue);
@@ -91,12 +93,15 @@ public class EditPersonValueFragment extends Fragment {
 
         ProteinProfValue = view.findViewById(R.id.ProteinProfValue);
         FatProfValue = view.findViewById(R.id.FatProfValue);
-        CarbohydrateProfValue= view.findViewById(R.id.CarbohydrateProfValue);
+        CarbohydrateProfMinValue= view.findViewById(R.id.CarbohydrateProfMinValue);
+        CarbohydrateProfMaxValue= view.findViewById(R.id.CarbohydrateProfMaxValue);
+
 
 
 
         CalNormValue = view.findViewById(R.id.CalNormValue);
-        CalProfValue = view.findViewById(R.id.CalProfValue);
+        CalProfMinValue = view.findViewById(R.id.CalProfMinValue);
+        CalProfMaxValue = view.findViewById(R.id.CalProfMaxValue);
         WaterValue = view.findViewById(R.id.WaterValue);
         FiberValue = view.findViewById(R.id.FiberValue);
         SaltValue = view.findViewById(R.id.SaltValue);
@@ -246,7 +251,6 @@ public class EditPersonValueFragment extends Fragment {
                     // Если текст содержит более одной запятой, удаляем последний введенный символ
                     s.delete(s.length() - 1, s.length());
                 }
-
                 updateDisplayedValues();
             }
         });
@@ -282,8 +286,6 @@ public class EditPersonValueFragment extends Fragment {
                 updateDisplayedValues();
             }
         });
-
-
 
 
         // Установка обработчика нажатия на кнопку Сохранить
@@ -495,14 +497,20 @@ public class EditPersonValueFragment extends Fragment {
             }
 
             // Вычисляем калорийность на дефицит, поддержку и профицит
-            double calDeficit = (BMR * AMR + TEF) * 0.8;
+            double calMinDeficit = (BMR * AMR + TEF) * 0.8;
+            double calMaxDeficit = (BMR * AMR + TEF) * 0.9;
+
             double calNorm = BMR * AMR + TEF;
-            double calSurplus = (BMR * AMR + TEF) * 1.1;
+            double calMinSurplus = (BMR * AMR + TEF) * 1.1;
+            double calMaxSurplus = (BMR * AMR + TEF) * 1.2;
 
             // Отображаем результаты
-            CalDefValue.setText(String.format("%.2f", calDeficit) + "ккал");
+            CalDefMinValue.setText(String.format("%.2f", calMinDeficit) + "ккал - ");
+            CalDefMaxValue.setText(String.format("%.2f", calMaxDeficit) + "ккал");
             CalNormValue.setText(String.format("%.2f", calNorm)+ "ккал");
-            CalProfValue.setText(String.format("%.2f", calSurplus)+ "ккал");
+            CalProfMinValue.setText(String.format("%.2f", calMinSurplus)+ "ккал - ");
+            CalProfMaxValue.setText(String.format("%.2f", calMaxSurplus) + "ккал");
+
 
             // Вычисляем БЖУ на дефицит, поддержку и профицит
             double proteinDeficit = leanBodyMass * 2.5;
@@ -513,23 +521,27 @@ public class EditPersonValueFragment extends Fragment {
             double fatNorm = leanBodyMass * 1;
             double fatSurplus = leanBodyMass * 1;
 
-            double carbDeficit = (calDeficit - (proteinDeficit * 4 + fatDeficit * 9)) / 4;
+            double carbMinDeficit = (calMinDeficit - (proteinDeficit * 4 + fatDeficit * 9)) / 4;
+            double carbMaxDeficit = (calMaxDeficit - (proteinDeficit * 4 + fatDeficit * 9)) / 4;
             double carbNorm = (calNorm - (proteinNorm * 4 + fatNorm * 9)) / 4;
-            double carbSurplus = (calSurplus - (proteinSurplus * 4 + fatSurplus * 9)) / 4;
+            double carbMinSurplus = (calMinSurplus - (proteinSurplus * 4 + fatSurplus * 9)) / 4;
+            double carbMaxSurplus = (calMaxSurplus - (proteinSurplus * 4 + fatSurplus * 9)) / 4;
 
             // Отображаем результаты
 
-            ProteinDefValue.setText("Б - " + String.format("%.2f", proteinDeficit) + "г.");
-            FatDefValue.setText("Ж - " + String.format("%.2f", fatDeficit) + "г.");
-            CarbohydrateDefValue.setText("У - " + String.format("%.2f", carbDeficit) + "г.");
+            ProteinDefValue.setText("Б: " + String.format("%.2f", proteinDeficit) + "г.");
+            FatDefValue.setText("Ж: " + String.format("%.2f", fatDeficit) + "г.");
+            CarbohydrateDefMinValue.setText("У: " + String.format("%.2f", carbMinDeficit) + "г. - ");
+            CarbohydrateDefMaxValue.setText(String.format("%.2f", carbMaxDeficit) + "г.");
 
-            ProteinNormValue.setText("Б - " + String.format("%.2f", proteinNorm) + "г.");
-            FatNormValue.setText("Ж - " + String.format("%.2f", fatNorm) + "г.");
-            CarbohydrateNormValue.setText("У - " + String.format("%.2f", carbNorm) + "г.");
+            ProteinNormValue.setText("Б: " + String.format("%.2f", proteinNorm) + "г.");
+            FatNormValue.setText("Ж: " + String.format("%.2f", fatNorm) + "г.");
+            CarbohydrateNormValue.setText("У: " + String.format("%.2f", carbNorm) + "г.");
 
-            ProteinProfValue.setText("Б - " + String.format("%.2f", proteinSurplus) + "г.");
-            FatProfValue.setText("Ж - " + String.format("%.2f", fatSurplus) + "г.");
-            CarbohydrateProfValue.setText("У - " + String.format("%.2f", carbSurplus) + "г.");
+            ProteinProfValue.setText("Б: " + String.format("%.2f", proteinSurplus) + "г.");
+            FatProfValue.setText("Ж: " + String.format("%.2f", fatSurplus) + "г.");
+            CarbohydrateProfMinValue.setText("У: " + String.format("%.2f", carbMinSurplus) + "г. - ");
+            CarbohydrateProfMaxValue.setText(String.format("%.2f", carbMaxSurplus) + "г.");
 
             // Вычисляем необходимое количество воды, клетчатки и соли
             double water = leanBodyMass / 20; // 1л на 20кг СМТ

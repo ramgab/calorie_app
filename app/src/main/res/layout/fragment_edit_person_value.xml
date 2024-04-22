@@ -116,45 +116,72 @@
             </LinearLayout>
 
 
-        <LinearLayout
-            android:id="@+id/layout_for_person_info_12"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/editTextNameLayout"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal"
-            tools:ignore="MissingConstraints">
-
-
             <LinearLayout
-                android:layout_width="0dp"
-
+                android:id="@+id/layout_for_person_info_12"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                app:layout_constraintTop_toBottomOf="@+id/editTextNameLayout"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints">
 
-                tools:ignore="Orientation">
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="0dp"
+
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/blocks"
+                    android:layout_weight="1"
 
-                    app:cardCornerRadius="15dp"
-                    android:layout_margin="2dp">
-                    <EditText
-                        android:id="@+id/editTextAge"
+                    tools:ignore="Orientation">
+
+                    <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
-                        android:textSize="14dp"
                         android:layout_height="wrap_content"
-                        android:digits="0123456789"
-                        android:inputType="numberDecimal"
-                        android:maxLength="2"
-                        android:hint="Возраст" />
+                        android:backgroundTint="@color/blocks"
+
+                        app:cardCornerRadius="15dp"
+                        android:layout_margin="2dp">
+                        <EditText
+                            android:id="@+id/editTextAge"
+                            android:layout_width="match_parent"
+                            android:textSize="14dp"
+                            android:layout_height="wrap_content"
+                            android:digits="0123456789"
+                            android:inputType="numberDecimal"
+                            android:maxLength="2"
+                            android:hint="Возраст" />
 
 
-                </androidx.cardview.widget.CardView>
+                    </androidx.cardview.widget.CardView>
 
-            </LinearLayout>
+                </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:layout_constraintTop_toBottomOf="@+id/editTextNameLayout"
+                        tools:ignore="Orientation">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/blocks"
+                            app:cardCornerRadius="15dp"
+                            android:layout_margin="2dp">
+
+                            <EditText
+                                android:id="@+id/editTextHeight"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:digits="0123456789.,"
+                                android:textSize="14dp"
+                                android:inputType="numberDecimal"
+                                android:maxLength="5"
+                                android:hint="Рост" />
+
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -170,73 +197,46 @@
                         android:layout_margin="2dp">
 
                         <EditText
-                            android:id="@+id/editTextHeight"
+                            android:id="@+id/editTextWeight"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:digits="0123456789.,"
                             android:textSize="14dp"
                             android:inputType="numberDecimal"
-                            android:maxLength="5"
-                            android:hint="Рост" />
+                            android:maxLength="6"
+                            android:hint="Вес" />
 
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:layout_constraintTop_toBottomOf="@+id/editTextNameLayout"
-                tools:ignore="Orientation">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/blocks"
-                    app:cardCornerRadius="15dp"
-                    android:layout_margin="2dp">
+                    android:layout_weight="1"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextNameLayout"
+                    tools:ignore="Orientation">
 
-                    <EditText
-                        android:id="@+id/editTextWeight"
+                    <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:digits="0123456789.,"
-                        android:textSize="14dp"
-                        android:inputType="numberDecimal"
-                        android:maxLength="6"
-                        android:hint="Вес" />
+                        android:backgroundTint="@color/blocks"
+                        app:cardCornerRadius="15dp"
+                        android:layout_margin="2dp">
 
-                </androidx.cardview.widget.CardView>
+                        <EditText
+                            android:id="@+id/editTextFatPercent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:digits="0123456789.,"
+                            android:textSize="14dp"
+                            android:inputType="numberDecimal"
+                            android:maxLength="4"
+                            android:hint="% жира" />
+
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                app:layout_constraintTop_toBottomOf="@+id/editTextNameLayout"
-                tools:ignore="Orientation">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/blocks"
-                    app:cardCornerRadius="15dp"
-                    android:layout_margin="2dp">
-
-                    <EditText
-                        android:id="@+id/editTextFatPercent"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:digits="0123456789.,"
-                        android:textSize="14dp"
-                        android:inputType="numberDecimal"
-                        android:maxLength="4"
-                        android:hint="% жира" />
-
-                </androidx.cardview.widget.CardView>
-            </LinearLayout>
-
-        </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -399,13 +399,6 @@
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
-
-
-
         </LinearLayout>
 
         <LinearLayout
@@ -533,7 +526,6 @@
 
 
             </androidx.cardview.widget.CardView>
-
         </LinearLayout>
 
         <LinearLayout
@@ -577,16 +569,32 @@
                     tools:ignore="MissingConstraints">
                 </TextView>
 
-                <TextView
-                    android:id="@+id/CalDefValue"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:text=""
-                    android:textSize="14dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginBottom="10dp"
-                    tools:ignore="MissingConstraints" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/CalDefMinValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text=""
+                        android:textSize="14dp"
+                        tools:ignore="MissingConstraints" />
+
+                    <TextView
+                        android:id="@+id/CalDefMaxValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text=""
+                        android:textSize="14dp"
+                        tools:ignore="MissingConstraints" />
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/PFCDef"
@@ -629,15 +637,33 @@
                         android:layout_marginBottom="10dp"
                         tools:ignore="MissingConstraints" />
 
-                    <TextView
-                        android:id="@+id/CarbohydrateDefValue"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:textSize="14dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginBottom="10dp"
-                        tools:ignore="MissingConstraints" />
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/CarbohydrateDefMinValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="14dp"
+                            tools:ignore="MissingConstraints" />
+
+                        <TextView
+                            android:id="@+id/CarbohydrateDefMaxValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="14dp"
+                            tools:ignore="MissingConstraints" />
+
+
+                    </LinearLayout>
+
+
 
                 </LinearLayout>
             </LinearLayout>
@@ -753,16 +779,32 @@
                     tools:ignore="MissingConstraints">
                 </TextView>
 
-                <TextView
-                    android:id="@+id/CalProfValue"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:text=""
-                    android:textSize="14dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginBottom="10dp"
-                    tools:ignore="MissingConstraints" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/CalProfMinValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text=""
+                        android:textSize="14dp"
+                        tools:ignore="MissingConstraints" />
+
+                    <TextView
+                        android:id="@+id/CalProfMaxValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text=""
+                        android:textSize="14dp"
+                        tools:ignore="MissingConstraints" />
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/PFCProf"
@@ -805,15 +847,29 @@
                         android:layout_marginBottom="10dp"
                         tools:ignore="MissingConstraints" />
 
-                    <TextView
-                        android:id="@+id/CarbohydrateProfValue"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:textSize="14dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginBottom="10dp"
-                        tools:ignore="MissingConstraints" />
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/CarbohydrateProfMinValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="14dp"
+                            tools:ignore="MissingConstraints" />
+
+                        <TextView
+                            android:id="@+id/CarbohydrateProfMaxValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="14dp"
+                            tools:ignore="MissingConstraints" />
+                    </LinearLayout>
 
                 </LinearLayout>
 
