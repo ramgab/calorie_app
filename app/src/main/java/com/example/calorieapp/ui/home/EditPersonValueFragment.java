@@ -297,14 +297,74 @@ public class EditPersonValueFragment extends Fragment {
                 String ageStr = editTextAge.getText().toString();
                 String heightStr = editTextHeight.getText().toString();
                 String weightStr = editTextWeight.getText().toString();
+                String fatPercentStr = editTextFatPercent.getText().toString();
                 String gender = spinnerGender.getSelectedItem().toString();
                 String activityLevel = spinnerActivityLevel.getSelectedItem().toString();
 
-                String fatStr = editTextFatPercent.getText().toString();
                 String goals = spinnerGoals.getSelectedItem().toString();
 
+
+
+                // Получение новых значений для дополнительных полей
+                String calMinDeficitStr = CalDefMinValue.getText().toString().trim().replace(',', '.');
+                String calMaxDeficitStr = CalDefMaxValue.getText().toString().trim().replace(',', '.');
+                String calNormStr = CalNormValue.getText().toString().trim().replace(',', '.');
+                String calMinSurplusStr = CalProfMinValue.getText().toString().trim().replace(',', '.');
+                String calMaxSurplusStr = CalProfMaxValue.getText().toString().trim().replace(',', '.');
+
+                String proteinDeficitStr = ProteinDefValue.getText().toString().trim().replace(',', '.');
+                String proteinNormStr = ProteinNormValue.getText().toString().trim().replace(',', '.');
+                String proteinSurplusStr = ProteinProfValue.getText().toString().trim().replace(',', '.');
+
+                String fatDeficitStr = FatDefValue.getText().toString().trim().replace(',', '.');
+                String fatNormStr = FatNormValue.getText().toString().trim().replace(',', '.');
+                String fatSurplusStr = FatProfValue.getText().toString().trim().replace(',', '.');
+
+                String carbMinDeficitStr = CarbohydrateDefMinValue.getText().toString().trim().replace(',', '.');
+                String carbMaxDeficitStr = CarbohydrateDefMaxValue.getText().toString().trim().replace(',', '.');
+                String carbNormStr = CarbohydrateNormValue.getText().toString().trim().replace(',', '.');
+                String carbMinSurplusStr = CarbohydrateProfMinValue.getText().toString().trim().replace(',', '.');
+                String carbMaxSurplusStr = CarbohydrateProfMaxValue.getText().toString().trim().replace(',', '.');
+
+                String waterStr = WaterValue.getText().toString().trim().replace(',', '.');
+                String fiberStr = FiberValue.getText().toString().trim().replace(',', '.');
+                String saltStr = SaltValue.getText().toString().trim().replace(',', '.');
+
+                String caffeineNormStr = CoffeeNormValue.getText().toString().trim().replace(',', '.');
+                String caffeineMaxStr = CoffeeMaxValue.getText().toString().trim().replace(',', '.');
+
+                // Преобразование строк в тип double
+                double calMinDeficit = Double.parseDouble(calMinDeficitStr);
+                double calMaxDeficit = Double.parseDouble(calMaxDeficitStr);
+                double calNorm = Double.parseDouble(calNormStr);
+                double calMinSurplus = Double.parseDouble(calMinSurplusStr);
+                double calMaxSurplus = Double.parseDouble(calMaxSurplusStr);
+
+                double proteinDeficit = Double.parseDouble(proteinDeficitStr);
+                double proteinNorm = Double.parseDouble(proteinNormStr);
+                double proteinSurplus = Double.parseDouble(proteinSurplusStr);
+
+                double fatDeficit = Double.parseDouble(fatDeficitStr);
+                double fatNorm = Double.parseDouble(fatNormStr);
+                double fatSurplus = Double.parseDouble(fatSurplusStr);
+
+                double carbMinDeficit = Double.parseDouble(carbMinDeficitStr);
+                double carbMaxDeficit = Double.parseDouble(carbMaxDeficitStr);
+                double carbNorm = Double.parseDouble(carbNormStr);
+                double carbMinSurplus = Double.parseDouble(carbMinSurplusStr);
+                double carbMaxSurplus = Double.parseDouble(carbMaxSurplusStr);
+
+                double water = Double.parseDouble(waterStr);
+                double fiber = Double.parseDouble(fiberStr);
+                double salt = Double.parseDouble(saltStr);
+
+                double caffeineNorm = Double.parseDouble(caffeineNormStr);
+                double caffeineMax = Double.parseDouble(caffeineMaxStr);
+
+
+
                 // Проверка наличия всех данных
-                if (name.isEmpty() || ageStr.isEmpty() || heightStr.isEmpty() || weightStr.isEmpty() || fatStr.isEmpty()) {
+                if (name.isEmpty() || ageStr.isEmpty() || heightStr.isEmpty() || weightStr.isEmpty() || fatPercentStr.isEmpty()) {
                     // Если какое-то поле не заполнено, выведите сообщение об ошибке
                     Toast.makeText(requireContext(), "Пожалуйста, заполните все поля", Toast.LENGTH_SHORT).show();
                     return; // Прерываем выполнение метода, чтобы данные не сохранялись
@@ -312,12 +372,12 @@ public class EditPersonValueFragment extends Fragment {
 
                 // Проверка возраста, роста и веса на числовой формат
                 int age;
-                double weight, height, fat;
+                double weight, height, fatPercent;
                 try {
                     age = Integer.parseInt(ageStr);
                     height = Double.parseDouble(heightStr.replace(',', '.')); // Заменяем запятую на точку, если она есть
                     weight = Double.parseDouble(weightStr.replace(',', '.')); // Заменяем запятую на точку, если она есть
-                    fat = Double.parseDouble(fatStr.replace(',', '.')); // Заменяем запятую на точку, если она есть
+                    fatPercent = Double.parseDouble(fatPercentStr.replace(',', '.')); // Заменяем запятую на точку, если она есть
 
                 } catch (NumberFormatException e) {
                     // Если возраст, рост или вес не являются числами, выведите сообщение об ошибке
@@ -347,7 +407,7 @@ public class EditPersonValueFragment extends Fragment {
                 }
 
                 // Проверка значения возраста
-                if (fat > 60 || age < 1) {
+                if (fatPercent > 60 || age < 1) {
                     Toast.makeText(requireContext(), "Неверный ввод: процент жира не может быть таким", Toast.LENGTH_SHORT).show();
                     return; // Прерываем выполнение метода, чтобы данные не сохранялись
                 }
@@ -359,7 +419,18 @@ public class EditPersonValueFragment extends Fragment {
                 DatabaseHelper dbHelper = new DatabaseHelper(requireContext());
 
                 // Вставляем новую запись
-                dbHelper.insertData(name, age, height, weight, gender, activityLevel, goals);
+                //dbHelper.insertData(name, age, height, weight, gender, activityLevel, goals);
+
+
+
+                dbHelper.insertData(name, age, height, weight, gender, activityLevel, fatPercent, goals,
+                        calMinDeficit, calMaxDeficit, calNorm, calMinSurplus, calMaxSurplus, proteinDeficit,
+                        proteinNorm, proteinSurplus, fatDeficit, fatNorm, fatSurplus, carbMinDeficit,
+                        carbMaxDeficit, carbNorm, carbMinSurplus, carbMaxSurplus, water, fiber, salt,
+                        caffeineNorm, caffeineMax
+
+                );
+
 
                 // Возвращаемся в HomeFragment
                 HomeFragment homeFragment = new HomeFragment();
@@ -505,11 +576,11 @@ public class EditPersonValueFragment extends Fragment {
             double calMaxSurplus = (BMR * AMR + TEF) * 1.2;
 
             // Отображаем результаты
-            CalDefMinValue.setText(String.format("%.2f", calMinDeficit) + "ккал - ");
-            CalDefMaxValue.setText(String.format("%.2f", calMaxDeficit) + "ккал");
-            CalNormValue.setText(String.format("%.2f", calNorm)+ "ккал");
-            CalProfMinValue.setText(String.format("%.2f", calMinSurplus)+ "ккал - ");
-            CalProfMaxValue.setText(String.format("%.2f", calMaxSurplus) + "ккал");
+            CalDefMinValue.setText(String.format("%.2f", calMinDeficit));
+            CalDefMaxValue.setText(String.format("%.2f", calMaxDeficit));
+            CalNormValue.setText(String.format("%.2f", calNorm));
+            CalProfMinValue.setText(String.format("%.2f", calMinSurplus));
+            CalProfMaxValue.setText(String.format("%.2f", calMaxSurplus));
 
 
             // Вычисляем БЖУ на дефицит, поддержку и профицит
@@ -529,19 +600,19 @@ public class EditPersonValueFragment extends Fragment {
 
             // Отображаем результаты
 
-            ProteinDefValue.setText("Б: " + String.format("%.2f", proteinDeficit) + "г.");
-            FatDefValue.setText("Ж: " + String.format("%.2f", fatDeficit) + "г.");
-            CarbohydrateDefMinValue.setText("У: " + String.format("%.2f", carbMinDeficit) + "г. - ");
-            CarbohydrateDefMaxValue.setText(String.format("%.2f", carbMaxDeficit) + "г.");
+            ProteinDefValue.setText(String.format("%.2f", proteinDeficit));
+            FatDefValue.setText(String.format("%.2f", fatDeficit));
+            CarbohydrateDefMinValue.setText(String.format("%.2f", carbMinDeficit));
+            CarbohydrateDefMaxValue.setText(String.format("%.2f", carbMaxDeficit));
 
-            ProteinNormValue.setText("Б: " + String.format("%.2f", proteinNorm) + "г.");
-            FatNormValue.setText("Ж: " + String.format("%.2f", fatNorm) + "г.");
-            CarbohydrateNormValue.setText("У: " + String.format("%.2f", carbNorm) + "г.");
+            ProteinNormValue.setText(String.format("%.2f", proteinNorm));
+            FatNormValue.setText(String.format("%.2f", fatNorm));
+            CarbohydrateNormValue.setText(String.format("%.2f", carbNorm));
 
-            ProteinProfValue.setText("Б: " + String.format("%.2f", proteinSurplus) + "г.");
-            FatProfValue.setText("Ж: " + String.format("%.2f", fatSurplus) + "г.");
-            CarbohydrateProfMinValue.setText("У: " + String.format("%.2f", carbMinSurplus) + "г. - ");
-            CarbohydrateProfMaxValue.setText(String.format("%.2f", carbMaxSurplus) + "г.");
+            ProteinProfValue.setText(String.format("%.2f", proteinSurplus));
+            FatProfValue.setText(String.format("%.2f", fatSurplus));
+            CarbohydrateProfMinValue.setText(String.format("%.2f", carbMinSurplus));
+            CarbohydrateProfMaxValue.setText(String.format("%.2f", carbMaxSurplus));
 
             // Вычисляем необходимое количество воды, клетчатки и соли
             double water = leanBodyMass / 20; // 1л на 20кг СМТ
@@ -549,17 +620,17 @@ public class EditPersonValueFragment extends Fragment {
             double salt = leanBodyMass / 10; // 1г на 10кг СМТ
 
             // Отображаем результаты
-            WaterValue.setText(String.format("%.2f", water) + "л.");
-            FiberValue.setText(String.format("%.2f", fiber) + "г.");
-            SaltValue.setText(String.format("%.2f", salt) + "г.");
+            WaterValue.setText(String.format("%.2f", water));
+            FiberValue.setText(String.format("%.2f", fiber));
+            SaltValue.setText(String.format("%.2f", salt));
 
             // Вычисляем количество кофеина
             double caffeineNorm = weight * 2.5; // 2.5мг на 1кг ОМТ
             double caffeineMax = weight * 5; // 5мг на 1кг ОМТ
 
             // Отображаем результаты
-            CoffeeNormValue.setText(String.format("%.2f", caffeineNorm) + "мг. - ");
-            CoffeeMaxValue.setText(String.format("%.2f", caffeineMax)+ "мг.");
+            CoffeeNormValue.setText(String.format("%.2f", caffeineNorm));
+            CoffeeMaxValue.setText(String.format("%.2f", caffeineMax));
         }
     }
 

@@ -18,6 +18,8 @@
         android:orientation="horizontal"
         android:background="@color/black">
 
+
+
         <LinearLayout
             android:id="@+id/layout_block_1"
             android:layout_width="match_parent"
@@ -218,12 +220,180 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/layout_block_2"
+            android:id="@+id/layout_block_4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_3"
             android:layout_marginTop="10dp"
             app:layout_constraintTop_toBottomOf="@id/layout_block_1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Памятка"
+                android:textSize="18dp"
+                android:textColor="@color/white"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="15dp"
+                android:textStyle="bold">
+
+            </TextView>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/shape_5"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Цель: "
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textSize="16dp">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/GoalValueInDashboard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Похудеть"
+                        android:textColor="@color/white"
+                        android:textSize="16dp">
+
+                    </TextView>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Необходимо придерживаться:"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="16dp">
+
+                </TextView>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp">
+
+                    <TextView
+                        android:id="@+id/CalorieMinValueInDashboard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2000"
+
+                        android:textColor="@color/white"
+                        android:textSize="16dp">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tire_cal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16dp"
+                        android:textColor="@color/white"
+                        android:text="ккал - ">
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/CalorieMaxValueInDashboard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2200"
+
+                        android:textColor="@color/white"
+                        android:textSize="16dp">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/kcal_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16dp"
+                        android:textColor="@color/white"
+                        android:text="ккал">
+                    </TextView>
+
+
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Вода:"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="16dp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/WaterValueInDashboard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3л."
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/white"
+                    android:textSize="16dp">
+
+                </TextView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Клетчатка:"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="16dp">
+
+                </TextView>
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_block_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_3"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/layout_block_4"
             android:orientation="vertical">
 
 

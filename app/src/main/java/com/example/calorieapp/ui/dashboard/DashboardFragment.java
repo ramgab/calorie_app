@@ -1,8 +1,11 @@
 package com.example.calorieapp.ui.dashboard;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -73,6 +76,9 @@ public class DashboardFragment extends Fragment {
     private TextView fatSum;
     private TextView carbohydrateSum;
 
+    private TextView calorieMinValueTextView;
+    private TextView calorieMaxValueTextView;
+
 
     // Объявляем экземпляр класса базы данных для выбранной даты
     private SelectedDateDatabaseHelper selectedDateDBHelper;
@@ -86,6 +92,7 @@ public class DashboardFragment extends Fragment {
         selectedButtonDBHelper = new SelectedButtonDatabaseHelper(requireContext());
     }
 
+    @SuppressLint("Range")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -111,7 +118,9 @@ public class DashboardFragment extends Fragment {
         CardView story7 = root.findViewById(R.id.story7);
         CardView story8 = root.findViewById(R.id.story8);
 
-
+        // Найдите TextView для минимального и максимального значения калорийности
+        calorieMinValueTextView = root.findViewById(R.id.CalorieMinValueInDashboard);
+        calorieMaxValueTextView = root.findViewById(R.id.CalorieMaxValueInDashboard);
         story1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -515,9 +524,75 @@ public class DashboardFragment extends Fragment {
         // Скройте BottomNavigationView
         bottomNavigationView.setVisibility(View.VISIBLE);
 
+// Получаем данные из базы данных
+        SQLiteDatabase db = dbHelperPerson.getReadableDatabase();
+        Cursor cursor = db.query(DatabaseHelper.TABLE_NAME, null, null, null, null, null, null);
+        String goals = null;
+        if (cursor != null && cursor.moveToLast()) {
+            goals = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_GOALS));
+        }
+        if (cursor != null) {
+            cursor.close();
+        }
+        db.close();
 
+        // Устанавливаем значения в TextView'ы в зависимости от целей
+        if (goals != null) {
+            switch (goals) {
+                case "Похудеть":
+                    // Заполняем TextView'ы для похудения
+                    setCalorieValuesFromDatabase(dbHelperPerson.COLUMN_CAL_MIN_DEFICIT, dbHelperPerson.COLUMN_CAL_MAX_DEFICIT, root);
+                    break;
+                case "Набрать массу":
+                    // Заполняем TextView'ы для набора массы
+                    setCalorieValuesFromDatabase(dbHelperPerson.COLUMN_CAL_MIN_SURPLUS, dbHelperPerson.COLUMN_CAL_MAX_SURPLUS, root);
+                    break;
+                case "Удержать вес":
+                    // Заполняем TextView'ы для удержания веса
+                    setCalorieValuesFromDatabase(dbHelperPerson.COLUMN_CAL_NORM, dbHelperPerson.COLUMN_CAL_NORM, root);
+
+                    break;
+                default:
+                    // Если значение не определено, не делаем ничего
+                    break;
+            }
+        }
 
         return root;
+    }
+
+    @SuppressLint("Range")
+    private void setCalorieValuesFromDatabase(String minValueColumn, String maxValueColumn, View root) {
+        // Получаем данные из базы данных
+        DatabaseHelper dbHelper = new DatabaseHelper(requireContext());
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.query(DatabaseHelper.TABLE_NAME, null, null, null, null, null, null);
+        double minCalorieValue = 0;
+        double maxCalorieValue = 0;
+        if (cursor != null && cursor.moveToLast()) {
+            minCalorieValue = cursor.getDouble(cursor.getColumnIndex(minValueColumn));
+            maxCalorieValue = cursor.getDouble(cursor.getColumnIndex(maxValueColumn));
+        }
+        if (cursor != null) {
+            cursor.close();
+        }
+        db.close();
+
+        // Устанавливаем значения в TextView'ы
+        TextView calorieMinValueTextView = root.findViewById(R.id.CalorieMinValueInDashboard);
+        TextView calorieMaxValueTextView = root.findViewById(R.id.CalorieMaxValueInDashboard);
+        TextView tireCal = root.findViewById(R.id.tire_cal);
+        TextView kcalText = root.findViewById(R.id.kcal_text);
+        calorieMinValueTextView.setText(String.valueOf(minCalorieValue));
+        if (minCalorieValue == maxCalorieValue) {
+            calorieMaxValueTextView.setText(""); // Пустое значение, если min и max одинаковы
+            tireCal.setText("ккал");
+            kcalText.setText("");
+        } else {
+            calorieMaxValueTextView.setText(String.valueOf(maxCalorieValue));
+            tireCal.setText("ккал - ");
+            kcalText.setText("ккал");
+        }
     }
 
 

@@ -128,10 +128,12 @@ public class HomeFragment extends Fragment {
             @SuppressLint("Range") float weight = cursor.getFloat(cursor.getColumnIndex(DatabaseHelper.COLUMN_WEIGHT));
             @SuppressLint("Range") String gender = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_GENDER));
             @SuppressLint("Range") float activityLevel = cursor.getFloat(cursor.getColumnIndex(DatabaseHelper.COLUMN_ACTIVITY_LEVEL));
+            @SuppressLint("Range") float calNorm = cursor.getFloat(cursor.getColumnIndex(DatabaseHelper.COLUMN_CAL_NORM)); // Получаем значение cal_norm из базы данных
+
 
             // Устанавливаем данные в TextView'ы
             personNameTextView.setText(name + "!");
-            calorieNormTextView.setText(String.format(Locale.getDefault(), "%.2f ккал", calculateCalorieNorm(weight, height, age, gender, activityLevel)));
+            calorieNormTextView.setText(String.format(Locale.getDefault(), "%.2f ккал", calNorm)); // Устанавливаем значение из базы данных
             genderValueTextView.setText(gender);
 
             // Определяем, какое окончание использовать для слова "год"
@@ -336,20 +338,6 @@ public class HomeFragment extends Fragment {
 
 
 
-
-
-    private float calculateCalorieNorm(float weight, float height, int age, String gender, float activityLevel) {
-        float bmr; // Basal Metabolic Rate (основной обмен веществ)
-
-        // Рассчитываем основной обмен веществ в зависимости от пола
-        if (gender.equalsIgnoreCase("Мужской")) {
-            bmr = (10 * weight + 6.25f * height - 5 * age + 5) * activityLevel;
-        } else { // Для женщин
-            bmr = (10 * weight + 6.25f * height - 5 * age - 161) * activityLevel;
-        }
-
-        return bmr;
-    }
 
 
     private void setupTopCategoriesChart() {

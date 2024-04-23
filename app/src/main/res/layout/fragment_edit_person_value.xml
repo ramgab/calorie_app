@@ -586,11 +586,27 @@
                         tools:ignore="MissingConstraints" />
 
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="ккал - "
+                        android:textSize="14dp"
+                        tools:ignore="MissingConstraints" />
+
+                    <TextView
                         android:id="@+id/CalDefMaxValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
                         android:text=""
+                        android:textSize="14dp"
+                        tools:ignore="MissingConstraints" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="ккал"
                         android:textSize="14dp"
                         tools:ignore="MissingConstraints" />
 
@@ -618,24 +634,71 @@
                     android:layout_marginLeft="10dp"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/ProteinDefValue"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:textSize="14dp"
-                        android:layout_marginBottom="10dp"
-                        tools:ignore="MissingConstraints" />
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="10dp">
 
-                    <TextView
-                        android:id="@+id/FatDefValue"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:text="Б: "
+                            android:textSize="14dp"
+                            tools:ignore="MissingConstraints" />
+
+                        <TextView
+                            android:id="@+id/ProteinDefValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="14dp"
+                            tools:ignore="MissingConstraints" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:text="г."
+                            android:textSize="14dp"
+                            tools:ignore="MissingConstraints" />
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:textSize="14dp"
+                        android:orientation="horizontal"
                         android:layout_marginLeft="8dp"
-                        android:layout_marginBottom="10dp"
-                        tools:ignore="MissingConstraints" />
+                        android:layout_marginBottom="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:text="Ж: "
+                            android:textSize="14dp"
+                            tools:ignore="MissingConstraints" />
+
+                        <TextView
+                            android:id="@+id/FatDefValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="14dp"
+                            tools:ignore="MissingConstraints" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:text="г."
+                            android:textSize="14dp"
+                            tools:ignore="MissingConstraints" />
+
+                    </LinearLayout>
+
+
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -643,6 +706,14 @@
                         android:layout_marginLeft="8dp"
                         android:layout_marginBottom="10dp"
                         android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:text="У: "
+                            android:textSize="14dp"
+                            tools:ignore="MissingConstraints" />
 
                         <TextView
                             android:id="@+id/CarbohydrateDefMinValue"
@@ -653,10 +724,26 @@
                             tools:ignore="MissingConstraints" />
 
                         <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:text="г. - "
+                            android:textSize="14dp"
+                            tools:ignore="MissingConstraints" />
+
+                        <TextView
                             android:id="@+id/CarbohydrateDefMaxValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
+                            android:textSize="14dp"
+                            tools:ignore="MissingConstraints" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:text="г."
                             android:textSize="14dp"
                             tools:ignore="MissingConstraints" />
 
@@ -691,16 +778,34 @@
                     tools:ignore="MissingConstraints">
                 </TextView>
 
-                <TextView
-                    android:id="@+id/CalNormValue"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:text=""
-                    android:textSize="14dp"
+                    android:orientation="horizontal"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="10dp"
-                    tools:ignore="MissingConstraints" />
+                    android:layout_marginLeft="10dp">
+
+                    <TextView
+                        android:id="@+id/CalNormValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text=""
+                        android:textSize="14dp"
+
+                        tools:ignore="MissingConstraints" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="ккал"
+                        android:textSize="14dp"
+                        tools:ignore="MissingConstraints" />
+
+                </LinearLayout>
+
+
 
                 <TextView
                     android:id="@+id/PFCNorm"
@@ -724,34 +829,104 @@
                     android:layout_marginLeft="10dp"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/ProteinNormValue"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:textSize="14dp"
-                        android:layout_marginBottom="10dp"
-                        tools:ignore="MissingConstraints" />
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="10dp">
 
-                    <TextView
-                        android:id="@+id/FatNormValue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:textSize="14dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginBottom="10dp"
-                        tools:ignore="MissingConstraints" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Б: "
+                            android:textSize="14dp"
+                            android:textColor="@color/white">
+                        </TextView>
 
-                    <TextView
-                        android:id="@+id/CarbohydrateNormValue"
+                        <TextView
+                            android:id="@+id/ProteinNormValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="14dp"
+                            tools:ignore="MissingConstraints" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="г."
+                            android:textSize="14dp"
+                            android:textColor="@color/white">
+                        </TextView>
+                    </LinearLayout>
+
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:textSize="14dp"
+                        android:orientation="horizontal"
                         android:layout_marginLeft="8dp"
-                        android:layout_marginBottom="10dp"
-                        tools:ignore="MissingConstraints" />
+                        android:layout_marginBottom="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ж: "
+                            android:textSize="14dp"
+                            android:textColor="@color/white">
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/FatNormValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="14dp"
+                            tools:ignore="MissingConstraints" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="г."
+                            android:textSize="14dp"
+                            android:textColor="@color/white">
+                        </TextView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginBottom="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="У: "
+                            android:textSize="14dp"
+                            android:textColor="@color/white">
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/CarbohydrateNormValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="14dp"
+                            tools:ignore="MissingConstraints" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="г."
+                            android:textSize="14dp"
+                            android:textColor="@color/white">
+                        </TextView>
+
+                    </LinearLayout>
+
+
 
                 </LinearLayout>
 
@@ -796,11 +971,27 @@
                         tools:ignore="MissingConstraints" />
 
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="ккал - "
+                        android:textSize="14dp"
+                        tools:ignore="MissingConstraints" />
+
+                    <TextView
                         android:id="@+id/CalProfMaxValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
                         android:text=""
+                        android:textSize="14dp"
+                        tools:ignore="MissingConstraints" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="ккал"
                         android:textSize="14dp"
                         tools:ignore="MissingConstraints" />
 
@@ -828,24 +1019,72 @@
                     android:layout_marginLeft="10dp"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/ProteinProfValue"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:textSize="14dp"
-                        android:layout_marginBottom="10dp"
-                        tools:ignore="MissingConstraints" />
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="10dp">
 
-                    <TextView
-                        android:id="@+id/FatProfValue"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Б: "
+                            android:textSize="14dp"
+                            android:textColor="@color/white">
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/ProteinProfValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="14dp"
+                            tools:ignore="MissingConstraints" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="г."
+                            android:textSize="14dp"
+                            android:textColor="@color/white">
+                        </TextView>
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:textSize="14dp"
+                        android:orientation="horizontal"
                         android:layout_marginLeft="8dp"
-                        android:layout_marginBottom="10dp"
-                        tools:ignore="MissingConstraints" />
+                        android:layout_marginBottom="10dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ж: "
+                            android:textSize="14dp"
+                            android:textColor="@color/white">
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/FatProfValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:textSize="14dp"
+                            tools:ignore="MissingConstraints" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="г."
+                            android:textSize="14dp"
+                            android:textColor="@color/white">
+                        </TextView>
+
+                    </LinearLayout>
+
+
+
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -853,6 +1092,14 @@
                         android:layout_marginLeft="8dp"
                         android:layout_marginBottom="10dp"
                         android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="У: "
+                            android:textSize="14dp"
+                            android:textColor="@color/white">
+                        </TextView>
 
                         <TextView
                             android:id="@+id/CarbohydrateProfMinValue"
@@ -863,12 +1110,28 @@
                             tools:ignore="MissingConstraints" />
 
                         <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="г. - "
+                            android:textSize="14dp"
+                            android:textColor="@color/white">
+                        </TextView>
+
+                        <TextView
                             android:id="@+id/CarbohydrateProfMaxValue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
                             android:textSize="14dp"
                             tools:ignore="MissingConstraints" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="г."
+                            android:textSize="14dp"
+                            android:textColor="@color/white">
+                        </TextView>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -897,15 +1160,33 @@
                     tools:ignore="MissingConstraints">
                 </TextView>
 
-                <TextView
-                    android:id="@+id/WaterValue"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:text=""
-                    android:textSize="14dp"
+                    android:orientation="horizontal"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="10dp"/>
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/WaterValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text=""
+                        android:textSize="14dp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="л."
+                        android:textSize="14dp"
+                        />
+
+                </LinearLayout>
+
+
             </LinearLayout>
 
             <LinearLayout
@@ -928,16 +1209,34 @@
                     tools:ignore="MissingConstraints">
                 </TextView>
 
-                <TextView
-                    android:id="@+id/FiberValue"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:text=""
-                    android:textSize="14dp"
-                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
                     android:layout_marginLeft="10dp"
-                    tools:ignore="MissingConstraints" />
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/FiberValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text=""
+                        android:textSize="14dp"
+                        tools:ignore="MissingConstraints" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="г."
+                        android:textSize="14dp"
+                        tools:ignore="MissingConstraints" />
+
+
+                </LinearLayout>
+
+
             </LinearLayout>
 
             <LinearLayout
@@ -960,16 +1259,33 @@
                     tools:ignore="MissingConstraints">
                 </TextView>
 
-                <TextView
-                    android:id="@+id/SaltValue"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:text=""
-                    android:textSize="14dp"
+                    android:orientation="horizontal"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="10dp"
-                    tools:ignore="MissingConstraints" />
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/SaltValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text=""
+                        android:textSize="14dp"
+                        tools:ignore="MissingConstraints" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="г."
+                        android:textSize="14dp"
+                        tools:ignore="MissingConstraints" />
+
+                </LinearLayout>
+
+
             </LinearLayout>
 
             <LinearLayout
@@ -996,6 +1312,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:orientation="horizontal"
                     android:layout_marginBottom="10dp">
                     <TextView
                         android:id="@+id/CoffeeNormValue"
@@ -1007,6 +1324,14 @@
                         tools:ignore="MissingConstraints" />
 
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="мг. - "
+                        android:textSize="14dp"
+                        tools:ignore="MissingConstraints" />
+
+                    <TextView
                         android:id="@+id/CoffeeMaxValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -1014,6 +1339,14 @@
                         android:text=""
                         android:textSize="14dp"
                         android:paddingTop="2dp"
+                        tools:ignore="MissingConstraints" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="мг."
+                        android:textSize="14dp"
                         tools:ignore="MissingConstraints" />
 
                 </LinearLayout>
