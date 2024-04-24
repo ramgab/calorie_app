@@ -482,19 +482,6 @@
                         tools:ignore="MissingConstraints"></TextView>
 
                     <TextView
-                        android:id="@+id/for_1_23"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:text="После этого, при желании, Вы можете скорректировать, какой должен быть дефицит/профицит калорий. Изначально системой заложено значение в 10% от общей суточной нормы калорийности рациона"
-                        android:textColor="@color/grey"
-                        android:textSize="14dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/qwerty3"></TextView>
-
-
-                    <TextView
                         android:id="@+id/for_1_5_53"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -506,7 +493,7 @@
                         android:textSize="14dp"
                         android:textStyle="italic"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/for_1_23"></TextView>
+                        app:layout_constraintTop_toBottomOf="@id/qwerty3"></TextView>
 
 
                     <TextView
@@ -516,6 +503,7 @@
                         android:paddingLeft="10dp"
                         android:paddingTop="5dp"
                         android:paddingRight="10dp"
+                        android:paddingBottom="10dp"
                         android:text="Профицит калорий - это состояние, когда количество калорий, которое вы потребляете, больше, чем количество калорий, которое ваше тело тратит за день."
                         android:textColor="@color/grey"
                         android:textSize="14dp"

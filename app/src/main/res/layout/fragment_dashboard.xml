@@ -219,173 +219,7 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/layout_block_4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_3"
-            android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@id/layout_block_1"
-            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Памятка"
-                android:textSize="18dp"
-                android:textColor="@color/white"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="15dp"
-                android:textStyle="bold">
-
-            </TextView>
-
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/shape_5"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Цель: "
-                        android:textColor="@color/white"
-                        android:textStyle="bold"
-                        android:textSize="16dp">
-
-                    </TextView>
-
-                    <TextView
-                        android:id="@+id/GoalValueInDashboard"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Похудеть"
-                        android:textColor="@color/white"
-                        android:textSize="16dp">
-
-                    </TextView>
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Необходимо придерживаться:"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:textSize="16dp">
-
-                </TextView>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="10dp">
-
-                    <TextView
-                        android:id="@+id/CalorieMinValueInDashboard"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2000"
-
-                        android:textColor="@color/white"
-                        android:textSize="16dp">
-
-                    </TextView>
-
-                    <TextView
-                        android:id="@+id/tire_cal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16dp"
-                        android:textColor="@color/white"
-                        android:text="ккал - ">
-                    </TextView>
-
-                    <TextView
-                        android:id="@+id/CalorieMaxValueInDashboard"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2200"
-
-                        android:textColor="@color/white"
-                        android:textSize="16dp">
-
-                    </TextView>
-
-                    <TextView
-                        android:id="@+id/kcal_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16dp"
-                        android:textColor="@color/white"
-                        android:text="ккал">
-                    </TextView>
-
-
-
-                </LinearLayout>
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="Вода:"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:textSize="16dp">
-
-                </TextView>
-
-                <TextView
-                    android:id="@+id/WaterValueInDashboard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="3л."
-                    android:layout_marginLeft="10dp"
-                    android:textColor="@color/white"
-                    android:textSize="16dp">
-
-                </TextView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="Клетчатка:"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:textSize="16dp">
-
-                </TextView>
-
-            </LinearLayout>
-
-
-
-
-        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/layout_block_2"
@@ -393,7 +227,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/shape_3"
             android:layout_marginTop="10dp"
-            app:layout_constraintTop_toBottomOf="@id/layout_block_4"
+            app:layout_constraintTop_toBottomOf="@id/layout_block_1"
             android:orientation="vertical">
 
 
@@ -529,9 +363,7 @@
                     android:id="@+id/fat_layout"
                     android:layout_width="0dp"
                     android:layout_height="120dp"
-                    android:layout_weight="1"
-
-                    >
+                    android:layout_weight="1">
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
@@ -1064,6 +896,256 @@
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
 
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/layout_block_4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_3"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/layout_block_3"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Памятка"
+                android:textSize="18dp"
+                android:textColor="@color/white"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Цель: "
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="16dp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/GoalValueInDashboard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Похудеть"
+                    android:textColor="@color/white"
+                    android:textSize="16dp">
+
+                </TextView>
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/shape_5"
+                android:orientation="vertical">
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Калории:"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="16dp">
+
+                </TextView>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp">
+
+                    <TextView
+                        android:id="@+id/CalorieRealValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/white"
+                        android:textSize="16dp">
+                    </TextView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16dp"
+                        android:textColor="@color/white"
+                        android:text=" ккал">
+                    </TextView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16dp"
+                        android:textColor="@color/white"
+                        android:text="/">
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/CalorieMinValueInDashboard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:textColor="@color/white"
+                        android:textSize="16dp">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tire_cal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16dp"
+                        android:textColor="@color/white"
+                        android:text="-">
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/CalorieMaxValueInDashboard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:textColor="@color/white"
+                        android:textSize="16dp">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/kcal_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16dp"
+                        android:textColor="@color/white"
+                        android:text=" ккал">
+                    </TextView>
+
+
+
+                </LinearLayout>
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:progressDrawable="@drawable/custom_progress_bar" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/shape_5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Вода:"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="16dp">
+
+                </TextView>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp">
+
+                    <TextView
+                        android:id="@+id/WaterValueRealInDashboard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/white"
+                        android:textSize="16dp">
+                    </TextView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="16dp"
+                        android:text="/"
+                        android:textColor="@color/white">
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/WaterValueInDashboard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2"
+                        android:textColor="@color/white"
+                        android:textSize="16dp">
+                    </TextView>
+
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="16dp"
+                        android:text=" л."
+                        android:textColor="@color/white">
+                    </TextView>
+                </LinearLayout>
+
+
+
+
+
+                <ProgressBar
+                    android:id="@+id/progressBarWater"
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:progressDrawable="@drawable/custom_progress_bar_water" />
+
+            </LinearLayout>
+
+
+
+
             <LinearLayout
                 android:id="@+id/pustishka"
                 android:layout_width="match_parent"
@@ -1074,6 +1156,10 @@
                 android:orientation="horizontal">
 
             </LinearLayout>
+
+
+
+
         </LinearLayout>
 
         <View

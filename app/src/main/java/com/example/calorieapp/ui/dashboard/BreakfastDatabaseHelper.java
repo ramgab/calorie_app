@@ -89,6 +89,16 @@ public class BreakfastDatabaseHelper extends SQLiteOpenHelper {
     // SQL query to create the calories_summary table
     // SQL query to create the calories_summary table
 
+    static final String TABLE_WATER_SUMMARY = "water_summary";
+    public static final String COLUMN_DATE_SUMMARY_WATER = "date_summary_water";
+    public static final String COLUMN_TOTAL_WATER = "total_water";
+
+    // SQL query to create the water_summary table
+    private static final String CREATE_WATER_SUMMARY_TABLE = "CREATE TABLE " + TABLE_WATER_SUMMARY + " (" +
+            COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            COLUMN_DATE_SUMMARY_WATER + " TEXT, " +
+            COLUMN_TOTAL_WATER + " REAL);";
+
     private static final String CREATE_CARBOHYDRATE_SUMMARY_TABLE = "CREATE TABLE " + TABLE_CARBOHYDRATE_SUMMARY + " (" +
             COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_DATE_SUMMARY_CARBOHYDRATE + " TEXT, " +
@@ -109,8 +119,43 @@ public class BreakfastDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_PROTEIN_SUMMARY_FINAL_TABLE);
         db.execSQL(CREATE_FAT_SUMMARY_FINAL_TABLE);
         db.execSQL(CREATE_CARB_SUMMARY_FINAL_TABLE);
+        db.execSQL(CREATE_WATER_SUMMARY_TABLE); // Добавляем создание таблицы water_summary
+
 
         Log.d("BreakfastDatabaseHelper", "Tables created: breakfast, calories_summary");
+    }
+
+    public void updateWaterSummary(String date, double totalWater) {
+        // Теперь вставляем или обновляем данные в таблице water_summary
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_DATE_SUMMARY_WATER, date);
+        values.put(COLUMN_TOTAL_WATER, totalWater);
+
+        db.replace(TABLE_WATER_SUMMARY, null, values);
+        db.close();
+    }
+
+    public double getTotalWaterSummary(String date) {
+        // Выполняем запрос для получения суммы воды из таблицы water_summary по выбранной дате
+        String query = "SELECT " + COLUMN_TOTAL_WATER + " FROM " + TABLE_WATER_SUMMARY +
+                " WHERE " + COLUMN_DATE_SUMMARY_WATER + " = ?" +
+                " ORDER BY " + COLUMN_ID + " DESC";  // Упорядочиваем по убыванию id
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, new String[]{date});
+
+        double totalWater = 0;
+
+        // Если есть результат, переходим к первой записи
+        if (cursor.moveToFirst()) {
+            totalWater = cursor.getDouble(0);
+        }
+
+        cursor.close();
+        db.close();
+
+        return totalWater;
     }
 
 
@@ -517,6 +562,14 @@ public class BreakfastDatabaseHelper extends SQLiteOpenHelper {
                         COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         COLUMN_DATE_SUMMARY_CARB_FINAL + " TEXT, " +
                         COLUMN_TOTAL_CARB_FINAL + " REAL);");
+            }
+
+            if (oldVersion < 2) {
+                // Upgrade from version 1 to 2
+                db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_WATER_SUMMARY + " (" +
+                        COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        COLUMN_DATE_SUMMARY_WATER + " TEXT, " +
+                        COLUMN_TOTAL_WATER + " REAL);");
             }
         }
     }

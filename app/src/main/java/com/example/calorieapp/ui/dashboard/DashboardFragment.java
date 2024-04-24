@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -72,18 +73,22 @@ public class DashboardFragment extends Fragment {
     private TextView sumCalorieDinner;
     private TextView sumCalorieSnack;
     private TextView calorieSum;
+    private TextView calorieRealValue;
     private TextView proteinSum;
     private TextView fatSum;
     private TextView carbohydrateSum;
 
     private TextView calorieMinValueTextView;
     private TextView calorieMaxValueTextView;
+    private TextView waterMax;
 
 
     // Объявляем экземпляр класса базы данных для выбранной даты
     private SelectedDateDatabaseHelper selectedDateDBHelper;
     private SelectedButtonDatabaseHelper selectedButtonDBHelper;
     private String breakfast_lunch_or_dinner;
+
+    private View rootView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -98,6 +103,8 @@ public class DashboardFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        rootView = root;
 
         // Установка цвета статус-бара
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
@@ -121,6 +128,7 @@ public class DashboardFragment extends Fragment {
         // Найдите TextView для минимального и максимального значения калорийности
         calorieMinValueTextView = root.findViewById(R.id.CalorieMinValueInDashboard);
         calorieMaxValueTextView = root.findViewById(R.id.CalorieMaxValueInDashboard);
+        waterMax = root.findViewById(R.id.WaterValueInDashboard);
         story1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -491,6 +499,7 @@ public class DashboardFragment extends Fragment {
         }
 
         calorieSum = root.findViewById(R.id.calorie_sum);
+        calorieRealValue = root.findViewById(R.id.CalorieRealValue);
         proteinSum = root.findViewById(R.id.proteinValue);
         fatSum = root.findViewById(R.id.fatValue);
         carbohydrateSum = root.findViewById(R.id.carbValue);
@@ -508,6 +517,7 @@ public class DashboardFragment extends Fragment {
         loadTotalFatSummaryFromDatabase(selectedDate);
         loadTotalCarbohydrateSummaryFromDatabase(selectedDate);
         updateProgressBars(selectedDate);
+
         // Добавьте слушатель изменений даты
         currentDateTextView.addTextChangedListener(dateTextWatcher);
 
@@ -541,15 +551,15 @@ public class DashboardFragment extends Fragment {
             switch (goals) {
                 case "Похудеть":
                     // Заполняем TextView'ы для похудения
-                    setCalorieValuesFromDatabase(dbHelperPerson.COLUMN_CAL_MIN_DEFICIT, dbHelperPerson.COLUMN_CAL_MAX_DEFICIT, root);
+                    setCalorieValuesFromDatabase(dbHelperPerson.COLUMN_CAL_MIN_DEFICIT, dbHelperPerson.COLUMN_CAL_MAX_DEFICIT, dbHelperPerson.COLUMN_WATER, root);
                     break;
                 case "Набрать массу":
                     // Заполняем TextView'ы для набора массы
-                    setCalorieValuesFromDatabase(dbHelperPerson.COLUMN_CAL_MIN_SURPLUS, dbHelperPerson.COLUMN_CAL_MAX_SURPLUS, root);
+                    setCalorieValuesFromDatabase(dbHelperPerson.COLUMN_CAL_MIN_SURPLUS, dbHelperPerson.COLUMN_CAL_MAX_SURPLUS,dbHelperPerson.COLUMN_WATER, root);
                     break;
                 case "Удержать вес":
                     // Заполняем TextView'ы для удержания веса
-                    setCalorieValuesFromDatabase(dbHelperPerson.COLUMN_CAL_NORM, dbHelperPerson.COLUMN_CAL_NORM, root);
+                    setCalorieValuesFromDatabase(dbHelperPerson.COLUMN_CAL_NORM, dbHelperPerson.COLUMN_CAL_NORM, dbHelperPerson.COLUMN_WATER, root);
 
                     break;
                 default:
@@ -558,20 +568,135 @@ public class DashboardFragment extends Fragment {
             }
         }
 
+        setupProgressBar(root);
+        setupWaterProgressBar(root);
+
         return root;
     }
 
     @SuppressLint("Range")
-    private void setCalorieValuesFromDatabase(String minValueColumn, String maxValueColumn, View root) {
+    private void setupWaterProgressBar(View root) {
+        // Получаем значение для максимального значения прогресс-бара из TextView
+        TextView waterValueTextView = root.findViewById(R.id.WaterValueInDashboard);
+        TextView waterRealValueTextView = root.findViewById(R.id.WaterValueRealInDashboard);
+        String waterValueString = waterValueTextView.getText().toString().replaceAll("[^\\d.]", ""); // Удаляем все символы, кроме цифр и точки
+        double maxWaterValue = Double.parseDouble(waterValueString);
+
+        // Получаем сумму граммов напитков за выбранную дату
+        double totalGramsOfWater = 0;
+        String selectedDate = currentDateTextView.getText().toString();
+        Cursor cursor = dbHelper.getReadableDatabase().query(
+                BreakfastDatabaseHelper.TABLE_BREAKFAST,
+                new String[]{BreakfastDatabaseHelper.COLUMN_GRAMS},
+                BreakfastDatabaseHelper.COLUMN_DATE + " = ? AND " + BreakfastDatabaseHelper.COLUMN_CATEGORY + " = ?",
+                new String[]{selectedDate, "Напитки"},
+                null,
+                null,
+                null
+        );
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                totalGramsOfWater += cursor.getDouble(cursor.getColumnIndex(BreakfastDatabaseHelper.COLUMN_GRAMS));
+            }
+            cursor.close();
+        }
+
+
+
+        //
+        Cursor cursorLunch = dbHelperLunch.getReadableDatabase().query(
+                LunchDatabaseHelper.TABLE_LUNCH,
+                new String[]{LunchDatabaseHelper.COLUMN_GRAMS},
+                LunchDatabaseHelper.COLUMN_DATE + " = ? AND " + LunchDatabaseHelper.COLUMN_CATEGORY + " = ?",
+                new String[]{selectedDate, "Напитки"},
+                null,
+                null,
+                null
+        );
+        if (cursorLunch != null) {
+            while (cursorLunch.moveToNext()) {
+                totalGramsOfWater += cursorLunch.getDouble(cursorLunch.getColumnIndex(LunchDatabaseHelper.COLUMN_GRAMS));
+            }
+            cursorLunch.close();
+        }
+
+        //
+        Cursor cursorDinner = dbHelperDinner.getReadableDatabase().query(
+                DinnerDatabaseHelper.TABLE_DINNER,
+                new String[]{DinnerDatabaseHelper.COLUMN_GRAMS},
+                DinnerDatabaseHelper.COLUMN_DATE + " = ? AND " + DinnerDatabaseHelper.COLUMN_CATEGORY + " = ?",
+                new String[]{selectedDate, "Напитки"},
+                null,
+                null,
+                null
+        );
+        if (cursorDinner != null) {
+            while (cursorDinner.moveToNext()) {
+                totalGramsOfWater += cursorDinner.getDouble(cursorDinner.getColumnIndex(DinnerDatabaseHelper.COLUMN_GRAMS));
+            }
+            cursorDinner.close();
+        }
+
+        //
+        Cursor cursorSnack = dbHelperSnack.getReadableDatabase().query(
+                SnackDatabaseHelper.TABLE_SNACK,
+                new String[]{SnackDatabaseHelper.COLUMN_GRAMS},
+                SnackDatabaseHelper.COLUMN_DATE + " = ? AND " + SnackDatabaseHelper.COLUMN_CATEGORY + " = ?",
+                new String[]{selectedDate, "Напитки"},
+                null,
+                null,
+                null
+        );
+        if (cursorSnack != null) {
+            while (cursorSnack.moveToNext()) {
+                totalGramsOfWater += cursorSnack.getDouble(cursorSnack.getColumnIndex(SnackDatabaseHelper.COLUMN_GRAMS));
+            }
+            cursorSnack.close();
+        }
+
+
+        // Вычисляем значение для заполнения прогресс-бара
+        double progressValue = totalGramsOfWater / 1000.0; // Переводим граммы в литры
+
+        double maxWater = maxWaterValue * 1000;
+
+        // Находим прогресс-бар и устанавливаем его значения
+        ProgressBar waterProgressBar = root.findViewById(R.id.progressBarWater);
+        waterProgressBar.setMax((int) maxWater);
+        waterProgressBar.setProgress((int) totalGramsOfWater);
+
+        waterRealValueTextView.setText(String.valueOf(progressValue) + " л.");
+    }
+
+
+    private void setupProgressBar(View root) {
+        TextView calorieMinValueTextView = root.findViewById(R.id.CalorieMinValueInDashboard);
+        ProgressBar progressBar = root.findViewById(R.id.progressBar);
+
+        // Извлекаем значение из calorie_sum и устанавливаем его в прогресс бар
+        TextView calorieSumTextView = root.findViewById(R.id.calorie_sum);
+        String calorieSumText = calorieSumTextView.getText().toString().replace(" ккал", "").replace(",", ".");
+        double calorieSumValue = Double.parseDouble(calorieSumText);
+        progressBar.setMax((int) Double.parseDouble(calorieMinValueTextView.getText().toString()));
+        progressBar.setProgress((int) calorieSumValue);
+    }
+
+
+    @SuppressLint("Range")
+    private void setCalorieValuesFromDatabase(String minValueColumn, String maxValueColumn, String maxWaterColumn, View root) {
         // Получаем данные из базы данных
         DatabaseHelper dbHelper = new DatabaseHelper(requireContext());
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.query(DatabaseHelper.TABLE_NAME, null, null, null, null, null, null);
         double minCalorieValue = 0;
         double maxCalorieValue = 0;
+        double maxWaterValue = 0;
+
         if (cursor != null && cursor.moveToLast()) {
             minCalorieValue = cursor.getDouble(cursor.getColumnIndex(minValueColumn));
             maxCalorieValue = cursor.getDouble(cursor.getColumnIndex(maxValueColumn));
+            maxWaterValue = cursor.getDouble(cursor.getColumnIndex(maxWaterColumn));
+
         }
         if (cursor != null) {
             cursor.close();
@@ -581,18 +706,23 @@ public class DashboardFragment extends Fragment {
         // Устанавливаем значения в TextView'ы
         TextView calorieMinValueTextView = root.findViewById(R.id.CalorieMinValueInDashboard);
         TextView calorieMaxValueTextView = root.findViewById(R.id.CalorieMaxValueInDashboard);
+        TextView waterMaxValueTextView = root.findViewById(R.id.WaterValueInDashboard);
+
         TextView tireCal = root.findViewById(R.id.tire_cal);
         TextView kcalText = root.findViewById(R.id.kcal_text);
         calorieMinValueTextView.setText(String.valueOf(minCalorieValue));
         if (minCalorieValue == maxCalorieValue) {
             calorieMaxValueTextView.setText(""); // Пустое значение, если min и max одинаковы
-            tireCal.setText("ккал");
+            tireCal.setText(" ккал");
             kcalText.setText("");
         } else {
             calorieMaxValueTextView.setText(String.valueOf(maxCalorieValue));
-            tireCal.setText("ккал - ");
-            kcalText.setText("ккал");
+            tireCal.setText("-");
+            kcalText.setText(" ккал");
         }
+        waterMaxValueTextView.setText(String.valueOf(maxWaterValue));
+
+
     }
 
 
@@ -615,6 +745,7 @@ public class DashboardFragment extends Fragment {
         setProgressBarWidth(binding.fatProgress, fatPercentage);
         setProgressBarWidth(binding.carbProgress, carbPercentage);
     }
+
 
     // Добавьте слушатель изменений текста для текущей даты
     private TextWatcher dateTextWatcher = new TextWatcher() {
@@ -641,6 +772,8 @@ public class DashboardFragment extends Fragment {
             loadTotalFatSummaryFromDatabase(selectedDate);
             loadTotalCarbohydrateSummaryFromDatabase(selectedDate);
             updateProgressBars(selectedDate);
+            setupProgressBar(rootView);
+            setupWaterProgressBar(rootView);
         }
     };
 
@@ -686,6 +819,7 @@ public class DashboardFragment extends Fragment {
         // Обновляем общую сумму калорий за день в таблице calories_summary_day
         dbHelperPerson.updateCaloriesSummaryDay(selectedDate, totalCaloriesFinal);
         calorieSum.setText(String.format(Locale.getDefault(), "%.2f ккал", totalCaloriesFinal));
+        calorieRealValue.setText(String.valueOf(totalCaloriesFinal));
     }
 
     private void loadTotalProteinSummaryFromDatabase(String selectedDate){

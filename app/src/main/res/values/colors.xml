@@ -26,9 +26,10 @@
     <color name="blue">#1E90FF </color>
     <color name="Orchid">#DA70D6 </color>
     <color name="Maroon">#800000 </color>
-    <color name="DarkSlateGray">#2F4F4F </color>
+    <color name="DarkSlateGray">#355E3B </color>
     <color name="LimeGreen">#32CD32 </color>
-    <color name="Cyan">#00FFFF </color>
+    <color name="Cyan">#33FFFF </color>
+    <color name="Teal">#008080</color>
 
 
 
