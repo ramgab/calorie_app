@@ -239,7 +239,7 @@
                 android:layout_marginTop="10dp"
                 android:text="2024ккал"
                 android:textAlignment="center"
-                android:textSize="20sp"
+                android:textSize="18dp"
                 android:textColor="@color/white"
                 tools:ignore="MissingConstraints">
             </TextView>
@@ -293,7 +293,7 @@
                 <LinearLayout
                     android:id="@+id/protein_layout"
                     android:layout_width="0dp"
-                    android:layout_height="120dp"
+                    android:layout_height="135dp"
                     android:layout_weight="1"
                     app:layout_constraintTop_toBottomOf="@+id/progress_bar"
                     >
@@ -314,9 +314,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
-                                android:textSize="18dp"
+                                android:textSize="16dp"
                                 android:textStyle="bold"
-                                android:text="Белки:"
+                                android:text="Белки"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 android:layout_marginStart="10dp"
@@ -327,33 +327,71 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
-                                android:textSize="18dp"
+                                android:textSize="14dp"
                                 app:layout_constraintTop_toBottomOf="@id/protein_text"
                                 android:paddingLeft="10dp"
                                 android:layout_marginLeft="10dp"
-                                android:layout_marginTop="10dp"/>
+                                android:layout_marginTop="5dp"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="г."
+                                android:text="г"
                                 android:textColor="@color/white"
-                                android:textSize="18dp"
+                                android:textSize="14dp"
                                 app:layout_constraintTop_toTopOf="@id/proteinValue"
                                 app:layout_constraintStart_toEndOf="@id/proteinValue"
                                 android:layout_marginStart="5dp"/>
 
+                            <TextView
+                                android:id="@+id/text_protein_goal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:textSize="14dp"
+                                android:text="Из: "
+                                android:textStyle="bold"
+                                app:layout_constraintTop_toBottomOf="@id/proteinValue"
+                                android:paddingLeft="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="5dp"/>
+
+                            <TextView
+                                android:id="@+id/proteinMaxValue"
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" 140"
+                                android:textColor="@color/white"
+                                android:textSize="14dp"
+                                app:layout_constraintTop_toTopOf="@id/text_protein_goal"
+                                app:layout_constraintStart_toEndOf="@id/text_protein_goal"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" г"
+                                android:textColor="@color/white"
+                                android:textSize="14dp"
+                                app:layout_constraintTop_toTopOf="@id/proteinMaxValue"
+                                app:layout_constraintStart_toEndOf="@id/proteinMaxValue"
+                                />
+
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <androidx.cardview.widget.CardView
+
+
+                        <ProgressBar
+                            android:id="@+id/progressBarProtein"
                             android:layout_width="match_parent"
                             android:layout_height="10dp"
-                            app:cardCornerRadius="15dp"
-                            android:backgroundTint="@color/protein"
-                            android:layout_gravity="bottom"
                             android:layout_marginBottom="10dp"
                             android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"/>
+                            android:layout_marginRight="10dp"
+                            android:layout_gravity="bottom"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:progressDrawable="@drawable/custom_progress_bar_protein" />
 
                     </androidx.cardview.widget.CardView>
 
@@ -362,7 +400,7 @@
                 <LinearLayout
                     android:id="@+id/fat_layout"
                     android:layout_width="0dp"
-                    android:layout_height="120dp"
+                    android:layout_height="135dp"
                     android:layout_weight="1">
 
                     <androidx.cardview.widget.CardView
@@ -378,7 +416,7 @@
 
                             <TextView
                                 android:id="@+id/fat_textt"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
                                 android:layout_marginTop="10dp"
@@ -386,8 +424,8 @@
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 android:textStyle="bold"
-                                android:textSize="18dp"
-                                android:text="Жиры:">
+                                android:textSize="16dp"
+                                android:text="Жиры">
 
                             </TextView>
 
@@ -396,35 +434,68 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
-                                android:textSize="18dp"
+                                android:textSize="14dp"
                                 app:layout_constraintTop_toBottomOf="@id/fat_textt"
                                 android:paddingLeft="10dp"
                                 android:layout_marginLeft="10dp"
-                                android:layout_marginTop="10dp"/>
+                                android:layout_marginTop="5dp"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="г."
+                                android:text="г"
                                 android:textColor="@color/white"
-                                android:textSize="18dp"
+                                android:textSize="14dp"
                                 app:layout_constraintTop_toTopOf="@id/fatValue"
                                 app:layout_constraintStart_toEndOf="@id/fatValue"
                                 android:layout_marginStart="5dp"/>
+
+                            <TextView
+                                android:id="@+id/text_fat_goal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:textSize="14dp"
+                                android:text="Из: "
+                                android:textStyle="bold"
+                                app:layout_constraintTop_toBottomOf="@id/fatValue"
+                                android:paddingLeft="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="5dp"/>
+
+                            <TextView
+                                android:id="@+id/fatMaxValue"
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" 140"
+                                android:textColor="@color/white"
+                                android:textSize="14dp"
+                                app:layout_constraintTop_toTopOf="@id/text_fat_goal"
+                                app:layout_constraintStart_toEndOf="@id/text_fat_goal"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" г"
+                                android:textColor="@color/white"
+                                android:textSize="14dp"
+                                app:layout_constraintTop_toTopOf="@id/fatMaxValue"
+                                app:layout_constraintStart_toEndOf="@id/fatMaxValue"
+                                />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <androidx.cardview.widget.CardView
+                        <ProgressBar
+                            android:id="@+id/progressBarFat"
                             android:layout_width="match_parent"
                             android:layout_height="10dp"
-                            app:cardCornerRadius="15dp"
-                            android:backgroundTint="@color/fat"
-                            android:layout_gravity="bottom"
                             android:layout_marginBottom="10dp"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
-                            >
-
-                        </androidx.cardview.widget.CardView>
+                            android:layout_gravity="bottom"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:progressDrawable="@drawable/custom_progress_bar_fat" />
 
 
                     </androidx.cardview.widget.CardView>
@@ -433,7 +504,7 @@
                 <LinearLayout
                     android:id="@+id/carb_layout"
                     android:layout_width="0dp"
-                    android:layout_height="120dp"
+                    android:layout_height="135dp"
                     android:layout_weight="1"
 
                     >
@@ -459,8 +530,8 @@
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 android:textStyle="bold"
-                                android:textSize="18dp"
-                                android:text="Углеводы:">
+                                android:textSize="16dp"
+                                android:text="Углеводы">
 
                             </TextView>
 
@@ -469,39 +540,98 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
-                                android:layout_marginTop="10dp"
+                                android:layout_marginTop="5dp"
                                 android:layout_marginLeft="10dp"
                                 app:layout_constraintTop_toBottomOf="@id/carb_text"
                                 android:paddingLeft="10dp"
                                 android:layout_gravity="center_vertical"
 
-                                android:textSize="18dp">
+                                android:textSize="14dp">
                             </TextView>
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="г."
+                                android:text="г"
                                 android:textColor="@color/white"
-                                android:textSize="18dp"
+                                android:textSize="14dp"
                                 app:layout_constraintTop_toTopOf="@id/carbValue"
                                 app:layout_constraintStart_toEndOf="@id/carbValue"
                                 android:layout_marginStart="5dp"/>
 
+                            <TextView
+                                android:id="@+id/text_carb_goal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/white"
+                                android:textSize="14dp"
+                                android:text="Из: "
+                                android:textStyle="bold"
+                                app:layout_constraintTop_toBottomOf="@id/carbValue"
+                                android:paddingLeft="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="5dp"/>
+
+                            <TextView
+                                android:id="@+id/carbMinValue"
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="140"
+                                android:textColor="@color/white"
+                                android:textSize="14dp"
+                                app:layout_constraintTop_toTopOf="@id/text_carb_goal"
+                                app:layout_constraintStart_toEndOf="@id/text_carb_goal"
+                                />
+
+                            <TextView
+                                android:id="@+id/carb_tire"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="-"
+                                android:textColor="@color/white"
+                                android:textSize="14dp"
+                                app:layout_constraintTop_toTopOf="@id/carbMinValue"
+                                app:layout_constraintStart_toEndOf="@id/carbMinValue"
+                                />
+
+                            <TextView
+                                android:id="@+id/carbMaxValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" 140"
+                                android:textColor="@color/white"
+                                android:textSize="14dp"
+                                android:paddingLeft="10dp"
+                                app:layout_constraintTop_toBottomOf="@id/carbMinValue"
+                                />
+
+                            <TextView
+                                android:id="@+id/carb_g"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" г"
+                                android:textColor="@color/white"
+                                android:textSize="14dp"
+                                app:layout_constraintTop_toTopOf="@id/carbMaxValue"
+                                app:layout_constraintStart_toEndOf="@id/carbMaxValue"
+                                />
+
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <androidx.cardview.widget.CardView
+
+                        <ProgressBar
+                            android:id="@+id/progressBarCarb"
                             android:layout_width="match_parent"
                             android:layout_height="10dp"
-                            app:cardCornerRadius="15dp"
-                            android:backgroundTint="@color/carb"
-                            android:layout_gravity="bottom"
                             android:layout_marginBottom="10dp"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
-                            >
+                            android:layout_gravity="bottom"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:progressDrawable="@drawable/custom_progress_bar_carb" />
 
-                        </androidx.cardview.widget.CardView>
+
 
 
                     </androidx.cardview.widget.CardView>
@@ -523,8 +653,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 tools:ignore="MissingConstraints"
-                app:layout_constraintTop_toBottomOf="@+id/layout_block_2"
-                android:layout_marginTop="5dp">
+                app:layout_constraintTop_toBottomOf="@+id/layout_block_2">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardViewBreakfast"
@@ -547,7 +676,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginLeft="10dp"
                         android:textStyle="bold"
-                        android:textSize="18dp"
+                        android:textSize="16dp"
                         android:text="Завтрак">
 
                     </TextView>
@@ -562,7 +691,7 @@
                         android:text="0 ккал"
                         android:layout_gravity="center_vertical"
 
-                        android:textSize="18dp">
+                        android:textSize="14dp">
 
                     </TextView>
 
@@ -648,7 +777,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginLeft="10dp"
                         android:textStyle="bold"
-                        android:textSize="18dp"
+                        android:textSize="16dp"
                         android:text="Обед">
 
                     </TextView>
@@ -663,7 +792,7 @@
                         android:text="0 ккал"
                         android:layout_gravity="center_vertical"
 
-                        android:textSize="18dp">
+                        android:textSize="14dp">
 
                     </TextView>
 
@@ -740,7 +869,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginLeft="10dp"
                         android:textStyle="bold"
-                        android:textSize="18dp"
+                        android:textSize="16dp"
                         android:text="Ужин">
 
                     </TextView>
@@ -755,7 +884,7 @@
                         android:text="0 ккал"
                         android:layout_gravity="center_vertical"
 
-                        android:textSize="18dp">
+                        android:textSize="14dp">
 
                     </TextView>
 
@@ -831,7 +960,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginLeft="10dp"
                         android:textStyle="bold"
-                        android:textSize="18dp"
+                        android:textSize="16dp"
                         android:text="Перекус/другое">
 
                     </TextView>
@@ -846,7 +975,7 @@
                         android:text="0 ккал"
                         android:layout_gravity="center_vertical"
 
-                        android:textSize="18dp">
+                        android:textSize="14dp">
 
                     </TextView>
 
@@ -913,7 +1042,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Памятка"
-                android:textSize="18dp"
+                android:textSize="16dp"
                 android:textColor="@color/white"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
@@ -989,13 +1118,13 @@
                         android:layout_height="wrap_content"
                         android:text="0"
                         android:textColor="@color/white"
-                        android:textSize="16dp">
+                        android:textSize="14dp">
                     </TextView>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="16dp"
+                        android:textSize="14dp"
                         android:textColor="@color/white"
                         android:text=" ккал">
                     </TextView>
@@ -1003,7 +1132,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="16dp"
+                        android:textSize="14dp"
                         android:textColor="@color/white"
                         android:text="/">
                     </TextView>
@@ -1014,7 +1143,7 @@
                         android:layout_height="wrap_content"
                         android:text="1"
                         android:textColor="@color/white"
-                        android:textSize="16dp">
+                        android:textSize="14dp">
 
                     </TextView>
 
@@ -1022,7 +1151,7 @@
                         android:id="@+id/tire_cal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="16dp"
+                        android:textSize="14dp"
                         android:textColor="@color/white"
                         android:text="-">
                     </TextView>
@@ -1033,7 +1162,7 @@
                         android:layout_height="wrap_content"
                         android:text="1"
                         android:textColor="@color/white"
-                        android:textSize="16dp">
+                        android:textSize="14dp">
 
                     </TextView>
 
@@ -1041,7 +1170,7 @@
                         android:id="@+id/kcal_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="16dp"
+                        android:textSize="14dp"
                         android:textColor="@color/white"
                         android:text=" ккал">
                     </TextView>
@@ -1096,13 +1225,13 @@
                         android:layout_height="wrap_content"
                         android:text="0"
                         android:textColor="@color/white"
-                        android:textSize="16dp">
+                        android:textSize="14dp">
                     </TextView>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:textSize="16dp"
+                        android:textSize="14dp"
                         android:text="/"
                         android:textColor="@color/white">
                     </TextView>
@@ -1113,7 +1242,7 @@
                         android:layout_height="wrap_content"
                         android:text="2"
                         android:textColor="@color/white"
-                        android:textSize="16dp">
+                        android:textSize="14dp">
                     </TextView>
 
 
@@ -1121,7 +1250,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:textSize="16dp"
+                        android:textSize="14dp"
                         android:text=" л."
                         android:textColor="@color/white">
                     </TextView>

@@ -14,8 +14,11 @@
     <color name="colorFat">#FFD0A8  </color> <!-- Желтый цвет для жиров -->
     <color name="colorCarb">#FF862D  </color>
     <color name="protein">#01605A</color>
+    <color name="protein_shadow">#013834</color>
     <color name="fat">#FFD0A8</color>
     <color name="carb">#FF862D</color>
+    <color name="carb_shadow">#572d0f</color>
+    <color name="fat_shadow">#806753</color>
     <color name="blocks">#1c1c1e</color>
     <color name="plus_card">#3f3f42</color>
     <color name="colorBreakfast">#ffa07a</color> <!-- Светлый оранжевый -->

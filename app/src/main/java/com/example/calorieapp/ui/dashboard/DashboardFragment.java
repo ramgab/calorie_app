@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -41,6 +42,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.zxing.integration.android.IntentIntegrator;
+
+import org.apache.poi.ss.formula.functions.T;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -113,7 +116,6 @@ public class DashboardFragment extends Fragment {
         } else {
             // Для API ниже 30
             requireActivity().getWindow().setStatusBarColor(ContextCompat.getColor(requireContext(), R.color.dark_grey));
-            // Убедитесь, что ваш стиль активности не устанавливает прозрачный статус-бар (android:windowTranslucentStatus)
         }
 
         CardView story1 = root.findViewById(R.id.story1);
@@ -193,6 +195,9 @@ public class DashboardFragment extends Fragment {
         // Удаляем свечение при прокрутке
         NestedScrollView nestedScrollView = root.findViewById(R.id.nestedscrollview_dashboard);
         nestedScrollView.setOverScrollMode(View.OVER_SCROLL_NEVER);
+
+        HorizontalScrollView horizontalScrollView = root.findViewById(R.id.stoies);
+        horizontalScrollView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         // Найти кнопку добавления завтрака
         CardView buttonAddBreakfast = root.findViewById(R.id.buttonAddBreakfast);
@@ -551,15 +556,15 @@ public class DashboardFragment extends Fragment {
             switch (goals) {
                 case "Похудеть":
                     // Заполняем TextView'ы для похудения
-                    setCalorieValuesFromDatabase(dbHelperPerson.COLUMN_CAL_MIN_DEFICIT, dbHelperPerson.COLUMN_CAL_MAX_DEFICIT, dbHelperPerson.COLUMN_WATER, root);
+                    setCalorieValuesFromDatabase(dbHelperPerson.COLUMN_CAL_MIN_DEFICIT, dbHelperPerson.COLUMN_CAL_MAX_DEFICIT, dbHelperPerson.COLUMN_WATER, dbHelperPerson.COLUMN_PROTEIN_DEFICIT, dbHelperPerson.COLUMN_FAT_DEFICIT, dbHelperPerson.COLUMN_CARBOHYDRATE_MIN_DEFICIT, dbHelperPerson.COLUMN_CARBOHYDRATE_MAX_DEFICIT, root);
                     break;
                 case "Набрать массу":
                     // Заполняем TextView'ы для набора массы
-                    setCalorieValuesFromDatabase(dbHelperPerson.COLUMN_CAL_MIN_SURPLUS, dbHelperPerson.COLUMN_CAL_MAX_SURPLUS,dbHelperPerson.COLUMN_WATER, root);
+                    setCalorieValuesFromDatabase(dbHelperPerson.COLUMN_CAL_MIN_SURPLUS, dbHelperPerson.COLUMN_CAL_MAX_SURPLUS,dbHelperPerson.COLUMN_WATER, dbHelperPerson.COLUMN_PROTEIN_SURPLUS, dbHelperPerson.COLUMN_FAT_SURPLUS, dbHelperPerson.COLUMN_CARBOHYDRATE_MIN_SURPLUS, dbHelperPerson.COLUMN_CARBOHYDRATE_MAX_SURPLUS, root);
                     break;
                 case "Удержать вес":
                     // Заполняем TextView'ы для удержания веса
-                    setCalorieValuesFromDatabase(dbHelperPerson.COLUMN_CAL_NORM, dbHelperPerson.COLUMN_CAL_NORM, dbHelperPerson.COLUMN_WATER, root);
+                    setCalorieValuesFromDatabase(dbHelperPerson.COLUMN_CAL_NORM, dbHelperPerson.COLUMN_CAL_NORM, dbHelperPerson.COLUMN_WATER, dbHelperPerson.COLUMN_PROTEIN_NORM, dbHelperPerson.COLUMN_FAT_NORM, dbHelperPerson.COLUMN_CARBOHYDRATE_NORM, dbHelperPerson.COLUMN_CARBOHYDRATE_NORM, root);
 
                     break;
                 default:
@@ -570,6 +575,9 @@ public class DashboardFragment extends Fragment {
 
         setupProgressBar(root);
         setupWaterProgressBar(root);
+        setupProgressBarCarb(root);
+        setupProgressBarFat(root);
+        setupProgressBarProtein(root);
 
         return root;
     }
@@ -670,7 +678,7 @@ public class DashboardFragment extends Fragment {
 
 
     private void setupProgressBar(View root) {
-        TextView calorieMinValueTextView = root.findViewById(R.id.CalorieMinValueInDashboard);
+        TextView calorieMinValueTextView = root.findViewById(R.id.CalorieMaxValueInDashboard);
         ProgressBar progressBar = root.findViewById(R.id.progressBar);
 
         // Извлекаем значение из calorie_sum и устанавливаем его в прогресс бар
@@ -682,8 +690,54 @@ public class DashboardFragment extends Fragment {
     }
 
 
+    private void setupProgressBarCarb(View root) {
+        TextView carbMinValueTextView = root.findViewById(R.id.carbMaxValue);
+        ProgressBar progressBarCarb = root.findViewById(R.id.progressBarCarb);
+
+        // Извлекаем значение из calorie_sum и устанавливаем его в прогресс бар
+        TextView carbSumTextView = root.findViewById(R.id.carbValue);
+        String carbSumText = carbSumTextView.getText().toString().replace(",", ".");
+        double carbSumValue = Double.parseDouble(carbSumText) * 1000;
+
+        String carbMinText = carbMinValueTextView.getText().toString();
+        double carbMinValue = Double.parseDouble(carbMinText) * 1000;
+        progressBarCarb.setMax((int) carbMinValue);
+        progressBarCarb.setProgress((int) carbSumValue);
+    }
+
+    private void setupProgressBarFat(View root) {
+        TextView fatMaxValueTextView = root.findViewById(R.id.fatMaxValue);
+        ProgressBar progressBarFat = root.findViewById(R.id.progressBarFat);
+
+        // Извлекаем значение из calorie_sum и устанавливаем его в прогресс бар
+        TextView fatSumTextView = root.findViewById(R.id.fatValue);
+        String fatSumText = fatSumTextView.getText().toString().replace(",", ".");
+        double fatSumValue = Double.parseDouble(fatSumText) * 1000;
+
+        String fatMaxText = fatMaxValueTextView.getText().toString();
+        double fatMaxValue = Double.parseDouble(fatMaxText) * 1000;
+        progressBarFat.setMax((int) fatMaxValue);
+        progressBarFat.setProgress((int) fatSumValue);
+    }
+
+    private void setupProgressBarProtein(View root) {
+        TextView proteinMaxValueTextView = root.findViewById(R.id.proteinMaxValue);
+        ProgressBar progressBarProtein = root.findViewById(R.id.progressBarProtein);
+
+        // Извлекаем значение из calorie_sum и устанавливаем его в прогресс бар
+        TextView proteinSumTextView = root.findViewById(R.id.proteinValue);
+        String proteinSumText = proteinSumTextView.getText().toString().replace(",", ".");
+        double proteinSumValue = Double.parseDouble(proteinSumText) * 1000;
+
+        String proteinMaxText = proteinMaxValueTextView.getText().toString();
+        double proteinMaxValue = Double.parseDouble(proteinMaxText) * 1000;
+        progressBarProtein.setMax((int) proteinMaxValue);
+        progressBarProtein.setProgress((int) proteinSumValue);
+    }
+
+
     @SuppressLint("Range")
-    private void setCalorieValuesFromDatabase(String minValueColumn, String maxValueColumn, String maxWaterColumn, View root) {
+    private void setCalorieValuesFromDatabase(String minValueColumn, String maxValueColumn, String maxWaterColumn, String maxProteinColumn, String maxFatColumn, String minCarbColumn, String maxCarbColumn, View root) {
         // Получаем данные из базы данных
         DatabaseHelper dbHelper = new DatabaseHelper(requireContext());
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -691,11 +745,21 @@ public class DashboardFragment extends Fragment {
         double minCalorieValue = 0;
         double maxCalorieValue = 0;
         double maxWaterValue = 0;
+        double maxProteinValue = 0;
+        double maxFatValue = 0;
+        double minCarbValue = 0;
+        double maxCarbValue = 0;
 
         if (cursor != null && cursor.moveToLast()) {
             minCalorieValue = cursor.getDouble(cursor.getColumnIndex(minValueColumn));
             maxCalorieValue = cursor.getDouble(cursor.getColumnIndex(maxValueColumn));
             maxWaterValue = cursor.getDouble(cursor.getColumnIndex(maxWaterColumn));
+            maxProteinValue = cursor.getDouble(cursor.getColumnIndex(maxProteinColumn));
+            maxFatValue = cursor.getDouble(cursor.getColumnIndex(maxFatColumn));
+            minCarbValue = cursor.getDouble(cursor.getColumnIndex(minCarbColumn));
+            maxCarbValue = cursor.getDouble(cursor.getColumnIndex(maxCarbColumn));
+
+
 
         }
         if (cursor != null) {
@@ -707,6 +771,12 @@ public class DashboardFragment extends Fragment {
         TextView calorieMinValueTextView = root.findViewById(R.id.CalorieMinValueInDashboard);
         TextView calorieMaxValueTextView = root.findViewById(R.id.CalorieMaxValueInDashboard);
         TextView waterMaxValueTextView = root.findViewById(R.id.WaterValueInDashboard);
+        TextView proteinMaxValueTextView = root.findViewById(R.id.proteinMaxValue);
+        TextView fatMaxValueTextView = root.findViewById(R.id.fatMaxValue);
+        TextView carbMinValueTextView = root.findViewById(R.id.carbMinValue);
+        TextView carbMaxValueTextView = root.findViewById(R.id.carbMaxValue);
+        TextView carbTire = root.findViewById(R.id.carb_tire);
+        TextView carbG = root.findViewById(R.id.carb_g);
 
         TextView tireCal = root.findViewById(R.id.tire_cal);
         TextView kcalText = root.findViewById(R.id.kcal_text);
@@ -721,7 +791,19 @@ public class DashboardFragment extends Fragment {
             kcalText.setText(" ккал");
         }
         waterMaxValueTextView.setText(String.valueOf(maxWaterValue));
+        proteinMaxValueTextView.setText(String.valueOf(maxProteinValue));
+        fatMaxValueTextView.setText(String.valueOf(maxFatValue));
+        carbMinValueTextView.setText(String.valueOf(minCarbValue));
 
+        if (minCarbValue == maxCarbValue) {
+            carbMaxValueTextView.setText(""); // Пустое значение, если min и max одинаковы
+            carbTire.setText(" г");
+            carbG.setText("");
+        } else {
+            carbMaxValueTextView.setText(String.valueOf(maxCarbValue));
+            carbTire.setText("-");
+            carbG.setText(" г");
+        }
 
     }
 
@@ -774,6 +856,9 @@ public class DashboardFragment extends Fragment {
             updateProgressBars(selectedDate);
             setupProgressBar(rootView);
             setupWaterProgressBar(rootView);
+            setupProgressBarCarb(rootView);
+            setupProgressBarFat(rootView);
+            setupProgressBarProtein(rootView);
         }
     };
 
@@ -819,7 +904,7 @@ public class DashboardFragment extends Fragment {
         // Обновляем общую сумму калорий за день в таблице calories_summary_day
         dbHelperPerson.updateCaloriesSummaryDay(selectedDate, totalCaloriesFinal);
         calorieSum.setText(String.format(Locale.getDefault(), "%.2f ккал", totalCaloriesFinal));
-        calorieRealValue.setText(String.valueOf(totalCaloriesFinal));
+        calorieRealValue.setText(String.format(Locale.getDefault(), "%.2f", totalCaloriesFinal));
     }
 
     private void loadTotalProteinSummaryFromDatabase(String selectedDate){
