@@ -15,6 +15,41 @@
         android:background="@drawable/border_radius_story">
 
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:text="Почему сахар не всегда вреден: разбираем мифы и факты"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/white">
+
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:text="Сахар встречается и в овощах, и в фруктах, но это не делает их вредными. "
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="100dp"
+            android:textColor="@color/white">
+
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:layout_weight="1"
+            android:layout_gravity="end"
+            android:text="Важно понимать, что сахароза, содержащаяся в них, аналогична той, что добавляется в продукты."
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="140dp"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/white">
+
+        </TextView>
 
 
     </LinearLayout>

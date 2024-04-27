@@ -54,7 +54,7 @@
                     android:paddingBottom="10dp"
                     android:text="Заполните форму"
                     android:textColor="@color/white"
-                    android:textSize="22dp"
+                    android:textSize="18dp"
                     android:textStyle="bold"
                     tools:ignore="MissingConstraints" />
 

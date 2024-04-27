@@ -71,7 +71,7 @@
                 android:paddingRight="5dp"
                 android:layout_gravity="center"
                 android:paddingLeft="5dp"
-                android:textSize="18sp"
+                android:textSize="18dp"
                 android:textColor="@android:color/white"/>
         </LinearLayout>
 
@@ -89,6 +89,7 @@
                 android:paddingLeft="5dp"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
+                android:textSize="14dp"
                 android:paddingRight="5dp"
                 android:textColor="@color/grey"
                 android:layout_height="wrap_content"/>
@@ -427,6 +428,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="Введите количество грамм"
+            android:textSize="14dp"
             android:textColor="@color/grey"
             android:textColorHint="@color/grey"
             app:backgroundTint="@color/grey"

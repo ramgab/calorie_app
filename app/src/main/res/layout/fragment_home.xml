@@ -37,7 +37,7 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:paddingRight="5dp"
-                android:textSize="22dp"
+                android:textSize="18dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="MissingConstraints">
@@ -51,7 +51,7 @@
                 app:layout_constraintStart_toEndOf="@id/hello"
                 android:textColor="@android:color/white"
                 android:paddingTop="10dp"
-                android:textSize="22dp"
+                android:textSize="18dp"
                 android:text="пользователь"
                 android:textStyle="bold"
                 tools:ignore="MissingConstraints">
@@ -89,7 +89,7 @@
                 android:text="Ваша норма калорий:"
                 android:textStyle="bold"
                 android:textAlignment="center"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textColor="@color/white"
                 tools:ignore="MissingConstraints">
             </TextView>
@@ -100,7 +100,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/text_calorie_norm"
                 android:textAlignment="center"
-                android:textSize="20sp"
+                android:textSize="18dp"
                 android:textColor="@color/white"
                 tools:ignore="MissingConstraints">
             </TextView>
@@ -138,7 +138,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
-                                android:textSize="18dp"
+                                android:textSize="16dp"
                                 android:textStyle="bold"
                                 android:text="Пол"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -151,7 +151,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
-                                android:textSize="16dp"
+                                android:textSize="14dp"
                                 android:text="Неизвестно"
                                 app:layout_constraintTop_toBottomOf="@id/gender_text"
                                 android:paddingLeft="10dp"
@@ -186,7 +186,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
-                                android:textSize="18dp"
+                                android:textSize="16dp"
                                 android:textStyle="bold"
                                 android:text="Возраст"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -199,7 +199,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
-                                android:textSize="16dp"
+                                android:textSize="14dp"
                                 android:text="Неизвестно"
                                 app:layout_constraintTop_toBottomOf="@id/age_text"
                                 android:paddingLeft="10dp"
@@ -255,7 +255,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
-                                android:textSize="18dp"
+                                android:textSize="16dp"
                                 android:textStyle="bold"
                                 android:text="Рост"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -268,7 +268,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
-                                android:textSize="16dp"
+                                android:textSize="14dp"
                                 android:text="Неизвестно"
                                 app:layout_constraintTop_toBottomOf="@id/height_text"
                                 android:paddingLeft="10dp"
@@ -303,7 +303,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
-                                android:textSize="18dp"
+                                android:textSize="16dp"
                                 android:textStyle="bold"
                                 android:text="Вес"
                                 app:layout_constraintTop_toTopOf="parent"
@@ -316,7 +316,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
-                                android:textSize="16dp"
+                                android:textSize="14dp"
                                 android:text="Неизвестно"
                                 app:layout_constraintTop_toBottomOf="@id/weight_text"
                                 android:paddingLeft="10dp"
@@ -355,7 +355,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginLeft="10dp"
                         android:textStyle="bold"
-                        android:textSize="18dp"
+                        android:textSize="16dp"
                         android:text="Коэффициент активности">
 
                     </TextView>
@@ -370,17 +370,12 @@
                         android:text="Неизвестно"
                         android:layout_gravity="center_vertical"
 
-                        android:textSize="16dp">
+                        android:textSize="14dp">
 
                     </TextView>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                app:layout_constraintTop_toBottomOf="@+id/activity_layout"
-                tools:ignore="MissingConstraints">
-            </LinearLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -401,7 +396,7 @@
                 android:layout_marginLeft="15dp"
                 android:textStyle="bold"
 
-                android:textSize="20sp"
+                android:textSize="18dp"
                 android:textColor="@color/white"
                 tools:ignore="MissingConstraints">
             </TextView>
@@ -424,7 +419,7 @@
                     android:paddingTop="5dp"
                     android:text="Как менялся ваш вес:"
                     android:textAlignment="center"
-                    android:textSize="18dp"
+                    android:textSize="16dp"
                     android:textColor="@color/white"
                     tools:ignore="MissingConstraints">
                 </TextView>
@@ -461,7 +456,7 @@
                     android:text="Сумма калорий за каждый день:"
 
                     android:textAlignment="center"
-                    android:textSize="18dp"
+                    android:textSize="16dp"
                     android:textColor="@color/white"
                     tools:ignore="MissingConstraints">
                 </TextView>
@@ -494,7 +489,7 @@
                     android:text="Ваши пищевые привычки: "
 
                     android:textAlignment="center"
-                    android:textSize="18dp"
+                    android:textSize="16dp"
                     android:textColor="@color/white"
                     tools:ignore="MissingConstraints">
                 </TextView>

@@ -91,7 +91,6 @@
                 android:paddingLeft="5dp"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
-
                 android:textSize="14dp"
                 android:paddingRight="5dp"
                 android:textColor="@color/grey"
@@ -431,6 +430,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="Введите количество грамм"
+            android:textSize="14dp"
             android:inputType="numberDecimal"
             android:digits="0123456789.,"
             android:maxLength="4" />

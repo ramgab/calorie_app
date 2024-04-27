@@ -76,7 +76,7 @@
                             app:layout_constraintTop_toBottomOf="@id/textViewProductNameLayoutLunch"
                             android:paddingTop="5dp"
                             android:paddingLeft="10dp"
-                            android:textSize="16dp"
+                            android:textSize="14dp"
                             android:textColor="@color/grey"
                             android:layout_height="wrap_content"
                             tools:ignore="MissingConstraints" />
@@ -91,7 +91,7 @@
                             android:textColor="@color/grey"
                             android:paddingTop="5dp"
                             android:paddingLeft="5dp"
-                            android:textSize="16dp"/>
+                            android:textSize="14dp"/>
 
 
                         <TextView
