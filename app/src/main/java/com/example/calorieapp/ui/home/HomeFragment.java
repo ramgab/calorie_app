@@ -45,11 +45,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class HomeFragment extends Fragment {
     // Внутри класса HomeFragment
@@ -167,45 +169,60 @@ public class HomeFragment extends Fragment {
         DatabaseHelper dbHelper = new DatabaseHelper(requireContext());
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        // Запрос для получения данных о весе, отсортированных по дате в убывающем порядке
         Cursor cursor = db.query(DatabaseHelper.TABLE_NAME, new String[]{DatabaseHelper.COLUMN_WEIGHT, DatabaseHelper.COLUMN_DATE},
                 null, null, null, null, DatabaseHelper.COLUMN_DATE + " ASC");
 
         ArrayList<Entry> weightEntries = new ArrayList<>();
         ArrayList<String> dates = new ArrayList<>();
 
+        // Создаем мапу для хранения последних записей для каждой уникальной даты
+        Map<String, Float> lastWeightMap = new HashMap<>();
+
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 @SuppressLint("Range") float weight = cursor.getFloat(cursor.getColumnIndex(DatabaseHelper.COLUMN_WEIGHT));
                 @SuppressLint("Range") String date = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_DATE));
 
-                // Convert the date string to the desired format (dd.MM )
-                try {
-                    SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                    SimpleDateFormat outputFormat = new SimpleDateFormat("dd.MM", Locale.getDefault());
-                    Date dateObject = inputFormat.parse(date);
-                    date = outputFormat.format(dateObject);
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                // Проверяем, была ли уже запись для этой даты
+                if (!lastWeightMap.containsKey(date)) {
+                    lastWeightMap.put(date, weight);
                 }
 
-                // Добавляем вес и дату в соответствующие списки
-                weightEntries.add(new Entry(weightEntries.size(), weight));
-                dates.add(date);
-
-                LineDataSet weightDataSet = new LineDataSet(weightEntries, "Вес");
-
-                weightDataSet.setColor(Color.BLUE);
-                weightDataSet.setCircleColor(Color.BLUE);
-
             } while (cursor.moveToNext());
-
         }
 
         if (cursor != null) {
             cursor.close();
         }
         db.close();
+
+        // Создаем список точек для графика только из последних записей для каждой даты
+        int index = 0;
+        List<String> sortedDates = new ArrayList<>(lastWeightMap.keySet());
+        Collections.sort(sortedDates); // Сортируем даты в порядке возрастания
+
+        // Ограничиваем количество значений до 7
+        if (sortedDates.size() > 7) {
+            sortedDates = sortedDates.subList(sortedDates.size() - 7, sortedDates.size());
+        }
+
+        for (String date : sortedDates) {
+            float weight = lastWeightMap.get(date);
+            weightEntries.add(new Entry(index, weight));
+
+            // Преобразуем дату в нужный формат (дд.мм)
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            SimpleDateFormat outputFormat = new SimpleDateFormat("dd.MM", Locale.getDefault());
+            try {
+                Date dateObject = inputFormat.parse(date);
+                date = outputFormat.format(dateObject);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            dates.add(date);
+
+            index++;
+        }
 
         LineDataSet weightDataSet = new LineDataSet(weightEntries, "Вес, кг");
         weightDataSet.setColor(Color.BLUE);
@@ -218,15 +235,13 @@ public class HomeFragment extends Fragment {
         weightChart.getDescription().setEnabled(false);
 
         XAxis xAxis = weightChart.getXAxis();
-        // Настройка цвета текста оси X
         xAxis.setTextColor(Color.WHITE);
-        xAxis.setTextSize(14f); // Замените 12f на желаемый размер
-        // Настройка цвета текста легенды (если она отображается)
+        xAxis.setTextSize(10f);
+        xAxis.setTextColor(Color.rgb(192, 192, 192));
         Legend legend = weightChart.getLegend();
-        legend.setTextColor(Color.WHITE);
-        legend.setTextSize(14f); // Замените 12f на желаемый размер
+        legend.setTextColor(Color.rgb(192, 192, 192));
+        legend.setTextSize(12f);
 
-// Настройка цвета текста значений на графике
         weightDataSet.setValueTextColor(Color.WHITE);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setGranularity(1f); // устанавливаем минимальный интервал между метками по оси X
@@ -234,61 +249,55 @@ public class HomeFragment extends Fragment {
         xAxis.setLabelCount(dates.size()); // устанавливаем количество меток на оси X
         xAxis.setAvoidFirstLastClipping(true); // предотвращаем обрезку первой и последней меток
 
-        // Получение объекта оси Y
         YAxis yAxis = weightChart.getAxisLeft();
         YAxis yAxisR = weightChart.getAxisRight();
-        // Скрытие значений по оси Y
         yAxis.setDrawLabels(false);
         yAxisR.setDrawLabels(false);
 
-// Настройка размера текста значений на графике
-        weightDataSet.setValueTextSize(12f); // Замените 12f на желаемый размер
-        weightChart.invalidate(); // Обновляем график
+        weightDataSet.setValueTextSize(12f);
+        weightChart.invalidate();
     }
+
 
 
     private void loadCaloriesSummaryChartData() {
         DatabaseHelper dbHelper = new DatabaseHelper(requireContext());
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        // Запрос для получения данных о сумме калорий за день, отсортированных по дате в убывающем порядке
+        // Запрос для получения данных о сумме калорий за день
         Cursor cursor = db.query(DatabaseHelper.TABLE_CALORIES_SUMMARY_DAY, new String[]{DatabaseHelper.COLUMN_TOTAL_CALORIES_DAY, DatabaseHelper.COLUMN_DATE_DAY},
-                null, null, null, null, DatabaseHelper.COLUMN_DATE_DAY);
+                null, null, null, null, DatabaseHelper.COLUMN_DATE_DAY + " ASC");
 
-        ArrayList<BarEntry> caloriesEntries = new ArrayList<>();
-        ArrayList<String> dates = new ArrayList<>();
+        // Создание TreeMap для сортировки данных по Date
+        TreeMap<Date, Float> sortedCaloriesMap = new TreeMap<>(new Comparator<Date>() {
+            @Override
+            public int compare(Date date1, Date date2) {
+                return date1.compareTo(date2);
+            }
+        });
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 @SuppressLint("Range") float totalCalories = cursor.getFloat(cursor.getColumnIndex(DatabaseHelper.COLUMN_TOTAL_CALORIES_DAY));
-                @SuppressLint("Range") String date = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_DATE_DAY));
+                @SuppressLint("Range") String dateString = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_DATE_DAY));
 
-                // Преобразуем дату в нужный формат (дд-мм)
+                // Преобразуем дату в формат dd.MM.yyyy
                 SimpleDateFormat inputFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-                SimpleDateFormat outputFormat = new SimpleDateFormat("dd.MM", Locale.getDefault());
+                Date date = null;
                 try {
-                    Date dateObject = inputFormat.parse(date);
-                    date = outputFormat.format(dateObject);
+                    date = inputFormat.parse(dateString);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
 
-                // Проверяем, есть ли уже бар для этого дня
-                int existingIndex = -1;
-                for (int i = 0; i < dates.size(); i++) {
-                    if (dates.get(i).equals(date)) {
-                        existingIndex = i;
-                        break;
-                    }
-                }
+                if (date != null) {
+                    // Добавляем данные в TreeMap
+                    sortedCaloriesMap.put(date, totalCalories);
 
-                if (existingIndex != -1) {
-                    // Обновляем значение существующего бара
-                    caloriesEntries.set(existingIndex, new BarEntry(existingIndex, totalCalories));
-                } else {
-                    // Добавляем новый бар
-                    caloriesEntries.add(new BarEntry(caloriesEntries.size(), totalCalories));
-                    dates.add(date);
+                    // Ограничение количества элементов в TreeMap до 8
+                    if (sortedCaloriesMap.size() > 7) {
+                        sortedCaloriesMap.remove(sortedCaloriesMap.firstKey());
+                    }
                 }
 
             } while (cursor.moveToNext());
@@ -299,6 +308,26 @@ public class HomeFragment extends Fragment {
         }
         db.close();
 
+        // Преобразование TreeMap в список
+        List<Map.Entry<Date, Float>> sortedCaloriesList = new ArrayList<>(sortedCaloriesMap.entrySet());
+
+        // Создание списков для значений осей X и Y
+        ArrayList<BarEntry> caloriesEntries = new ArrayList<>();
+        ArrayList<String> dates = new ArrayList<>();
+
+        for (Map.Entry<Date, Float> entry : sortedCaloriesList) {
+            Date date = entry.getKey();
+            float totalCalories = entry.getValue();
+
+            // Преобразуем Date в формат dd.MM
+            SimpleDateFormat outputFormat = new SimpleDateFormat("dd.MM", Locale.getDefault());
+            String dateString = outputFormat.format(date);
+
+            caloriesEntries.add(new BarEntry(dates.size(), totalCalories));
+            dates.add(dateString);
+        }
+
+        // Создание BarDataSet и BarData
         BarDataSet caloriesDataSet = new BarDataSet(caloriesEntries, "Сумма калорий за день");
         caloriesDataSet.setColor(Color.BLUE);
         caloriesDataSet.setValueTextColor(Color.WHITE);
@@ -306,6 +335,7 @@ public class HomeFragment extends Fragment {
 
         BarData barData = new BarData(caloriesDataSet);
 
+        // Настройка BarChart
         BarChart caloriesChart = requireView().findViewById(R.id.caloriesChart);
         caloriesChart.setData(barData);
         caloriesChart.getDescription().setEnabled(false);
@@ -315,7 +345,8 @@ public class HomeFragment extends Fragment {
         xAxis.setTextColor(Color.WHITE); // Изменение цвета текста на оси X на желтый
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setGranularity(1f);
-        xAxis.setTextSize(12f);
+        xAxis.setTextSize(10f);
+        xAxis.setTextColor(Color.rgb(192, 192, 192));
 
         xAxis.setValueFormatter(new IndexAxisValueFormatter(dates));
         xAxis.setLabelCount(dates.size());
@@ -331,8 +362,8 @@ public class HomeFragment extends Fragment {
 
         yAxisR.setDrawLabels(false);
         Legend legend = caloriesChart.getLegend();
-        legend.setTextColor(Color.WHITE); // Изменение цвета текста в легенде на зеленый
-        legend.setTextSize(12f);
+        legend.setTextColor(Color.rgb(192, 192, 192));
+        legend.setTextSize(10f);
         caloriesChart.invalidate();
     }
 

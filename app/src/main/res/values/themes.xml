@@ -12,6 +12,7 @@
         <!-- Status bar color. -->
         <item name="android:textColorHint">@color/grey</item>
         <item name="android:editTextColor">@android:color/white</item>
+        <item name="android:fontFamily">@font/geologica_regular</item>
 
 
 

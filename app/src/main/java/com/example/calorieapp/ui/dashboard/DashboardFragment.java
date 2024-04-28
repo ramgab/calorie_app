@@ -673,7 +673,7 @@ public class DashboardFragment extends Fragment {
         waterProgressBar.setMax((int) maxWater);
         waterProgressBar.setProgress((int) totalGramsOfWater);
 
-        waterRealValueTextView.setText(String.valueOf(progressValue) + " л.");
+        waterRealValueTextView.setText(String.valueOf(progressValue) + " л");
     }
 
 

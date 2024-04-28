@@ -114,7 +114,7 @@ public class BreakfastDetailsFragment extends Fragment {
         BreakfastDatabaseHelper dbHelper = new BreakfastDatabaseHelper(requireContext());
         double totalCalories = dbHelper.getTotalCaloriesSummary(selectedDate);
         // Устанавливаем значение в TextView
-        calBreakfast.setText(String.format("%sккал", totalCalories));
+        calBreakfast.setText(String.format("%s ккал", totalCalories));
 
     }
 

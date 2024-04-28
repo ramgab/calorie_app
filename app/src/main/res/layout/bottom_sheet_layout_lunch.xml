@@ -151,7 +151,7 @@
             <LinearLayout
                 android:id="@+id/pr"
                 android:layout_width="0dp"
-                android:layout_height="80dp"
+                android:layout_height="85dp"
                 android:layout_weight="1">
 
                 <androidx.cardview.widget.CardView
@@ -209,7 +209,7 @@
             <LinearLayout
                 android:id="@+id/ft"
                 android:layout_width="0dp"
-                android:layout_height="80dp"
+                android:layout_height="85dp"
                 android:layout_weight="1">
 
                 <androidx.cardview.widget.CardView
@@ -269,7 +269,7 @@
             <LinearLayout
                 android:id="@+id/cb"
                 android:layout_width="0dp"
-                android:layout_height="80dp"
+                android:layout_height="85dp"
                 android:layout_weight="1">
 
                 <androidx.cardview.widget.CardView

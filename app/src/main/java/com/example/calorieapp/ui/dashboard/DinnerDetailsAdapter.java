@@ -56,11 +56,11 @@ public class DinnerDetailsAdapter extends RecyclerView.Adapter<DinnerDetailsAdap
             @SuppressLint("Range") double carbohydrate = cursor.getDouble(cursor.getColumnIndex(DinnerDatabaseHelper.COLUMN_CARBOHYDRATE));
 
             holder.textViewProductName.setText(productName);
-            holder.textViewGrams.setText(String.format(Locale.getDefault(), "%.2fг.", grams));
-            holder.textViewCalories.setText(String.format(Locale.getDefault(), "%.2fккал", calories));
-            holder.textViewProtein.setText(String.format(Locale.getDefault(), "Б: %.2fг.", protein));
-            holder.textViewFat.setText(String.format(Locale.getDefault(), "Ж: %.2fг.", fat));
-            holder.textViewCarbohydrate.setText(String.format(Locale.getDefault(), "У: %.2fг.", carbohydrate));
+            holder.textViewGrams.setText(String.format(Locale.getDefault(), "%.2f г", grams));
+            holder.textViewCalories.setText(String.format(Locale.getDefault(), "%.2f ккал,", calories));
+            holder.textViewProtein.setText(String.format(Locale.getDefault(), "Б: %.2f г", protein));
+            holder.textViewFat.setText(String.format(Locale.getDefault(), "Ж: %.2f г", fat));
+            holder.textViewCarbohydrate.setText(String.format(Locale.getDefault(), "У: %.2f г", carbohydrate));
 
             // Находим кнопку удаления в макете элемента списка
             holder.deleteButton.setOnClickListener(new View.OnClickListener() {

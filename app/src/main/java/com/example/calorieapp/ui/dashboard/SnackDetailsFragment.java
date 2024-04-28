@@ -106,7 +106,7 @@ public class SnackDetailsFragment extends Fragment {
         SnackDatabaseHelper dbHelper = new SnackDatabaseHelper(requireContext());
         double totalCalories = dbHelper.getTotalCaloriesSummarySnack(selectedDate);
         // Устанавливаем значение в TextView
-        calSnack.setText(String.format("%sккал", totalCalories));
+        calSnack.setText(String.format("%s ккал", totalCalories));
     }
 
     private void loadSnackDetailsFromDatabase() {

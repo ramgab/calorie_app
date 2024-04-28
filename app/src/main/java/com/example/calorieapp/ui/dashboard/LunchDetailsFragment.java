@@ -110,7 +110,7 @@ public class LunchDetailsFragment extends Fragment {
         LunchDatabaseHelper dbHelper = new LunchDatabaseHelper(requireContext());
         double totalCalories = dbHelper.getTotalCaloriesSummaryLunch(selectedDate);
         // Устанавливаем значение в TextView
-        calLunch.setText(String.format("%sккал", totalCalories));
+        calLunch.setText(String.format("%s ккал", totalCalories));
 
     }
 
