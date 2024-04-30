@@ -67,6 +67,8 @@ public class BreakfastDetailsFragment extends Fragment {
         // Найти кнопку для закрытия фрагмента
         ImageView buttonCloseFragment = rootView.findViewById(R.id.buttonCloseBreakfastFragment);
 
+
+
         // Установить слушатель нажатия для кнопки
         buttonCloseFragment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,10 +76,10 @@ public class BreakfastDetailsFragment extends Fragment {
                 DashboardFragment dashboardFragment = new DashboardFragment();
 
 
-
                 // Получаем FragmentManager и начинаем транзакцию
                 requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.nav_host_fragment_activity_main, dashboardFragment) // Заменяем текущий фрагмент на ProductListFragment
+                        .addToBackStack(null)
                         .commit(); // Применяем транзакцию
 
 

@@ -159,6 +159,7 @@ public class ProductListFragment extends Fragment {
                 // Получаем FragmentManager и начинаем транзакцию
                 requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.nav_host_fragment_activity_main, dashboardFragment) // Заменяем текущий фрагмент на ProductListFragment
+                        .addToBackStack(null)
                         .commit(); // Применяем транзакцию
             }
         });

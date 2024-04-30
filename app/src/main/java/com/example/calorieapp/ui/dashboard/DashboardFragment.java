@@ -118,6 +118,10 @@ public class DashboardFragment extends Fragment {
             requireActivity().getWindow().setStatusBarColor(ContextCompat.getColor(requireContext(), R.color.dark_grey));
         }
 
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        // Удаляем home_fragment из стека обратного вызова
+        fragmentManager.popBackStack("home_fragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
         CardView story1 = root.findViewById(R.id.story1);
         CardView story2 = root.findViewById(R.id.story2);
         CardView story3 = root.findViewById(R.id.story3);

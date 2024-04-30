@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.calorieapp.R;
@@ -73,6 +74,10 @@ public class HomeFragment extends Fragment {
             requireActivity().getWindow().setStatusBarColor(ContextCompat.getColor(requireContext(), R.color.dark_grey));
             // Убедитесь, что ваш стиль активности не устанавливает прозрачный статус-бар (android:windowTranslucentStatus)
         }
+
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        // Удаляем dashboard_fragment из стека обратного вызова
+        fragmentManager.popBackStack("dashboard_fragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
         // Удаляем свечение при прокрутке
         NestedScrollView nestedScrollView = root.findViewById(R.id.nestedscrollview_home);

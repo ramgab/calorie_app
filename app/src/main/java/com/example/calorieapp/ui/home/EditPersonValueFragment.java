@@ -438,12 +438,10 @@ public class EditPersonValueFragment extends Fragment {
                 BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
 
 
-
-
-
                 // Получаем FragmentManager и начинаем транзакцию
                 requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.nav_host_fragment_activity_main, homeFragment) // Заменяем текущий фрагмент на ProductListFragment
+                        .addToBackStack(null)
                         .commit(); // Применяем транзакцию
 
                 // Скройте BottomNavigationView
@@ -463,6 +461,7 @@ public class EditPersonValueFragment extends Fragment {
                 // Получаем FragmentManager и начинаем транзакцию
                 requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.nav_host_fragment_activity_main, homeFragment) // Заменяем текущий фрагмент на ProductListFragment
+                        .addToBackStack(null)
                         .commit(); // Применяем транзакцию
 
                 // Отображаем BottomNavigationView
