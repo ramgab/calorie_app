@@ -84,12 +84,14 @@ public class SnackDetailsFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        // Создайте адаптер и установите его для RecyclerView
-        adapter = new SnackDetailsAdapter(requireContext());
-        recyclerView.setAdapter(adapter);
-
         // Получите выбранную дату из аргументов
         selectedDate = getArguments().getString("selectedDate");
+
+        // Создайте адаптер и установите его для RecyclerView
+        adapter = new SnackDetailsAdapter(requireContext(), this, selectedDate);
+        recyclerView.setAdapter(adapter);
+
+
 
         // Загрузите данные из базы данных и установите их в адаптер
         loadSnackDetailsFromDatabase();
@@ -103,7 +105,7 @@ public class SnackDetailsFragment extends Fragment {
         return rootView;
     }
 
-    private void loadCaloriesSummaryFromDatabase(String selectedDate) {
+    public void loadCaloriesSummaryFromDatabase(String selectedDate) {
         SnackDatabaseHelper dbHelper = new SnackDatabaseHelper(requireContext());
         double totalCalories = dbHelper.getTotalCaloriesSummarySnack(selectedDate);
         // Устанавливаем значение в TextView

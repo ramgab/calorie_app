@@ -86,19 +86,21 @@ public class LunchDetailsFragment extends Fragment {
             }
         });
 
-        // Получите RecyclerView из макета
+        // Получаем RecyclerView из макета
         recyclerView = rootView.findViewById(R.id.recyclerViewLunchDetails);
 
-        // Создайте LinearLayoutManager для управления макетом RecyclerView
+        // Создаем LinearLayoutManager для управления макетом RecyclerView
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
         recyclerView.setLayoutManager(layoutManager);
 
+        // Получаеи выбранную дату из аргументов
+        selectedDate = getArguments().getString("selectedDate");
+
         // Создайте адаптер и установите его для RecyclerView
-        adapter = new LunchDetailsAdapter(requireContext());
+        adapter = new LunchDetailsAdapter(requireContext(), this, selectedDate);
         recyclerView.setAdapter(adapter);
 
-        // Получите выбранную дату из аргументов
-        selectedDate = getArguments().getString("selectedDate");
+
 
         // Загрузите данные из базы данных и установите их в адаптер
         loadLunchDetailsFromDatabase();
@@ -112,7 +114,7 @@ public class LunchDetailsFragment extends Fragment {
         return rootView;
     }
 
-    private void loadCaloriesSummaryFromDatabase(String selectedDate) {
+    public void loadCaloriesSummaryFromDatabase(String selectedDate) {
         LunchDatabaseHelper dbHelper = new LunchDatabaseHelper(requireContext());
         double totalCalories = dbHelper.getTotalCaloriesSummaryLunch(selectedDate);
         // Устанавливаем значение в TextView

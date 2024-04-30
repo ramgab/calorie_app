@@ -30,11 +30,17 @@ public class DinnerDetailsAdapter extends RecyclerView.Adapter<DinnerDetailsAdap
 
     private Context context;
     private Cursor cursor;
+
+    private DinnerDetailsFragment fragment;
+
+    private String selectedDate;
     private double deletedCalories; // Переменная для хранения значения калорий удаляемой карточки
     private String deletedDate; // Переменная для хранения значения даты удаляемой карточки
 
-    public DinnerDetailsAdapter(Context context) {
+    public DinnerDetailsAdapter(Context context, DinnerDetailsFragment fragment, String selectedDate) {
         this.context = context;
+        this.fragment = fragment;
+        this.selectedDate = selectedDate; // сохраняем выбранную дату
     }
 
     @NonNull
@@ -75,6 +81,7 @@ public class DinnerDetailsAdapter extends RecyclerView.Adapter<DinnerDetailsAdap
                         @SuppressLint("Range") long id = cursor.getLong(cursor.getColumnIndex(DinnerDatabaseHelper.COLUMN_ID));
                         // Вызываем метод для удаления элемента из базы данных
                         deleteItem(id, holder);
+                        fragment.loadCaloriesSummaryFromDatabase(selectedDate);
                     }
                 }
             });

@@ -29,12 +29,18 @@ import java.util.Locale;
 public class LunchDetailsAdapter extends RecyclerView.Adapter<LunchDetailsAdapter.ViewHolder> {
 
     private Context context;
+    private LunchDetailsFragment fragment;
+
+    private String selectedDate;
+
     private Cursor cursor;
     private double deletedCalories; // Переменная для хранения значения калорий удаляемой карточки
     private String deletedDate; // Переменная для хранения значения даты удаляемой карточки
 
-    public LunchDetailsAdapter(Context context) {
+    public LunchDetailsAdapter(Context context, LunchDetailsFragment fragment, String selectedDate) {
         this.context = context;
+        this.fragment = fragment;
+        this.selectedDate = selectedDate; // сохраняем выбранную дату
     }
 
     @NonNull
@@ -75,6 +81,7 @@ public class LunchDetailsAdapter extends RecyclerView.Adapter<LunchDetailsAdapte
                         @SuppressLint("Range") long id = cursor.getLong(cursor.getColumnIndex(LunchDatabaseHelper.COLUMN_ID));
                         // Вызываем метод для удаления элемента из базы данных
                         deleteItem(id, holder);
+                        fragment.loadCaloriesSummaryFromDatabase(selectedDate);
                     }
                 }
             });
