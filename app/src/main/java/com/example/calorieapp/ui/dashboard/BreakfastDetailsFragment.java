@@ -75,6 +75,9 @@ public class BreakfastDetailsFragment extends Fragment {
             public void onClick(View view) {
                 DashboardFragment dashboardFragment = new DashboardFragment();
 
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                // Удаляем home_fragment из стека обратного вызова
+                //fragmentManager.popBackStack("dashboard_fragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
                 // Получаем FragmentManager и начинаем транзакцию
                 requireActivity().getSupportFragmentManager().beginTransaction()

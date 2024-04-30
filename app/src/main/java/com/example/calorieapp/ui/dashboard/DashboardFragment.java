@@ -53,9 +53,6 @@ import java.util.List;
 import java.util.Locale;
 
 public class DashboardFragment extends Fragment {
-    private RecyclerView homeHorizontalRec;
-    private List<HomeHorModel> homeHorModelList;
-    private HomeHorAdapter homeHorAdapter;
 
     private FragmentDashboardBinding binding;
     private TextView currentDateTextView;
@@ -582,6 +579,8 @@ public class DashboardFragment extends Fragment {
         setupProgressBarCarb(root);
         setupProgressBarFat(root);
         setupProgressBarProtein(root);
+
+
 
         return root;
     }

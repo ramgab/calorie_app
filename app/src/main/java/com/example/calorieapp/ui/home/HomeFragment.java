@@ -76,8 +76,19 @@ public class HomeFragment extends Fragment {
         }
 
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-        // Удаляем dashboard_fragment из стека обратного вызова
-        fragmentManager.popBackStack("dashboard_fragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        // Получаем количество записей в стеке обратного вызова
+        int count = fragmentManager.getBackStackEntryCount();
+        // Проходимся по всем записям в стеке
+        for (int i = 0; i < count; ++i) {
+            // Получаем запись по индексу
+            FragmentManager.BackStackEntry entry = fragmentManager.getBackStackEntryAt(i);
+            // Проверяем тег записи
+            if (entry.getName() != null && entry.getName().equals("dashboard_fragment")) {
+                fragmentManager.popBackStack(entry.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            }
+
+        }
+
 
         // Удаляем свечение при прокрутке
         NestedScrollView nestedScrollView = root.findViewById(R.id.nestedscrollview_home);

@@ -52,8 +52,6 @@ public class EditPersonValueFragment extends Fragment {
             // Для API ниже 30
             requireActivity().getWindow().setStatusBarColor(ContextCompat.getColor(requireContext(), R.color.dark_grey));
             // Убедитесь, что ваш стиль активности не устанавливает прозрачный статус-бар (android:windowTranslucentStatus)
-
-
         }
 
         // Удаляем свечение при прокрутке
@@ -457,6 +455,8 @@ public class EditPersonValueFragment extends Fragment {
 
 
                 HomeFragment homeFragment = new HomeFragment();
+
+
 
                 // Получаем FragmentManager и начинаем транзакцию
                 requireActivity().getSupportFragmentManager().beginTransaction()

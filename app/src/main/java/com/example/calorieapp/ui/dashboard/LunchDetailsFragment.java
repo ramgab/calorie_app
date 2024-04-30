@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -52,7 +53,6 @@ public class LunchDetailsFragment extends Fragment {
             // Убедитесь, что ваш стиль активности не устанавливает прозрачный статус-бар (android:windowTranslucentStatus)
         }
 
-
         bottomNavigationView = requireActivity().findViewById(R.id.nav_view);
 
         // Скрываем BottomNavigationView
@@ -73,6 +73,11 @@ public class LunchDetailsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 DashboardFragment dashboardFragment = new DashboardFragment();
+
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                // Удаляем home_fragment из стека обратного вызова
+                //fragmentManager.popBackStack("dashboard_fragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
                 // Получаем FragmentManager и начинаем транзакцию
                 requireActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.nav_host_fragment_activity_main, dashboardFragment) // Заменяем текущий фрагмент на ProductListFragment
