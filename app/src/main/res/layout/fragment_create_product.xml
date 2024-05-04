@@ -83,16 +83,16 @@
                 app:cardCornerRadius="10dp">
 
 
-            <EditText
-                android:id="@+id/editTextCreateProductName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:textSize="14dp"
-                android:textColor="@color/grey"
-                android:textColorHint="@color/grey"
-                app:backgroundTint="@color/grey"
-                android:hint="Название продукта"/>
+                <EditText
+                    android:id="@+id/editTextCreateProductName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:textSize="14dp"
+                    android:textColor="@color/grey"
+                    android:textColorHint="@color/grey"
+                    app:backgroundTint="@color/grey"
+                    android:hint="Название продукта"/>
 
             </androidx.cardview.widget.CardView>
 

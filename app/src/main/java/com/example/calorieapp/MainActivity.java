@@ -15,9 +15,11 @@ import android.view.View;
 
 import com.example.calorieapp.ui.dashboard.BreakfastDetailsFragment;
 import com.example.calorieapp.ui.dashboard.CreateProductFragment;
+import com.example.calorieapp.ui.dashboard.CreateRecipeFragment;
 import com.example.calorieapp.ui.dashboard.DinnerDetailsFragment;
 import com.example.calorieapp.ui.dashboard.LunchDetailsFragment;
 import com.example.calorieapp.ui.dashboard.ProductDatabaseHelper;
+import com.example.calorieapp.ui.dashboard.ProductListForRecipeFragment;
 import com.example.calorieapp.ui.dashboard.ProductListFragment;
 import com.example.calorieapp.ui.dashboard.SnackDetailsFragment;
 import com.example.calorieapp.ui.home.EditPersonValueFragment;
@@ -211,12 +213,20 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-            } else if (currentFragment instanceof CreateProductFragment) {
+            } else if (currentFragment instanceof CreateProductFragment || currentFragment instanceof CreateRecipeFragment) {
                 // Если текущий фрагмент - CreateProductFragment, переходим к ProductListFragment
                 getSupportFragmentManager().popBackStack("product_list_fragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
                 // Не отображаем BottomNavigationView
                 bottomNavigationView.setVisibility(View.GONE);
+
+            } else if (currentFragment instanceof ProductListForRecipeFragment) {
+                // Если текущий фрагмент - CreateProductFragment, переходим к ProductListFragment
+                getSupportFragmentManager().popBackStack("create_recipe_fragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+                // Не отображаем BottomNavigationView
+                bottomNavigationView.setVisibility(View.GONE);
+
             } else if (currentFragment instanceof EditPersonValueFragment) {
                 // Если текущий фрагмент - EditPersonValueFragment, переходим к HomeFragment
                 getSupportFragmentManager().popBackStack("home_fragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);

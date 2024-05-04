@@ -16,12 +16,12 @@
 
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
+            android:textSize="36dp"
+            android:layout_marginTop="80dp"
             android:text="Почему сахар не всегда вреден: разбираем мифы и факты"
             android:textStyle="bold"
-            android:gravity="center"
             android:textColor="@color/white">
 
         </TextView>
@@ -29,8 +29,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16dp"
-            android:text="Сахар встречается и в овощах, и в фруктах, но это не делает их вредными. "
+            android:textSize="18dp"
+            android:text="Сахар встречается и в овощах, и в фруктах, но это не делает их вредными. Важно понимать, что сахароза, содержащаяся в них, аналогична той, что добавляется в продукты."
             android:layout_marginTop="10dp"
             android:layout_marginRight="100dp"
             android:textColor="@color/white">
@@ -40,14 +40,58 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16dp"
-            android:layout_weight="1"
-            android:layout_gravity="end"
-            android:text="Важно понимать, что сахароза, содержащаяся в них, аналогична той, что добавляется в продукты."
+            android:textSize="18dp"
+            android:textAlignment="textEnd"
+            android:layout_marginLeft="100dp"
+            android:text="Сахар не вызывает зависимости, а вот вкусные продукты, независимо от их содержания сахара, могут стать объектом привыкания. Переедание любимыми продуктами и, как следствие, набор лишнего веса - основные проблемы, а не сахар сам по себе."
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="140dp"
-            android:layout_alignParentRight="true"
             android:textColor="@color/white">
+
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:text="Сахар не лишен пользы. В крайних случаях он даже может спасти жизнь при гипогликемической коме. Однако, если речь идет о витаминах и минералах, сахар не является источником полезных веществ."
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="100dp"
+            android:textColor="@color/white">
+
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:textAlignment="textEnd"
+            android:layout_marginLeft="100dp"
+            android:text="Фрукты и овощи, несмотря на наличие сахара, остаются полезными благодаря высокому содержанию клетчатки, антиоксидантов, витаминов и минералов. Кроме того, они отличаются низкой калорийной плотностью, что способствует чувству насыщения без лишних калорий."
+            android:layout_marginTop="20dp"
+            android:textColor="@color/white">
+
+        </TextView>
+
+        <TextView
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:textSize="36dp"
+            android:layout_marginTop="20dp"
+            android:text="Итог:"
+            android:textStyle="bold"
+            android:textColor="@color/black">
+
+        </TextView>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:text="Сахар не всегда вреден, но его избыток в пище может привести к негативным последствиям, таким как набор лишнего веса. Контролируемое потребление с учетом общей калорийности и питательной ценности продуктов поможет поддерживать здоровый образ жизни.
+"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black">
 
         </TextView>
 

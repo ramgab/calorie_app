@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_create_product"
+        android:title="Создать продукт" />
+    <item
+        android:id="@+id/action_create_recipe"
+        android:title="Создать рецепт" />
+</menu>

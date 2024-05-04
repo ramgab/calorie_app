@@ -14,6 +14,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -21,6 +22,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.view.inputmethod.EditorInfo;
@@ -200,21 +202,64 @@ public class ProductListFragment extends Fragment {
 
 
         ImageView createProductButton = root.findViewById(R.id.createProduct);
+
         createProductButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Создаем новый экземпляр фрагмента CreateProductFragment
-                CreateProductFragment createProductFragment = new CreateProductFragment();
+                // Создаем PopupMenu, используя контекст фрагмента
+                PopupMenu popupMenu = new PopupMenu(getContext(), createProductButton);
 
-                // Получаем FragmentManager и начинаем транзакцию
-                requireActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.nav_host_fragment_activity_main, createProductFragment) // Заменяем текущий фрагмент на новый
-                        .addToBackStack("product_list_fragment") // Добавляем транзакцию в стек возврата
-                        .commit(); // Применяем транзакцию
+                // Надуваем меню из ресурсов
+                popupMenu.getMenuInflater().inflate(R.menu.popup_menu_create, popupMenu.getMenu());
+
+                // Обработчик выбора пунктов меню
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        int id = item.getItemId();
+                        if (id == R.id.action_create_product) {
+                            // При выборе "Создать продукт"
+                            openCreateProductFragment();
+                            return true;
+                        } else if (id == R.id.action_create_recipe) {
+                            // При выборе "Создать рецепт"
+                            openCreateRecipeFragment();
+                            return true;
+                        }
+                        return false;
+                    }
+                });
+
+                // Показываем PopupMenu
+                popupMenu.show();
             }
         });
 
         return root;
+    }
+
+    // Метод для открытия фрагмента CreateProductFragment
+    private void openCreateProductFragment() {
+        // Создаем новый экземпляр фрагмента CreateProductFragment
+        CreateProductFragment createProductFragment = new CreateProductFragment();
+
+        // Получаем FragmentManager и начинаем транзакцию
+        requireActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.nav_host_fragment_activity_main, createProductFragment) // Заменяем текущий фрагмент на новый
+                .addToBackStack("product_list_fragment") // Добавляем транзакцию в стек возврата
+                .commit(); // Применяем транзакцию
+    }
+
+    // Метод для открытия фрагмента CreateRecipeFragment
+    private void openCreateRecipeFragment() {
+        // Создаем новый экземпляр фрагмента CreateProductFragment
+        CreateRecipeFragment createRecipeFragment = new CreateRecipeFragment();
+
+        // Получаем FragmentManager и начинаем транзакцию
+        requireActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.nav_host_fragment_activity_main, createRecipeFragment) // Заменяем текущий фрагмент на новый
+                .addToBackStack("product_list_fragment") // Добавляем транзакцию в стек возврата
+                .commit(); // Применяем транзакцию
     }
 
 

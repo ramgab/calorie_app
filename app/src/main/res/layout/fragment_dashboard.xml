@@ -99,9 +99,8 @@
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/story1"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:backgroundTint="@color/blocks"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:clickable="true"
                         android:focusable="true"
                         android:background="?android:attr/selectableItemBackground"
@@ -109,13 +108,39 @@
                         android:enterFadeDuration="1000"
                         android:exitFadeDuration="5000"
                         app:cardCornerRadius="15dp"
-                        android:layout_margin="5dp" />
+                        android:layout_margin="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/for_story_1"
+                            android:gravity="center"
+                            >
+
+                            <!-- your views -->
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:text="Сахар: мифы и факты"
+                            android:textSize="12dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_gravity="bottom">
+
+                        </TextView>
+
+                    </androidx.cardview.widget.CardView>
 
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/story2"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:backgroundTint="@color/blocks"
                         android:clickable="true"
                         android:focusable="true"
@@ -128,8 +153,8 @@
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/story3"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:backgroundTint="@color/blocks"
                         android:clickable="true"
                         android:focusable="true"
@@ -142,8 +167,8 @@
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/story4"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:backgroundTint="@color/blocks"
                         android:clickable="true"
                         android:focusable="true"
@@ -156,8 +181,8 @@
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/story5"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:backgroundTint="@color/blocks"
                         android:clickable="true"
                         android:focusable="true"
@@ -170,8 +195,8 @@
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/story6"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:backgroundTint="@color/blocks"
                         android:clickable="true"
                         android:focusable="true"
@@ -184,8 +209,8 @@
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/story7"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:backgroundTint="@color/blocks"
                         android:clickable="true"
                         android:focusable="true"
@@ -199,8 +224,8 @@
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/story8"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:backgroundTint="@color/blocks"
                         android:clickable="true"
                         android:focusable="true"
