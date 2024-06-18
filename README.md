@@ -1,10 +1,10 @@
 # Мобильное приложение для отслеживания питания и подсчета калорий
-## Редактирование пользовательских данных и экран "О себе"
-![mygif](https://github.com/ramgab/calorie_app/blob/master/app/src/main/res/drawable/gif_about_me.gif)
+## Экран "О себе" и редактирование пользовательских данных
+![mygif](https://github.com/ramgab/gif_for_app/blob/main/o_sebe.gif)
 
 
 ## Экран "Дневник"
-![mygif](https://github.com/ramgab/calorie_app/blob/master/app/src/main/res/drawable/gif_diary.gif)
+![mygif](https://github.com/ramgab/gif_for_app/blob/main/dnevnik.gif)
 
 ## Взаимодействие с продуктами
 ![mygif](https://github.com/ramgab/calorie_app/blob/master/app/src/main/res/drawable/gif_product.gif)
